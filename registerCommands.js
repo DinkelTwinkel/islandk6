@@ -21,7 +21,7 @@ const rest = new REST({ version: '10' }).setToken(token);
       // Routes.applicationCommands(clientId),
 
       // If you want to register commands for a specific guild, use the following line:
-      Routes.applicationGuildCommands(clientId, '1192955466872004669'),
+      Routes.applicationGuildCommands(clientId, '1193663232041304134'),
       { body: commands },
     );
 

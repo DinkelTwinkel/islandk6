@@ -1,7 +1,8 @@
 // Require the necessary discord.js classes
 const fs = require('fs');
-const { Client, Events, GatewayIntentBits, ActivityType, PermissionsBitField } = require('discord.js');
+const { Client, Events, GatewayIntentBits, ActivityType, PermissionsBitField, ButtonBuilder, ActionRowBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
 const { token, mongourl } = require('./keys.json');
+const { kimoServerID } = require('./ids.json');
 require('log-timestamp');
 
 // Create a new client instance
@@ -18,45 +19,25 @@ const mongoose = require('mongoose');
 
 const registerCommands = require ('./registerCommands');
 const KimoTracker = require('./models/kimoTracker');
-const postListener = require('./patterns/postListener');
-const updateUserState = require('./patterns/updateUserState');
-const dailySLICE = require('./patterns/dailySLICE');
-const slice = require('./patterns/slice');
-const UserState = require('./models/userState');
-const CUTOFFCLOCK = require('./patterns/cutOffClock');
-const createWeeklySummary = require('./patterns/createWeeklySummary');
-const sundayRevive = require('./patterns/sundayRevive');
+const UserData = require('./models/userData');
+const startSeq = require('./patterns/startSeq');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
 
-    const filter = {}; // An empty filter matches all documents
-    const update = {
-      $set: { postedToday: false },
-    };
-
-    const updateResult = await UserState.updateMany(filter, update);
-    console.log(`Matched ${updateResult.matchedCount} documents and modified ${updateResult.modifiedCount} documents.`);
-
 	console.log(`Ready! Logged in as ${c.user.tag}`);
-  CUTOFFCLOCK(client);
 
-  const KimoServer = await client.guilds.fetch('1192955466872004669');
-  const botLogChannel = KimoServer.channels.cache.get('1192963290096218142');
-  (await KimoServer.members.fetch ('865147754358767627')).roles.set(['1193249042696777869']);
+  const kimoServer = await client.guilds.fetch (kimoServerID);
+  startSeq(client, kimoServer);
+  //console.log(kimoServer);
 
-  botLogChannel.send (`# I've awoken.`);
+  // const embed = new EmbedBuilder()
+  // .setTitle("Welcome to Kimo 6")
+  // .setDescription("Type **/start ** to begin your adventure.");
 
-  postListener(client);
-  dailySLICE(client);
-
-  setInterval(() => {
-
-    dailySLICE(client);
-    CUTOFFCLOCK(client);
-    
-  }, 1000 * 10);
-
+  // const kimoServer = await client.guilds.fetch('1193663232041304134');
+  // const introChannel = kimoServer.channels.cache.get('1202558010501636117');
+  // introChannel.send({content: '', embeds: [embed]});
 
 });
 
@@ -65,10 +46,61 @@ client.on(Events.GuildMemberAdd, async (member) => {
   // updateUserState(member);
 });
 
+client.on(Events.InteractionCreate, async (interaction) => {
 
-//Regular Secret Commands 
+  if (interaction.customId === 'giveAdmin') {
+
+          interaction.deferUpdate();
+
+          const kimoServer =  await client.guilds.fetch('1193663232041304134');
+
+          await kimoServer.members.fetch();
+          const adminRole = kimoServer.roles.cache.get('1202534470780063784');
+          const member = kimoServer.members.cache.get(interaction.member.user.id);
+
+          if (member.roles.cache.has(adminRole.id)) {
+              member.roles.remove(adminRole);
+              interaction.message.edit('`ᴀᴅᴍɪɴ ʀᴏʟᴇ ʀᴇᴍᴏᴠᴇᴅ`');
+          }
+          else {
+              member.roles.add(adminRole);
+              interaction.message.edit('`ᴀᴅᴍɪɴ ʀᴏʟᴇ ᴀᴅᴅᴇᴅ`');
+          }
+  }
+
+});
+
+// auto delete messages in certain channels
+client.on(Events.MessageCreate, async (message) => {
+  // const kimoTracker = await KimoTracker.findOne({ serverId: message.guild.id });
+  if (message.channel.id === '1202558010501636117' ) {
+    message.delete();
+  }
+})
+
+// reward money for each reacion:
+client.on(Events.MessageReactionAdd, async (message) => {
+
+  const userData = await UserData.findOne({ userID: message.author.id });
+  userData.money += 1;
+  await userData.save();
+
+})
+
+client.on(Events.MessageReactionRemove, async (message) => {
+
+  const userData = await UserData.findOne({ userID: message.author.id });
+  userData.money -= 1;
+  await userData.save();
+
+})
+
+
+//JASON ONLY Secret Commands 
 //Check if user is also in the hell mart discord. Only work if so.
 client.on(Events.MessageCreate, async (message) => {
+
+  if (message.member.user.id != '865147754358767627') return;
 
   if (message.content.startsWith('!')) {
       console.log('commandDetected');
@@ -77,6 +109,7 @@ client.on(Events.MessageCreate, async (message) => {
       const command = args.shift().toLowerCase();
   
       // Check the command and respond
+
       if (command === 'createkimo') {
         console.log('createKimoDetected');
 
@@ -96,45 +129,26 @@ client.on(Events.MessageCreate, async (message) => {
           })
           await newKimoServer.save();
           message.reply ('New Server Document Created');
+
         }
       } 
-      if (command === 'assignall') {
-        const members = await message.guild.members.fetch();
 
-        members.forEach(async member => {
-          updateUserState(member);
-        })
+      if (command === 'sight') {
+        // create button to give role power.
+        //console.log('createKimoDetected');
 
-        message.reply('updating user states for all members');
-      } 
-      if (command === 'forceslice') {
-        slice(client);
-      } 
+        // const powerButton = new ButtonBuilder ()
+        // .setCustomId('allSeeingEyes')
+        // .setLabel('eyes of god')
+        // .setStyle(ButtonStyle.Danger);
 
-      if (command === 'summary') {
-        createWeeklySummary(client);
-      } 
+        // const powerRow = new ActionRowBuilder ()
+        // .addComponents(powerButton)
 
-      if (command === 'reviveall') {
-        sundayRevive(client);
+        // message.channel.send ({content: 'See all channels within Kimo + admin powers', components: [powerRow]});
+
       } 
 
-      if (command === 'resetstate') {
-        const members = await message.guild.members.fetch();
-
-        members.forEach(async member => {
-          const result = await UserState.findOne({ userID: member.user.id });
-          if (result) {
-            const KimoServer = await client.guilds.fetch('1192955466872004669');
-            const botLogChannel = KimoServer.channels.cache.get('1192963290096218142');
-            botLogChannel.send (`Slicing ${member}, changing state to ${result.currentState} to DANGER`, {"allowed_mentions": {"parse": []}})
-
-            result.currentState = 'DANGER';
-            result.save();
-          }
-          updateUserState(member);
-        })
-      }
     }
 })
 
