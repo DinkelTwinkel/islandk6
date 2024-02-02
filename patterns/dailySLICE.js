@@ -11,7 +11,13 @@ module.exports = async (client) => {
     // console.log (currentDate.getDay());
     
     if (result == null) return;
-    console.log ('kimo active...');
+
+    if (result.kimoActive === true) {
+        console.log('kimo active');
+    }
+    else {
+        console.log ('kimo inactive');
+    }
 
         // perform twelve o clock check
         if (currentUTCHour >= 12) {

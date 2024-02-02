@@ -22,6 +22,7 @@ const KimoTracker = require('./models/kimoTracker');
 const UserData = require('./models/userData');
 const startSeq = require('./patterns/startSeq');
 const cutOffClock = require('./patterns/cutOffClock');
+const dailySLICE = require('./patterns/dailySLICE');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -31,6 +32,14 @@ client.once(Events.ClientReady, async c => {
   const kimoServer = await client.guilds.fetch (kimoServerID);
   startSeq(client, kimoServer);
   cutOffClock(client);
+
+  dailySLICE(client);
+
+  setInterval(() => {
+
+    dailySLICE(client);
+    
+  }, 1000 * 10);
 
 });
 
