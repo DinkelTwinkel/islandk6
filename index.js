@@ -73,7 +73,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
 // auto delete messages in certain channels
 client.on(Events.MessageCreate, async (message) => {
   // const kimoTracker = await KimoTracker.findOne({ serverId: message.guild.id });
-  if (message.channel.id === '1202558010501636117' ) {
+  if (message.channel.id === '1202878435639304212' ) {
     message.delete();
   }
 })
