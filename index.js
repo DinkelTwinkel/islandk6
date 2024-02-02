@@ -21,6 +21,7 @@ const registerCommands = require ('./registerCommands');
 const KimoTracker = require('./models/kimoTracker');
 const UserData = require('./models/userData');
 const startSeq = require('./patterns/startSeq');
+const cutOffClock = require('./patterns/cutOffClock');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -29,15 +30,7 @@ client.once(Events.ClientReady, async c => {
 
   const kimoServer = await client.guilds.fetch (kimoServerID);
   startSeq(client, kimoServer);
-  //console.log(kimoServer);
-
-  // const embed = new EmbedBuilder()
-  // .setTitle("Welcome to Kimo 6")
-  // .setDescription("Type **/start ** to begin your adventure.");
-
-  // const kimoServer = await client.guilds.fetch('1193663232041304134');
-  // const introChannel = kimoServer.channels.cache.get('1202558010501636117');
-  // introChannel.send({content: '', embeds: [embed]});
+  cutOffClock(client);
 
 });
 
@@ -73,7 +66,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
 // auto delete messages in certain channels
 client.on(Events.MessageCreate, async (message) => {
   // const kimoTracker = await KimoTracker.findOne({ serverId: message.guild.id });
-  if (message.channel.id === '1202878435639304212' ) {
+  if (message.channel.id === '1202878435639304212' && !message.author.bot ) {
     message.delete();
   }
 })

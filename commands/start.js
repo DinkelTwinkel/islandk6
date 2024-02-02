@@ -23,7 +23,7 @@ module.exports = {
           .setRequired(true)),
     async execute(interaction, client) {
 
-        if (interaction.member.roles.has ('1202551817708507136') || interaction.member.roles.has ('1202876101005803531') ) {
+        if (interaction.member.roles.cache.has ('1202551817708507136') || interaction.member.roles.cache.has ('1202876101005803531') ) {
             interaction.reply({content: 'You cannot use this.', ephemeral: true});
         }
 
