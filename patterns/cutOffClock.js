@@ -27,8 +27,8 @@ module.exports = async (client) => {
 
             client.user.setPresence({
             activities: [{ name: `March 1st START`, type: ActivityType.Watching }],
-            status: 'idle',
+            status: 'dnd',
             });
-
+            client.user.setStatus('idle');
 
 };
