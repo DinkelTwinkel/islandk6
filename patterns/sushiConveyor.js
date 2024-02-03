@@ -1,17 +1,32 @@
-module.exports = async (string) => {
+module.exports = async (spaceSeparatedString, cut) => {
 
   const splitEmojis = (sushi) => [...new Intl.Segmenter().segment(sushi)].map(x => x.segment);
-  const sushi = splitEmojis("🌊🌊🦈🚢🌊🌊🌊🌊🌊🌊🌊🚢🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🐟")
+  const sushi = splitEmojis("🌊🌊🦈🚢🌊🌊🌊🌊🌊🌊🌊🚢🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊🐟🛫🛬🚁⛵🚤🐬🐳🐋🐟🐠🐡🦐🦑🐙🦞🦀🐚")
   const randomIndex = Math.floor(Math.random() * sushi.length);
 
-  let newString = await string.concat(sushi[randomIndex]);
+  const string = spaceSeparatedString.split(' ');
 
-  newString = newString.substring(1);
+  if (string.length > 1) {
+    let newString = await string[1].concat(sushi[randomIndex]);
 
-  console.log (string);
-  console.log (newString);
-  //console.log (sushiArray);
+    newString = newString.substring(1);
 
-  return newString;
+    console.log (string);
+    console.log (newString);
+    //console.log (sushiArray);
 
+    return string[0] + ' ' + newString;
+  }
+
+  else {
+    let newString = await spaceSeparatedString.concat(sushi[randomIndex]);
+
+    newString = newString.substring(1);
+
+    console.log (string);
+    console.log (newString);
+    //console.log (sushiArray);
+
+    return newString;
+  }
 };

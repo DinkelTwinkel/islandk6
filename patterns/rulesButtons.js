@@ -40,8 +40,17 @@ module.exports = async (customID) => {
         credits.setDisabled(true);
     }
 
+    const commands = new ButtonBuilder ()
+    .setCustomId('rulesCommands')
+    .setLabel('COMMANDS')
+    .setStyle(ButtonStyle.Secondary)
+
+    if (customID === 'rulesCommands') {
+        commands.setDisabled(true);
+    }
+
     const row = new ActionRowBuilder()
-    .setComponents(kimoButton, rulesButton, figureButton, credits)
+    .setComponents(kimoButton, rulesButton, figureButton, commands, credits)
 
     return row;
 

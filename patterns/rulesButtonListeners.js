@@ -5,6 +5,7 @@ const rulesFigure = require('./rulesFigure');
 const rulesRules = require('./rulesRules');
 const rulesCredits = require('./rulesCredits');
 const kimoIDMaker = require('./kimoIDMaker');
+const rulesCommands = require('./rulesCommands');
 const cooldowns = new Map();
 
 module.exports = async (client) => {
@@ -33,6 +34,11 @@ module.exports = async (client) => {
       else if (interaction.customId === 'rulesCredits') {
 
         rulesCredits(client, interaction, interaction.customId);
+
+      }
+      else if (interaction.customId === 'rulesCommands') {
+
+        rulesCommands(client, interaction, interaction.customId);
 
       }
 

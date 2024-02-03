@@ -32,6 +32,7 @@ const reactionRewards = require('./patterns/reactionRewards');
 const radio = require('./patterns/radio');
 const rulesButtonListeners = require('./patterns/rulesButtonListeners');
 const sushiConveyor = require('./patterns/sushiConveyor');
+const jailAuto = require('./patterns/jailAuto');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -44,6 +45,7 @@ client.once(Events.ClientReady, async c => {
   dailySLICE(client);
   radio(client);
   rulesButtonListeners(client);
+  jailAuto(client);
 
   setInterval(() => {
 
@@ -53,14 +55,19 @@ client.once(Events.ClientReady, async c => {
 
   reactionRewards(client);
 
-  // sushiConveyer 
+  // Wave Conveyer
+  const waveChannels = ['1203354315176022017', '1203358217271246983', '1203358105384259684', '1203358412876812338', '1203358444535685140', '1203392330296467590']
 
-  const sushiChannel = kimoServer.channels.cache.get('1203354315176022017');
-  sushiChannel.setName (await sushiConveyor(sushiChannel.name));
+  waveChannels.forEach(async channelID => {
+    const sushiChannel = kimoServer.channels.cache.get(channelID);
+    sushiChannel.setName (await sushiConveyor(sushiChannel.name));
+  });
 
   setInterval(async () => {
-
-    sushiChannel.setName (await sushiConveyor(sushiChannel.name));
+    waveChannels.forEach(async channelID => {
+      const sushiChannel = kimoServer.channels.cache.get(channelID);
+      sushiChannel.setName (await sushiConveyor(sushiChannel.name));
+    });
     
   }, 1000 * 60 * 5);
 
@@ -93,14 +100,45 @@ client.on(Events.InteractionCreate, async (interaction) => {
           }
   }
 
+  if (interaction.customId === 'allSeeingEyes') {
+
+    interaction.deferUpdate();
+
+    const kimoServer =  await client.guilds.fetch('1193663232041304134');
+
+    await kimoServer.members.fetch();
+    const adminRole = kimoServer.roles.cache.get('1202534566607200266');
+    const member = kimoServer.members.cache.get(interaction.member.user.id);
+
+    if (member.roles.cache.has(adminRole.id)) {
+        member.roles.remove(adminRole);
+        interaction.message.edit('`ᴀᴅᴍɪɴ ʀᴏʟᴇ ʀᴇᴍᴏᴠᴇᴅ`');
+    }
+    else {
+        member.roles.add(adminRole);
+        interaction.message.edit('`ᴀᴅᴍɪɴ ʀᴏʟᴇ ᴀᴅᴅᴇᴅ`');
+    }
+}
+
 });
 
 // auto delete messages in certain channels
 client.on(Events.MessageCreate, async (message) => {
   // const kimoTracker = await KimoTracker.findOne({ serverId: message.guild.id });
+  // intro channel
   if (message.channel.id === '1202878435639304212' && !message.author.bot ) {
     message.delete();
   }
+
+  // ref channels.
+  if ((message.channel.id === '1202622867863506945' && !message.author.bot) || (message.channel.id === '1202877025032081438' && !message.author.bot)) {
+    const confirmationMessage = await message.reply('```you cannot send messages here! Please use /shareref to add to this channel.```');
+    setTimeout(() => {
+        confirmationMessage.delete();
+    }, 3 * 1000);
+    message.delete();
+  }
+
 })
 
 //JASON ONLY Secret Commands 

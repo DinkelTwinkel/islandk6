@@ -14,7 +14,7 @@ module.exports = async (client, interaction, customID) => {
     },
     {
       name: "AMREIO",
-      value: "https://www.instagram.com/amreio/\n(kimo  sect founder, cottage aunt)",
+      value: "https://www.instagram.com/amreio/\n(kimo founder, secretary, cottage aunt)",
       inline: false
     },
     {
@@ -29,7 +29,7 @@ module.exports = async (client, interaction, customID) => {
     },
     {
       name: "SOL",
-      value: "https://www.instagram.com/solaski/\n(moderation, hosting, human whisperer)",
+      value: "https://www.instagram.com/solaski/\n(moderation, hosting, human-whisperer)",
       inline: false
     },
     {
@@ -44,7 +44,7 @@ module.exports = async (client, interaction, customID) => {
     },
     {
       name: "ALEC",
-      value: "https://www.instagram.com/aulec/\n(moderation, hosting)",
+      value: "https://www.instagram.com/aulec/\n(moderation, hosting, dog-petter)",
       inline: false
     },
     {
