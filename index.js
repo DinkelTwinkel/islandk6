@@ -31,6 +31,7 @@ const dailySLICE = require('./patterns/dailySLICE');
 const reactionRewards = require('./patterns/reactionRewards');
 const radio = require('./patterns/radio');
 const rulesButtonListeners = require('./patterns/rulesButtonListeners');
+const sushiConveyor = require('./patterns/sushiConveyor');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -51,6 +52,17 @@ client.once(Events.ClientReady, async c => {
   }, 1000 * 10);
 
   reactionRewards(client);
+
+  // sushiConveyer 
+
+  const sushiChannel = kimoServer.channels.cache.get('1203354315176022017');
+  sushiChannel.setName (await sushiConveyor(sushiChannel.name));
+
+  setInterval(async () => {
+
+    sushiChannel.setName (await sushiConveyor(sushiChannel.name));
+    
+  }, 1000 * 60 * 5);
 
 });
 

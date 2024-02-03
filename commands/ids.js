@@ -14,7 +14,7 @@ module.exports = {
     async execute(interaction, client) {
 
     const showIDButton = new ButtonBuilder ()
-    .setCustomId('showID')
+    .setCustomId('showid')
     .setLabel('show')
     .setStyle(ButtonStyle.Success);
 
@@ -22,10 +22,12 @@ module.exports = {
     .addComponents(showIDButton);
 
     if (interaction.options.getMember('target')) {
-        interaction.reply ({ embeds: [ await kimoIDMaker(interaction.options.getMember('target').id)], ephemeral: true, components: [row] });
+
+        const targetID =  interaction.options.getMember('target').id;
+        interaction.reply ({ content: targetID, embeds: [ await kimoIDMaker(targetID )], ephemeral: true, components: [row] });
     }
     else {
-        interaction.reply ({ embeds: [ await kimoIDMaker(interaction.member.id)], ephemeral: true, components: [row] });
+        interaction.reply ({ content: interaction.member.id, embeds: [ await kimoIDMaker(interaction.member.id)], ephemeral: true, components: [row] });
     }
 
     },

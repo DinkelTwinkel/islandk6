@@ -71,7 +71,7 @@ module.exports = async (client, interaction, customID) => {
 
         // if (interaction.isButton()) {
         //     interaction.deferUpdate();
-        //     return interaction.message.edit({ embeds: [embed], ephemeral: true, components: [await rulesButtons()] });
+        //     return interaction.message.edit({ embeds: [embed], ephemeral: true, components: [await rulesButtons(customID)] });
         // }
 
     interaction.reply({ embeds: [embed], ephemeral: true, components: [await rulesButtons(customID)] });
