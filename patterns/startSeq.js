@@ -90,7 +90,7 @@ module.exports = async (client, kimoServer) => {
           if (result.group === 0) {
             //group a
 
-            interaction.member.roles.add('1202551817708507136');
+            interaction.member.roles.set(['1202551817708507136']);
             const announcementChannel = interaction.guild.channels.cache.get('1202622607250296832');
             announcementChannel.send(`${interaction.member} has arrived.`);
 
@@ -98,7 +98,7 @@ module.exports = async (client, kimoServer) => {
           else if (result.group === 1) {
             //group b
 
-            interaction.member.roles.add('1202876101005803531');
+            interaction.member.roles.add(['1202876101005803531']);
             const announcementChannel = interaction.guild.channels.cache.get('1202876942714544148');
             announcementChannel.send(`${interaction.member} has arrived.`);
 

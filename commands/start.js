@@ -9,7 +9,7 @@ module.exports = {
     .addStringOption(option =>
 			option
 				.setName('name')
-				.setDescription('what is your name')
+				.setDescription('What do you go by')
 				.setRequired(true))
     .addStringOption(option =>
       option
@@ -24,7 +24,7 @@ module.exports = {
     async execute(interaction, client) {
 
         if (interaction.member.roles.cache.has ('1202551817708507136') || interaction.member.roles.cache.has ('1202876101005803531') ) {
-            interaction.reply({content: 'You cannot use this.', ephemeral: true});
+            return interaction.reply({content: 'You cannot use this.', ephemeral: true});
         }
 
       const kimoTracker = await KimoTracker.findOne({ serverId: interaction.guild.id });
@@ -33,7 +33,7 @@ module.exports = {
 
       let dice;
 
-      if (Math.random < 0.5) {
+      if (Math.random() < 0.5) {
         dice = 0;
       }
       else {
@@ -50,7 +50,6 @@ module.exports = {
 
       if (result == null) {
 
-
           result = new UserData ({
             userID: interaction.member.user.id,
             name: name,
@@ -59,6 +58,7 @@ module.exports = {
             energy: 1,
             money: 0,
             group: dice,
+            profileColour: generateRandomHexColor(),
           })
 
       }
@@ -92,3 +92,13 @@ module.exports = {
 
     },
   };
+
+  function generateRandomHexColor() {
+    // Generate a random number and convert it to a hexadecimal string
+    const randomColor = Math.floor(Math.random()*16777215).toString(16);
+    
+    // Pad the string with zeros to ensure it is always 6 digits long
+    const hexColor = "#" + "0".repeat(6 - randomColor.length) + randomColor;
+    
+    return hexColor;
+  }

@@ -1,12 +1,17 @@
 // Require the necessary discord.js classes
 const fs = require('fs');
-const { Client, Events, GatewayIntentBits, ActivityType, PermissionsBitField, ButtonBuilder, ActionRowBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
+const { Client, Events, GatewayIntentBits, ActivityType, PermissionsBitField, ButtonBuilder, ActionRowBuilder, ButtonStyle, EmbedBuilder, Partials } = require('discord.js');
 const { token, mongourl } = require('./keys.json');
 const { kimoServerID } = require('./ids.json');
 require('log-timestamp');
 
 // Create a new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildVoiceStates] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildVoiceStates], partials: [
+  Partials.Channel,
+  Partials.Message,
+  Partials.Reaction,
+  Partials.User,
+] });
 
 const mongoose = require('mongoose');
 
@@ -23,6 +28,9 @@ const UserData = require('./models/userData');
 const startSeq = require('./patterns/startSeq');
 const cutOffClock = require('./patterns/cutOffClock');
 const dailySLICE = require('./patterns/dailySLICE');
+const reactionRewards = require('./patterns/reactionRewards');
+const radio = require('./patterns/radio');
+const rulesButtonListeners = require('./patterns/rulesButtonListeners');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -32,14 +40,17 @@ client.once(Events.ClientReady, async c => {
   const kimoServer = await client.guilds.fetch (kimoServerID);
   startSeq(client, kimoServer);
   cutOffClock(client);
-
   dailySLICE(client);
+  radio(client);
+  rulesButtonListeners(client);
 
   setInterval(() => {
 
     dailySLICE(client);
     
   }, 1000 * 10);
+
+  reactionRewards(client);
 
 });
 
@@ -79,24 +90,6 @@ client.on(Events.MessageCreate, async (message) => {
     message.delete();
   }
 })
-
-// reward money for each reacion:
-client.on(Events.MessageReactionAdd, async (message) => {
-
-  const userData = await UserData.findOne({ userID: message.author.id });
-  userData.money += 1;
-  await userData.save();
-
-})
-
-client.on(Events.MessageReactionRemove, async (message) => {
-
-  const userData = await UserData.findOne({ userID: message.author.id });
-  userData.money -= 1;
-  await userData.save();
-
-})
-
 
 //JASON ONLY Secret Commands 
 //Check if user is also in the hell mart discord. Only work if so.
