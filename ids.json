@@ -2,11 +2,13 @@
 	"kimoServerID": "1193663232041304134",
     "kimoChannelID": "1193665461699739738",
     "kimoChannelDungeonID": "1202747652345962496",
+    "botLogChannelID":"1202553664539983882",
+    "announcementChannelID":"1202784547822112879",
+    "adminRoleID": "1203377553763475497",
     "safeRoleID": "1202533882822397972",
     "dangerRoleID": "1202533924040081408",
     "deadRoleID":"1202533941727203368",
     "degenerateRoleID":"1202633002790948865",
     "jailedRoleID":"1202749571957006348",
-    "botLogChannelID":"1202553664539983882",
     "participantRoleID":"1202876101005803531"
 }

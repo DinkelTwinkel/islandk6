@@ -1,6 +1,7 @@
 const Jail = require('../models/jailTracker');
 const KimoTracker = require('../models/kimoTracker');
 const { ActivityType, EmbedBuilder } = require('discord.js');
+const { kimoServerID, announcementChannelID, jailedRoleID, dangerRoleID } = require('../ids.json');
 
 module.exports = async (client, jailTarget, reason, jailer, time) => {
 
@@ -24,7 +25,7 @@ module.exports = async (client, jailTarget, reason, jailer, time) => {
 
     await jailTracker.save();
 
-    console.log (releaseTime);
+    console.log(releaseTime);
 
     jailTracker.roles = roleArray;
     jailTracker.timeToFree = releaseTime;
@@ -33,19 +34,21 @@ module.exports = async (client, jailTarget, reason, jailer, time) => {
 
     await jailTracker.save();
 
-    jailTarget.roles.set(['1202749571957006348', '1202533924040081408']);
+    jailTarget.roles.set([jailedRoleID, dangerRoleID]);
 
     // set time and set other stats.
 
+    const formattedReleaseTime = Math.floor(releaseTime / 1000);
+    const embedDescription = "```" + `REASON : ${reason}` + "```" + `\n jailed by ${jailer}\n release <t:${formattedReleaseTime}:R>`
+
     const embed = new EmbedBuilder()
-    .setAuthor({
-        name: `JAIL SENTENCE`,
-    })
-    .setDescription("```" + `REASON : ${reason}` + "```" + `\n jailed by ${jailer}\n release <t:${Math.floor(releaseTime / 1000)}:R>`);
+        .setAuthor({
+            name: `JAIL SENTENCE`,
+        })
+        .setDescription(embedDescription);
 
-    const kimoServer = await client.guilds.fetch('1193663232041304134');
-    const announcementChannel = kimoServer.channels.cache.get('1202784547822112879');
+    const kimoServer = await client.guilds.fetch(kimoServerID);
+    const announcementChannel = kimoServer.channels.cache.get(announcementChannelID);
+
     announcementChannel.send({content: `${jailTarget} new arrival! Welcome to the DUNGEON.`, embeds: [embed] });
-
-
 };
