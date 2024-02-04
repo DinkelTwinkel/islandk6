@@ -54,7 +54,7 @@ module.exports = async (client, interaction, customID) => {
     },
     {
       name: "CHEN",
-      value: "https://www.instagram.com/chen_dll/?hl=en \n (moderation, quest NPC, pigeon enjoyer)",
+      value: "https://www.instagram.com/chen_dll/ \n (moderation, quest NPC, pigeon enjoyer)",
       inline: false
     },
     {
