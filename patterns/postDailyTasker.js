@@ -105,7 +105,7 @@ async function postFortune(message, fortune) {
     .setDescription("```" + fortune + "```" )
     .setFooter({
         text: 'Message in a bottle',
-        iconURL: "https://cdn.discordapp.com/attachments/1192661895296073780/1203271816496414730/6829994.png?ex=65d07d34&is=65be0834&hm=baddbce47ba413edf025144f2f957175ba5a0e717d635b787e4a3021d9e6fba7&",
+        iconURL: "https://cdn.discordapp.com/attachments/1202898933328781332/1203685866279800832/bottle.png?ex=65d1fed1&is=65bf89d1&hm=a9fb09e08c20d515f07765d4458b7d46fcbac7cc7d15b8fa8bdb135178e06d46&",
     })
     .setColor("#f9ffcc");
 
