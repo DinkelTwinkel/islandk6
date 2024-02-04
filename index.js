@@ -132,6 +132,26 @@ client.on(Events.InteractionCreate, async (interaction) => {
     }
 }
 
+if (interaction.customId === 'lifeguardRole') {
+
+  interaction.deferUpdate();
+
+  const kimoServer =  await client.guilds.fetch('1193663232041304134');
+
+  await kimoServer.members.fetch();
+  const adminRole = kimoServer.roles.cache.get('1202555128352346143');
+  const member = kimoServer.members.cache.get(interaction.member.user.id);
+
+  if (member.roles.cache.has(adminRole.id)) {
+      member.roles.remove(adminRole);
+      interaction.message.edit('`ᴀᴅᴍɪɴ ʀᴏʟᴇ ʀᴇᴍᴏᴠᴇᴅ`');
+  }
+  else {
+      member.roles.add(adminRole);
+      interaction.message.edit('`ᴀᴅᴍɪɴ ʀᴏʟᴇ ᴀᴅᴅᴇᴅ`');
+  }
+}
+
 });
 
 // auto delete messages in certain channels
@@ -192,17 +212,33 @@ client.on(Events.MessageCreate, async (message) => {
 
       if (command === 'sight') {
         // create button to give role power.
-        //console.log('createKimoDetected');
+        console.log('createKimoDetected');
 
-        // const powerButton = new ButtonBuilder ()
-        // .setCustomId('allSeeingEyes')
-        // .setLabel('eyes of god')
-        // .setStyle(ButtonStyle.Danger);
+        const powerButton = new ButtonBuilder ()
+        .setCustomId('allSeeingEyes')
+        .setLabel('all seeing eyes')
+        .setStyle(ButtonStyle.Danger);
 
-        // const powerRow = new ActionRowBuilder ()
-        // .addComponents(powerButton)
+        const powerRow = new ActionRowBuilder ()
+        .addComponents(powerButton)
 
-        // message.channel.send ({content: 'See all channels within Kimo + admin powers', components: [powerRow]});
+        message.channel.send ({content: 'See all channels within Kimo', components: [powerRow]});
+
+      } 
+
+      if (command === 'lifeguard') {
+        // create button to give role power.
+        console.log('createKimoDetected');
+
+        const powerButton = new ButtonBuilder ()
+        .setCustomId('lifeguardRole')
+        .setLabel('get life guard role')
+        .setStyle(ButtonStyle.Danger);
+
+        const powerRow = new ActionRowBuilder ()
+        .addComponents(powerButton)
+
+        message.channel.send ({content: 'admin powers', components: [powerRow]});
 
       } 
 
