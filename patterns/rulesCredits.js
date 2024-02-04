@@ -53,6 +53,11 @@ module.exports = async (client, interaction, customID) => {
       inline: false
     },
     {
+      name: "CHEN",
+      value: "https://www.instagram.com/chen_dll/?hl=en \n (moderation, quest NPC, pigeon enjoyer)",
+      inline: false
+    },
+    {
       name: "✂ SPECIAL CREDITS -",
       value: "**DIV** DESIGNER OF SCISSORCHAN FOR KIMO 6\nhttps://www.instagram.com/devoidd/",
       inline: false
