@@ -34,6 +34,7 @@ module.exports = {
         jail(client, jailTarget, interaction.options.getString('reason'), interaction.member, interaction.options.getInteger('time'));
 
         interaction.reply({ content: `${jailTarget.displayName} has been sent to the dungeon!`, ephemeral: true });
+        
     },
   };
 

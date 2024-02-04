@@ -45,7 +45,6 @@ module.exports = {
 
         cooldowns.set(interaction.member.user.id, now);
 
-
         targetResult.money += transferAmount;
         userResult.money -= transferAmount;
 

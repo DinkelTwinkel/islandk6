@@ -7,7 +7,7 @@ module.exports = async (client, jailTarget) => {
 
     let jailTracker = await Jail.findOne({ userId: jailTarget.user.id});
 
-    jailTarget.roles.set(jailTracker.roles);
+    await jailTarget.roles.set(jailTracker.roles);
     jailTarget.roles.add('1202633002790948865');
 
 

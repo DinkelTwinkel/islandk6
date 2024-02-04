@@ -39,8 +39,6 @@ module.exports = async (client) => {
     }
     )
 
-
-
 };
 
 async function relayMessage (kimoServer, channelID, message) {

@@ -22,6 +22,8 @@ module.exports = async (client, jailTarget, reason, jailer, time) => {
         })
     }
 
+    await jailTracker.save();
+
     console.log (releaseTime);
 
     jailTracker.roles = roleArray;
