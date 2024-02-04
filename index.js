@@ -179,7 +179,7 @@ if (interaction.customId === 'questNpcRole') {
   const kimoServer =  await client.guilds.fetch('1193663232041304134');
 
   await kimoServer.members.fetch();
-  const adminRole = kimoServer.roles.cache.get('1202633002790948865');
+  const adminRole = kimoServer.roles.cache.get('1203377553763475497');
   const member = kimoServer.members.cache.get(interaction.member.user.id);
 
   if (member.roles.cache.has(adminRole.id)) {
