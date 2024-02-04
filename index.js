@@ -2,7 +2,7 @@
 const fs = require('fs');
 const { Client, Events, GatewayIntentBits, ActivityType, PermissionsBitField, ButtonBuilder, ActionRowBuilder, ButtonStyle, EmbedBuilder, Partials } = require('discord.js');
 const { token, mongourl } = require('./keys.json');
-const { kimoServerID } = require('./ids.json');
+const { kimoServerID, botLogChannelID } = require('./ids.json');
 require('log-timestamp');
 
 // Create a new client instance
@@ -42,6 +42,9 @@ client.once(Events.ClientReady, async c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
 
   const kimoServer = await client.guilds.fetch (kimoServerID);
+  const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
+  botLogChannel.send (`# I've awoken.`);
+
   startSeq(client, kimoServer);
   cutOffClock(client);
   dailySLICE(client);
