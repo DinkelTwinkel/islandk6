@@ -70,7 +70,7 @@ module.exports = async (client) => {
 
         // }
 
-        const bannedWords = ["retard", "andrew's underwear", "premo", "boney", "nate", "zuckerberg", "nft", "boku no pico", "faggot", "mommy", "daddy", "anus", "fuck", "shit", "dick"];
+        const bannedWords = ["retard", "andrew's underwear", "premo", "boney", "nate", "zuckerberg", "nft", "boku no pico", "league of legends", "faggot", "mommy", "daddy", "anus", "fuck", "shit", "dick"];
         const replacementWord = ["sweetiepie", "i love u", "i have found jesus", "honey darling", "my bum is itchy", "my love", "bby", "habibi"];
 
         bannedWords.forEach( async element => {
@@ -89,7 +89,7 @@ module.exports = async (client) => {
                     jailTracker= new Jail({
                         userId: message.member.id,
                         roles: roleArray,
-                        numberOfTimesJailed: 1,
+                        numberOfTimesJailed: 0,
                     })
                 }
             
@@ -97,7 +97,7 @@ module.exports = async (client) => {
     
                 console.log('feet message detected');
     
-                const jailTime = jailTracker.numberOfTimesJailed * 5;
+                const jailTime = jailTracker.numberOfTimesJailed * 5 + 1;
     
                 jail(client, message.member, `Used banned word: ${element}`, 'auto-sanitary-systems', jailTime);
                 // message.reply(`${message.member} has been sent to the dungeon for ${jailTime} mins for poor word choice. Social score lowered...`);
