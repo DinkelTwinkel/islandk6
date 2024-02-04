@@ -11,11 +11,13 @@ module.exports = async (client, interaction, customID) => {
     let userFortune = await Fortune.findOne ({ userId: interaction.member.id });
 
     if (userFortune) {
-      if (userFortune.lastFortuneDay != new Date ().getDate()) {
-        userFortune.Fortune = await getFortuneCookie(client);
-        userFortune.lastFortuneDay = new Date ().getDate();
-        await userFortune.save();
-      }
+        // if (userFortune.lastFortuneDay != new Date ().getDate()) {
+        //     userFortune.Fortune = await getFortuneCookie(client);
+        //     userFortune.lastFortuneDay = new Date ().getDate();
+        //     await userFortune.save();
+        //   }
+
+        // reuse fortune
     }
     else {
       userFortune = new Fortune ({

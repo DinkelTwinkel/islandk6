@@ -33,6 +33,8 @@ const radio = require('./patterns/radio');
 const rulesButtonListeners = require('./patterns/rulesButtonListeners');
 const sushiConveyor = require('./patterns/sushiConveyor');
 const jailAuto = require('./patterns/jailAuto');
+const sushiConveyor2 = require('./patterns/sushiConveyor2');
+const postDailyTasker = require('./patterns/postDailyTasker');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -46,6 +48,7 @@ client.once(Events.ClientReady, async c => {
   radio(client);
   rulesButtonListeners(client);
   jailAuto(client);
+  postDailyTasker(client);
 
   setInterval(() => {
 
@@ -56,18 +59,24 @@ client.once(Events.ClientReady, async c => {
   reactionRewards(client);
 
   // Wave Conveyer
-  const waveChannels = ['1203354315176022017', '1203358217271246983', '1203358105384259684', '1203358412876812338', '1203358444535685140', '1203392330296467590']
+  const waveChannels = ['1203395035018829915', '1203610316210966558', '1203358217271246983', '1203358105384259684', '1203358412876812338', '1203358444535685140', '1203392330296467590']
 
   waveChannels.forEach(async channelID => {
     const sushiChannel = kimoServer.channels.cache.get(channelID);
     sushiChannel.setName (await sushiConveyor(sushiChannel.name));
   });
 
+  const specialWaveChannel = kimoServer.channels.cache.get('1203354315176022017');
+  specialWaveChannel.setName (await sushiConveyor2(specialWaveChannel.name));
+
   setInterval(async () => {
     waveChannels.forEach(async channelID => {
       const sushiChannel = kimoServer.channels.cache.get(channelID);
       sushiChannel.setName (await sushiConveyor(sushiChannel.name));
     });
+
+    const specialWaveChannel = kimoServer.channels.cache.get('1203354315176022017');
+    specialWaveChannel.setName (await sushiConveyor2(specialWaveChannel.name));
     
   }, 1000 * 60 * 5);
 

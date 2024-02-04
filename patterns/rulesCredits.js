@@ -9,7 +9,7 @@ module.exports = async (client, interaction, customID) => {
   .addFields(
     {
       name: "ZOMBIE",
-      value: "https://www.instagram.com/_zantide/\n(leadership, code-rat, design)",
+      value: "https://www.instagram.com/_zantide/\n(leadership, code-rat, design, art)",
       inline: false
     },
     {
@@ -24,22 +24,17 @@ module.exports = async (client, interaction, customID) => {
     },
     {
       name: "EVYN",
-      value: "https://www.instagram.com/evynfong/\n(moderation, quest NPC, legendary pokemon)",
+      value: "https://www.instagram.com/evynfong/\n(moderation, art, quest NPC, legendary pokemon)",
       inline: false
     },
     {
       name: "SOL",
-      value: "https://www.instagram.com/solaski/\n(moderation, hosting, human-whisperer)",
+      value: "https://www.instagram.com/solaski/\n(moderation, hosting, quest NPC)",
       inline: false
     },
     {
       name: "KAT",
       value: "https://www.instagram.com/katghehe/\n(moderation, hosting)",
-      inline: false
-    },
-    {
-      name: "VORON",
-      value: "(story & writing support, quest NPC)",
       inline: false
     },
     {
@@ -50,6 +45,11 @@ module.exports = async (client, interaction, customID) => {
     {
       name: "RIAN",
       value: "https://www.instagram.com/rianquack/\n(moderation, hosting, quest NPC)",
+      inline: false
+    },
+    {
+      name: "VORON",
+      value: "(story & writing support)",
       inline: false
     },
     {

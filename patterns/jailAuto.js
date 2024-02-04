@@ -33,35 +33,85 @@ module.exports = async (client) => {
 
     client.on(Events.MessageCreate, async (message) => {
 
-        if (message.content.includes("feet")) {
 
+        if (message.guild.id != KimoServer.id) return;
+        if (message.member.roles.cache.get('1202749571957006348')) return;
+        if (message.author.bot) return;
 
-            const roleArray = [];
-            message.member.roles.cache.forEach(role => {
-              roleArray.push(role.id);
-            });
+        const messageLowercase = message.content.toLowerCase();
+
+        // if (messageLowercase.includes("feet") || messageLowercase.includes("foot")) {
+
+        //     const roleArray = [];
+        //     message.member.roles.cache.forEach(role => {
+        //       roleArray.push(role.id);
+        //     });
         
-            let jailTracker = await Jail.findOne({ userId: message.member.id});
-            if (!jailTracker) {
-                jailTracker= new Jail({
-                    userId: message.member.id,
-                    roles: roleArray,
-                })
+        //     let jailTracker = await Jail.findOne({ userId: message.member.id});
+        //     if (!jailTracker) {
+        //         jailTracker= new Jail({
+        //             userId: message.member.id,
+        //             roles: roleArray,
+        //             numberOfTimesJailed: 1,
+        //         })
+        //     }
+
+        //     jailTracker.feetMentionTracker += 1;
+        
+        //     await jailTracker.save();
+
+        //     console.log('feet message detected');
+
+        //     const jailTime = jailTracker.numberOfTimesJailed * 5;
+
+        //     jail(client, message.member, 'Spoke about feet', 'auto-sanitary-systems', jailTime);
+        //     message.reply(`${message.member} has been sent to the dungeon for ${jailTime} mins for unsanitary behaviour.`);
+        //     message.member.roles.add('1202633002790948865');
+
+        // }
+
+        const bannedWords = ["retard", "andrew's underwear", "premo", "boney", "nate", "zuckerberg", "nft", "ai", "ban", "boku no pico", "faggot", "mommy", "daddy", "anus", "fuck", "shit", "dick"];
+        const replacementWord = ["sweetiepie", "i love u", "i have found jesus", "honey darling", "my bum is itchy", "my love", "bby", "habibi"];
+
+        bannedWords.forEach( async element => {
+
+            if (messageLowercase.includes(element)) {
+
+                console.log('banned word detected');
+
+                const roleArray = [];
+                message.member.roles.cache.forEach(role => {
+                  roleArray.push(role.id);
+                });
+            
+                let jailTracker = await Jail.findOne({ userId: message.member.id});
+                if (!jailTracker) {
+                    jailTracker= new Jail({
+                        userId: message.member.id,
+                        roles: roleArray,
+                        numberOfTimesJailed: 1,
+                    })
+                }
+            
+                await jailTracker.save();
+    
+                console.log('feet message detected');
+    
+                const jailTime = jailTracker.numberOfTimesJailed * 5;
+    
+                jail(client, message.member, `Used banned word: ${element}`, 'auto-sanitary-systems', jailTime);
+                // message.reply(`${message.member} has been sent to the dungeon for ${jailTime} mins for poor word choice. Social score lowered...`);
+                message.member.roles.add('1202633002790948865');
+    
+                message.delete();
+
+                const randomWord = replacementWord[Math.floor(Math.random() * replacementWord.length)];
+                message.channel.send('```' + `${message.member.displayName}: ${replaceWord(messageLowercase, element, randomWord)}` + '```');
+    
             }
+            
+        });
 
-            jailTracker.feetMentionTracker += 1;
-        
-            await jailTracker.save();
-
-            console.log('feet message detected');
-
-            if (jailTracker.numberOfTimesJailed === 0 )
-
-            jail(client, message.member, 'Spoke about feet', 'auto-sanitary-systems', 10);
-            message.reply(`${message.member} has been sent to the dungeon for 10mins for unsanitary behaviour, degenerate role added.`);
-            message.member.roles.add('1202633002790948865');
-
-        }
 
     })
 
@@ -69,3 +119,13 @@ module.exports = async (client) => {
 
 
 };
+
+function replaceWord(originalString, targetWord, replacementWord) {
+    // Use a regular expression with the 'g' flag to replace all occurrences
+    var regex = new RegExp('\\b' + targetWord + '\\b', 'g');
+    
+    // Use the replace method to replace the target word with the replacement word
+    var modifiedString = originalString.replace(regex, replacementWord);
+    
+    return modifiedString;
+  }
