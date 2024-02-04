@@ -42,7 +42,7 @@ client.once(Events.ClientReady, async c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
 
   const kimoServer = await client.guilds.fetch (kimoServerID);
-  const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
+  const botLogChannel = kimoServer.channels.cache.get(botLogChannelID);
   botLogChannel.send (`# I've awoken.`);
 
   startSeq(client, kimoServer);
