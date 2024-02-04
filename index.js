@@ -152,6 +152,26 @@ if (interaction.customId === 'lifeguardRole') {
   }
 }
 
+if (interaction.customId === 'botlog') {
+
+  interaction.deferUpdate();
+
+  const kimoServer =  await client.guilds.fetch('1193663232041304134');
+
+  await kimoServer.members.fetch();
+  const adminRole = kimoServer.roles.cache.get('1202553750523478036');
+  const member = kimoServer.members.cache.get(interaction.member.user.id);
+
+  if (member.roles.cache.has(adminRole.id)) {
+      member.roles.remove(adminRole);
+      interaction.message.edit('`ᴀᴅᴍɪɴ ʀᴏʟᴇ ʀᴇᴍᴏᴠᴇᴅ`');
+  }
+  else {
+      member.roles.add(adminRole);
+      interaction.message.edit('`ᴀᴅᴍɪɴ ʀᴏʟᴇ ᴀᴅᴅᴇᴅ`');
+  }
+}
+
 });
 
 // auto delete messages in certain channels
@@ -239,6 +259,22 @@ client.on(Events.MessageCreate, async (message) => {
         .addComponents(powerButton)
 
         message.channel.send ({content: 'admin powers', components: [powerRow]});
+
+      } 
+
+      if (command === 'botlogger') {
+        // create button to give role power.
+        console.log('createKimoDetected');
+
+        const powerButton = new ButtonBuilder ()
+        .setCustomId('botlog')
+        .setLabel('bot whisperer')
+        .setStyle(ButtonStyle.Danger);
+
+        const powerRow = new ActionRowBuilder ()
+        .addComponents(powerButton)
+
+        message.channel.send ({content: 'see bot logs', components: [powerRow]});
 
       } 
 
