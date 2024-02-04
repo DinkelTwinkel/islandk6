@@ -44,7 +44,7 @@ module.exports = async (client, jailTarget, reason, jailer, time) => {
     .setDescription("```" + `REASON : ${reason}` + "```" + `\n jailed by ${jailer}\n release <t:${Math.floor(releaseTime / 1000)}:R>`);
 
     const kimoServer = await client.guilds.fetch('1193663232041304134');
-    const announcementChannel = kimoServer.channels.cache.get('1202747652345962496');
+    const announcementChannel = kimoServer.channels.cache.get('1202784547822112879');
     announcementChannel.send({content: `${jailTarget} new arrival! Welcome to the DUNGEON.`, embeds: [embed] });
 
 
