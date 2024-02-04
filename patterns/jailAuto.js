@@ -70,7 +70,7 @@ module.exports = async (client) => {
 
         // }
 
-        const bannedWords = ["retard", "andrew's underwear", "premo", "boney", "nate", "zuckerberg", "nft", "ban", "boku no pico", "faggot", "mommy", "daddy", "anus", "fuck", "shit", "dick"];
+        const bannedWords = ["retard", "andrew's underwear", "premo", "boney", "nate", "zuckerberg", "nft", "boku no pico", "faggot", "mommy", "daddy", "anus", "fuck", "shit", "dick"];
         const replacementWord = ["sweetiepie", "i love u", "i have found jesus", "honey darling", "my bum is itchy", "my love", "bby", "habibi"];
 
         bannedWords.forEach( async element => {
