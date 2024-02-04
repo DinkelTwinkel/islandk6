@@ -64,11 +64,11 @@ module.exports = async (client, interaction, customID) => {
 
         .setTitle("Welcome to KimoDaMeshi 6 🌴")
         .setDescription(`**Daily Cut <t:${await getNextCutoff()}:R>**\n` + "```" + `Current Safe: ${safe}\nCurrent Danger: ${danger}\nCurrent Dead: ${dead}` + "```\nSTART OF KIMO: <t:1709294400:f> \nEND OF KIMO: <t:1711800000:f>")
-        .setThumbnail("https://cdn.discordapp.com/attachments/1202898933328781332/1203685779675684964/bottle.png?ex=65d1febd&is=65bf89bd&hm=8de19cc72f202eab14caef39692732b394e2c7003822e089f39b402aabe2148f&")
+        .setThumbnail("https://cdn.discordapp.com/attachments/1192661895296073780/1203270562063843359/911eb1f2cff48f9a4179835007eb7fbd.gif?ex=65d07c09&is=65be0709&hm=3ff00a23a227f508aa1469289530da7a2d5fa07dc8785a100d687ec506d926ca&")
         .setColor("#ff4000")
         .setFooter({
             text: `${userFortune.Fortune}`,
-            iconURL: "https://cdn.discordapp.com/attachments/1202898933328781332/1203685866279800832/bottle.png?ex=65d1fed1&is=65bf89d1&hm=a9fb09e08c20d515f07765d4458b7d46fcbac7cc7d15b8fa8bdb135178e06d46&",
+            iconURL: "https://cdn.discordapp.com/attachments/1202898933328781332/1203685779675684964/bottle.png?ex=65d1febd&is=65bf89bd&hm=8de19cc72f202eab14caef39692732b394e2c7003822e089f39b402aabe2148f&",
         });
 
         // if (interaction.isButton()) {
