@@ -35,6 +35,7 @@ const sushiConveyor = require('./patterns/sushiConveyor');
 const jailAuto = require('./patterns/jailAuto');
 const sushiConveyor2 = require('./patterns/sushiConveyor2');
 const postDailyTasker = require('./patterns/postDailyTasker');
+const DangerRoleColourShifting = require('./patterns/DangerRoleColourShifting');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -52,6 +53,7 @@ client.once(Events.ClientReady, async c => {
   rulesButtonListeners(client);
   jailAuto(client);
   postDailyTasker(client);
+  DangerRoleColourShifting(client);
 
   setInterval(() => {
 
@@ -82,6 +84,18 @@ client.once(Events.ClientReady, async c => {
     specialWaveChannel.setName (await sushiConveyor2(specialWaveChannel.name));
     
   }, 1000 * 60 * 5);
+
+  // const refChannel1 = kimoServer.channels.cache.get('1202622867863506945');
+  // const refChannel2 = kimoServer.channels.cache.get('1202877025032081438');
+
+  // const guidelineEmbed = new EmbedBuilder()
+  // .setAuthor({
+  //   name: "REF BOOK GUIDELINES",
+  // })
+  // .setDescription("use /shareref to add images to this channel.\nCredit the creator directly: do not use repost links such as from pinterest. Thank you!");
+
+  // refChannel1.send({embeds: [guidelineEmbed]})
+  // refChannel2.send({embeds: [guidelineEmbed]});
 
 });
 

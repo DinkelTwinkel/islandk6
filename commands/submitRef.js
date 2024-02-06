@@ -65,6 +65,27 @@ module.exports = {
             targetResult.money += 1;
             await targetResult.save();
 
+            const guidelineEmbed = new EmbedBuilder()
+            .setDescription("use **/shareref** to add images to this channel.\nCredit the creator directly: do not use repost links such as from pinterest. Thank you!");
+
+            const messages = await refChannel1.messages.fetch();
+            messages.forEach(message => {
+              if (message.content === '**REF BOOK GUIDELINES**') {
+                message.delete();
+              }
+            });
+
+            const messages2 = await refChannel2.messages.fetch();
+            messages2.forEach(message => {
+              if (message.content === '**REF BOOK GUIDELINES**') {
+                message.delete();
+              }
+            });
+
+            refChannel1.send({ content: '**REF BOOK GUIDELINES**', embeds: [guidelineEmbed]});
+            refChannel2.send({ content: '**REF BOOK GUIDELINES**', embeds: [guidelineEmbed]});
+            
+
           }
 
         }

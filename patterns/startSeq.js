@@ -93,21 +93,19 @@ module.exports = async (client, kimoServer) => {
 
           let result = await UserData.findOne({ userID: interaction.member.user.id })
 
+          let announcementChannel;
+          let message;
+          let finalRole;
+
           if (result.group === 0) {
             //group a
-
-            interaction.member.roles.set(['1202551817708507136']);
-            const announcementChannel = interaction.guild.channels.cache.get('1202622607250296832');
-            announcementChannel.send(`${interaction.member} has arrived.`);
-
+            announcementChannel = interaction.guild.channels.cache.get('1202622607250296832');
+            finalRole = '1202551817708507136';
           }
           else if (result.group === 1) {
             //group b
-
-            interaction.member.roles.add(['1202876101005803531']);
-            const announcementChannel = interaction.guild.channels.cache.get('1202876942714544148');
-            announcementChannel.send(`${interaction.member} has arrived.`);
-
+            announcementChannel = interaction.guild.channels.cache.get('1202876942714544148');
+            finalRole = '1202551817708507136';
           }
 
           const embed = new EmbedBuilder()
@@ -120,7 +118,10 @@ module.exports = async (client, kimoServer) => {
             },
           );
 
-          interaction.reply({ content: '', embeds: [embed], ephemeral: true })
+          message = await announcementChannel.send(`${interaction.member} has arrived.`);
+          await interaction.reply({ content: '', embeds: [embed], ephemeral: true })
+          interaction.followUp({content: `Click here > ${message.url}`, ephemeral: true});
+          interaction.member.roles.set([finalRole]);
 
         }
 
