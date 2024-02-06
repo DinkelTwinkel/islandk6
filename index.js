@@ -2,7 +2,7 @@
 const fs = require('fs');
 const { Client, Events, GatewayIntentBits, ActivityType, PermissionsBitField, ButtonBuilder, ActionRowBuilder, ButtonStyle, EmbedBuilder, Partials } = require('discord.js');
 const { token, mongourl } = require('./keys.json');
-const { kimoServerID, botLogChannelID } = require('./ids.json');
+const { kimoServerID, botLogChannelID, deadRoleID } = require('./ids.json');
 require('log-timestamp');
 
 // Create a new client instance
@@ -262,6 +262,21 @@ client.on(Events.MessageCreate, async (message) => {
           message.reply ('New Server Document Created');
 
         }
+      } 
+
+      if (command === 'kickdead') {
+        console.log('kickDeadCommandDetected');
+        const KimoServer = await client.guilds.fetch(kimoServerID);
+        const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
+        const members = KimoServer.members.cache.filter(member => member.roles.cache.has(deadRoleID));
+
+        botLogChannel.send(`kick dead command detected:`);
+
+        members.forEach(async member => {
+          member.kick();
+          botLogChannel.send(`kicking ${member}`);
+        })
+
       } 
 
       if (command === 'sight') {
