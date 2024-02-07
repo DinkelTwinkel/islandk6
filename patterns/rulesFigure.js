@@ -4,8 +4,10 @@ const rulesButtons = require('./rulesButtons');
 
 module.exports = async (client, interaction, customID) => {
 
+    await interaction.deferReply({ ephemeral: true});
+
     const exampleArtMessage = await getExamplePicture(client);
-    const artImage = exampleArtMessage.attachments.first().url;
+    const artImage = await exampleArtMessage.attachments.first().url;
     const artCredit = exampleArtMessage.content;
 
     console.log (artImage);
@@ -28,7 +30,7 @@ module.exports = async (client, interaction, customID) => {
     //     return interaction.message.edit({ content: '', embeds: [embed] , ephemeral: true, components: [await rulesButtons(customID)] });
     // }
 
-    interaction.reply({ content: '', embeds: [embed] , ephemeral: true, components: [await rulesButtons(customID)] });
+    await interaction.editReply({ content: '', embeds: [embed] , ephemeral: true, components: [await rulesButtons(customID)] });
 
 };
 
