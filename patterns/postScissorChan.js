@@ -39,7 +39,6 @@ function attachmentTest(message) {
         }
         else {
             console.log('No valid image extension found in the attachment URL.');
-            deleteMessageAndReply(message)
             return null;
         }
     }
@@ -52,7 +51,6 @@ function attachmentTest(message) {
         }
         else {
             console.log('No valid image extension found in the attachment URL.');
-            deleteMessageAndReply(message)
             return null;
         }
     }

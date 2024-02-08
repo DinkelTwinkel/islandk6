@@ -46,13 +46,11 @@ module.exports = async (client) => {
                 // tell scissorchan to slice.
                 botLogChannel.send ('!dailyslice');
 
-                //
-
             }
         }
 
         // daily dead kick and create summary.
-        if (currentUTCHour >= 10 && currentUTCHour < 12 && result.deadKickedToday === false) {
+        if (currentUTCHour >= 10 && currentUTCHour < 11 && result.deadKickedToday === false) {
 
             const KimoServer = await client.guilds.fetch(kimoServerID);
             const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
