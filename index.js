@@ -45,6 +45,7 @@ client.once(Events.ClientReady, async c => {
   const kimoServer = await client.guilds.fetch (kimoServerID);
   const botLogChannel = kimoServer.channels.cache.get(botLogChannelID);
   botLogChannel.send (`# I've awoken.`);
+  botLogChannel.send('!assignall');
 
   startSeq(client, kimoServer);
   cutOffClock(client);
@@ -56,10 +57,12 @@ client.once(Events.ClientReady, async c => {
   DangerRoleColourShifting(client);
 
   setInterval(() => {
-
     dailySLICE(client);
-    
   }, 1000 * 10);
+
+  setInterval(() => {
+    botLogChannel.send('!assignall');
+  }, 1000 * 10 * 60);
 
   reactionRewards(client);
 
@@ -224,6 +227,14 @@ client.on(Events.MessageCreate, async (message) => {
     }, 3 * 1000);
     message.delete();
   }
+  // if last words, resend to other last words.
+
+  if (message.channel.id === '1202633424381153300' && !message.author.bot ) {
+    // find other last words channel and resend there. 
+    const backStageServer = client.guilds.cache.get('1063167135939039262');
+    const backStageLastwords = backStageServer.channels.cache.get('1203782984268783656');
+    backStageLastwords.send(`${message.member.displayName}: "${message.content}"`);
+  }
 
 })
 
@@ -343,6 +354,55 @@ client.on(Events.MessageCreate, async (message) => {
 
       } 
 
+    }
+})
+
+// regular hidden commands
+client.on(Events.MessageCreate, async (message) => {
+
+  if (message.guild.id != '1193663232041304134') return;
+
+  if (message.content.startsWith('!')) {
+      console.log('commandDetected');
+      // Extract the command and any arguments
+      const args = message.content.slice(1).trim().split(/ +/);
+      const command = args.shift().toLowerCase();
+  
+      // Check the command and respond
+
+      if (command === 'therapy') {
+
+        const kimoServer =  await client.guilds.fetch('1193663232041304134');
+        await kimoServer.members.fetch();
+        const therapyRole = kimoServer.roles.cache.get('1205106840061485089');
+        const member = kimoServer.members.cache.get(message.member.user.id);
+
+        if (member.roles.cache.has(therapyRole.id)) {
+            member.roles.remove(therapyRole);
+            return message.delete();
+        }
+        else {
+            member.roles.add(therapyRole);
+            return message.delete();
+        }
+      }
+
+      if (command === 'stats') {
+
+        const kimoServer =  await client.guilds.fetch('1193663232041304134');
+        await kimoServer.members.fetch();
+        const therapyRole = kimoServer.roles.cache.get('1205115328246452244');
+        const member = kimoServer.members.cache.get(message.member.user.id);
+
+        if (member.roles.cache.has(therapyRole.id)) {
+            member.roles.remove(therapyRole);
+            return message.delete();
+        }
+        else {
+            member.roles.add(therapyRole);
+            return message.delete();
+        }
+      }
     }
 })
 

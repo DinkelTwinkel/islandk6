@@ -9,6 +9,7 @@ const kimoTracker = new Schema({
 	kimoActive: { type: Boolean, default: false },
 	kimoInfiniteMode: { type: Boolean, default: false },
 	kimoLiveDays: { type: Number, required: true,  default: 0  },
+	deadKickedToday: { type: Boolean, default: false },
 
 }, { timestamps: true });
 
