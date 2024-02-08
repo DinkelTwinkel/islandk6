@@ -13,7 +13,7 @@ module.exports = {
 
 	async execute(interaction) {
 
-		if (!interaction.member.roles.cache.get('1203377553763475497')) return interaction.reply ('Only quest npcs can use this.');
+		if (!interaction.member.roles.cache.get('1203377553763475497')) return interaction.reply ({content: 'Only quest npcs can use this.', ephemeral: true});
 
         interaction.channel.send({ files: [{ attachment: interaction.options.getString('imagelink') }] });
 

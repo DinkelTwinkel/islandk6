@@ -39,11 +39,14 @@ module.exports = {
                     { name: 'Blue', value: '8EA8FF' },
                     { name: 'Red', value: 'C5002D' },
                     { name: 'Black', value: '000000' },
+                    { name: 'Green', value: '3fd467' },
                 )),
 
 	async execute(interaction) {
 
-        const quest = await new EmbedBuilder()
+        if (!interaction.member.roles.cache.get('1203377553763475497')) return interaction.reply ({content: 'Only quest npcs can use this.', ephemeral: true});
+
+        const quest = new EmbedBuilder()
         .setDescription(`Quest Issuer: ${interaction.member}`)
         .addFields(
             {

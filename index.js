@@ -36,6 +36,8 @@ const jailAuto = require('./patterns/jailAuto');
 const sushiConveyor2 = require('./patterns/sushiConveyor2');
 const postDailyTasker = require('./patterns/postDailyTasker');
 const DangerRoleColourShifting = require('./patterns/DangerRoleColourShifting');
+const journalFinding = require('./patterns/journalFinding');
+const postScissorChan = require('./patterns/postScissorChan');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -55,6 +57,8 @@ client.once(Events.ClientReady, async c => {
   jailAuto(client);
   postDailyTasker(client);
   DangerRoleColourShifting(client);
+  journalFinding(client);
+  postScissorChan(client);
 
   setInterval(() => {
     dailySLICE(client);
