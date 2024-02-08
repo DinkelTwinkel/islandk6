@@ -403,8 +403,35 @@ client.on(Events.MessageCreate, async (message) => {
             return message.delete();
         }
       }
+
+      if (command === 'figurehangout') {
+
+        const kimoServer =  await client.guilds.fetch('1193663232041304134');
+        await kimoServer.members.fetch();
+        const therapyRole = kimoServer.roles.cache.get('1205121471895048212');
+        const member = kimoServer.members.cache.get(message.member.user.id);
+
+        if (member.roles.cache.has(therapyRole.id)) {
+            member.roles.remove(therapyRole);
+            return message.reply ('figure draw together ping role removed!');
+        }
+        else {
+            member.roles.add(therapyRole);
+            return message.reply ('figure draw together ping role added!');
+        }
+      }
     }
+
+    
 })
+
+// async function selfDeleteConfirmationMessage(message, content) {
+//   const confirmationMessage = await message.reply('```' + content + '```');
+//   setTimeout(() => {
+//       confirmationMessage.delete();
+//   }, 3 * 1000);
+//   message.delete();
+// }
 
 // Define a collection to store your commands
 client.commands = new Map();
