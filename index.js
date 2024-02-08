@@ -92,6 +92,47 @@ client.once(Events.ClientReady, async c => {
     
   }, 1000 * 60 * 5);
 
+  // campfire vc emoji
+
+  const campfireChannels = ['1202623019122434048', '1202623019122434048'];
+  const microwaveChannels = ['1202877555053428766', '1202632696296382505'];
+  const caveChannels = ['1202877492512432128', '1202632483053764628'];
+
+  setInterval(async () => {
+
+    campfireChannels.forEach(id => {
+      if (Math.random() > 0.5) {
+        const channel = kimoServer.channels.cache.get(id)
+        channel.setName('🔥 campfire');
+      }
+      else {
+        channel.setName('campfire');
+      }
+    });
+
+    caveChannels.forEach(id => {
+      if (Math.random() > 0.5) {
+        const channel = kimoServer.channels.cache.get(id)
+        channel.setName('🐼 cave');
+      }
+      else {
+        channel.setName('cave');
+      }
+    });
+
+    microwaveChannels.forEach(id => {
+      if (Math.random() > 0.5) {
+        const channel = kimoServer.channels.cache.get(id)
+        channel.setName('⚡ microwave');
+      }
+      else {
+        channel.setName('microwave');
+      }
+    });
+
+
+  }, 1000 * 60 * 10);
+
   // const refChannel1 = kimoServer.channels.cache.get('1202622867863506945');
   // const refChannel2 = kimoServer.channels.cache.get('1202877025032081438');
 
