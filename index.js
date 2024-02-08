@@ -101,28 +101,28 @@ client.once(Events.ClientReady, async c => {
   setInterval(async () => {
 
     campfireChannels.forEach(id => {
+      const channel = kimoServer.channels.cache.get(id)
       if (Math.random() > 0.5) {
-        const channel = kimoServer.channels.cache.get(id)
         channel.setName('🔥 campfire');
       }
       else {
         channel.setName('campfire');
       }
     });
-
+  
     caveChannels.forEach(id => {
+      const channel = kimoServer.channels.cache.get(id)
       if (Math.random() > 0.5) {
-        const channel = kimoServer.channels.cache.get(id)
         channel.setName('🐼 cave');
       }
       else {
         channel.setName('cave');
       }
     });
-
+  
     microwaveChannels.forEach(id => {
+      const channel = kimoServer.channels.cache.get(id)
       if (Math.random() > 0.5) {
-        const channel = kimoServer.channels.cache.get(id)
         channel.setName('⚡ microwave');
       }
       else {
