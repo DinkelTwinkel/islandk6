@@ -109,7 +109,7 @@ module.exports = async (client, kimoServer) => {
           }
 
           const embed = new EmbedBuilder()
-          .setDescription(`Unknown:  "FINE... GOOD LUCK OUT THERE I GUESS **${result.name}**"`)
+          .setDescription(`Unknown:  "FINE... GOOD LUCK OUT THERE I GUESS **${result.name.toUpperCase()}**"`)
           .addFields(
             {
             name: "**END OF TRANSMISSION**",
