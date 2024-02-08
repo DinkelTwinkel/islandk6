@@ -64,7 +64,7 @@ module.exports = async (client, interaction, customID) => {
 
         .setTitle("Welcome to KimoDaMeshi 6 🌴")
         .setDescription(`**Daily Cut <t:${await getNextCutoff()}:R>**\n` + "```" + `Current Safe: ${safe}\nCurrent Danger: ${danger}\nCurrent Dead: ${dead}` + "```\nSTART OF KIMO: <t:1709294400:f> \nEND OF KIMO: <t:1711800000:f>")
-        .setThumbnail("https://cdn.discordapp.com/attachments/1192661895296073780/1203270562063843359/911eb1f2cff48f9a4179835007eb7fbd.gif?ex=65d07c09&is=65be0709&hm=3ff00a23a227f508aa1469289530da7a2d5fa07dc8785a100d687ec506d926ca&")
+        .setThumbnail("https://cdn.discordapp.com/attachments/1154159412160757810/1205160625718951966/fire.gif?ex=65d75c4b&is=65c4e74b&hm=b9632e3a70e9193e98569f36b11188a16a1741cf80034d64fdde4f74d5b73dbf&")
         .setColor("#ff4000")
         .setFooter({
             text: `${userFortune.Fortune}`,
