@@ -85,7 +85,7 @@ module.exports = {
       interaction.member.setNickname(name);
 
       const embed = new EmbedBuilder()
-      .setDescription(`Unknown:  "hello?"\nUnknown: "Is this your first time participating in Kimo?"`);
+      .setDescription(`Unknown:  "HEY."\nUnknown: "FIRST TIME HERE??"`);
 
       interaction.reply ({content: '', ephemeral: true, embeds: [embed], components: [firstRow]});
 

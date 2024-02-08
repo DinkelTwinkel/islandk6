@@ -23,7 +23,7 @@ module.exports = async (client, kimoServer) => {
         },
     );
 
-    channel.send({content: '', embeds: [embed], files: [{ attachment: 'https://cdn.discordapp.com/attachments/1192661895296073780/1202945633124884521/2c3c1102f92f48945d94c599823accaa.gif?ex=65cf4d6c&is=65bcd86c&hm=14f225cbe55407666973b0e3c8e9160a2b81c3fa70e577899c3c2957ecfb41a2&' }]});
+    channel.send({content: '', embeds: [embed], files: [{ attachment: 'https://cdn.discordapp.com/attachments/1154159412160757810/1205170118628347946/transmission.gif?ex=65d76523&is=65c4f023&hm=b7dc8b8280df6668e238c52cc0c5af754a53daca81125050e13923263fe5ae66&' }]});
 
 
     client.on(Events.InteractionCreate, async (interaction) => {
@@ -34,11 +34,11 @@ module.exports = async (client, kimoServer) => {
 
           const embed = new EmbedBuilder()
           .setTitle("\n")
-          .setDescription(`Unknown: "Kimodameshi is a yearly figure drawing art event"\n\nUnknown: "Every day participants must race against time to post a figure drawing or be eliminated"`);
+          .setDescription(`Unknown: "KIMODAMESHI IS A YEARLY FIGURE DRAWING ART EVENT"\n\nUnknown: "EVERY DAY PARTICIPANTS MUST RACE AGAINST TIME TO POST A FIGURE DRAWING OR BE ELIMINATED"`);
 
           const confirmButton = new ButtonBuilder ()
           .setCustomId('startConfirm')
-          .setLabel('Here, take a look at this')
+          .setLabel('HERE, TAKE A LOOK AT THIS')
           .setStyle(ButtonStyle.Secondary);
 
           const confirmRow = new ActionRowBuilder ()
@@ -83,7 +83,7 @@ module.exports = async (client, kimoServer) => {
             .addComponents(final2);
 
             const embed = new EmbedBuilder()
-            .setDescription(`Unknown:  "At any time please use **/figure** for the latest guideline and **/Help** for command information."`);
+            .setDescription(`Unknown:  "AT ANY TIME PLEASE USE **/FIGURE** FOR THE LATEST GUIDELINE AND **/HELP** FOR COMMAND INFORMATION."`);
 
             interaction.reply({ content: '', ephemeral: true, embeds: [embed], components: [confirmRow] });
 
@@ -109,7 +109,7 @@ module.exports = async (client, kimoServer) => {
           }
 
           const embed = new EmbedBuilder()
-          .setDescription(`Unknown:  "okay... good luck out there **${result.name}**"`)
+          .setDescription(`Unknown:  "FINE... GOOD LUCK OUT THERE I GUESS **${result.name}**"`)
           .addFields(
             {
             name: "**END OF TRANSMISSION**",
