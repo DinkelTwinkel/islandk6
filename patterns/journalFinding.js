@@ -8,7 +8,7 @@ module.exports = async (client) => {
         if (message.member.user.bot) return;
 
         const dice = Math.random() * 100;
-        const findEntryChance = 1;
+        const findEntryChance = 0.01;
 
         const journalEntrySelfDeleteTimer = 10;
 
@@ -22,9 +22,9 @@ module.exports = async (client) => {
                 text: `Scattered Journal`,
             });
             const confirmationMessage = await message.reply({embeds: [embed]})
-            setTimeout(() => {
-                confirmationMessage.delete();
-            }, journalEntrySelfDeleteTimer * 1000);
+            // setTimeout(() => {
+            //     confirmationMessage.delete();
+            // }, journalEntrySelfDeleteTimer * 1000);
                         
         }
 
