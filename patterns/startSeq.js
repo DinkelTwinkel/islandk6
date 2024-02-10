@@ -105,7 +105,7 @@ module.exports = async (client, kimoServer) => {
           else if (result.group === 1) {
             //group b
             announcementChannel = interaction.guild.channels.cache.get('1202876942714544148');
-            finalRole = '1202551817708507136';
+            finalRole = '1202876101005803531';
           }
 
           const embed = new EmbedBuilder()
