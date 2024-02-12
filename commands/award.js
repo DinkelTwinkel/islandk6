@@ -27,7 +27,14 @@ module.exports = {
         if (transferAmount <= 0) return interaction.reply({ content: 'invalid amount', ephemeral: true });
 
         const target = interaction.options.getMember('target');
-        const targetResult = await UserData.findOne({ userID: target.id });
+        let targetResult = await UserData.findOne({ userID: target.id });
+
+        if (!targetResult) {
+            targetResult = new UserData({
+                userID: target.user.id,
+                money: transferAmount,
+            })
+        }
 
         targetResult.money += transferAmount;
         await targetResult.save();
