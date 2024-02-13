@@ -34,7 +34,7 @@ module.exports = async (client, kimoServer) => {
 
           const embed = new EmbedBuilder()
           .setTitle("\n")
-          .setDescription(`Unknown: "KIMODAMESHI IS A YEARLY FIGURE DRAWING ART EVENT"\n\nUnknown: "EVERY DAY PARTICIPANTS MUST RACE AGAINST TIME TO POST A FIGURE DRAWING OR BE ELIMINATED"`);
+          .setDescription('```' + `Unknown: "KIMODAMESHI IS A YEARLY FIGURE DRAWING ART EVENT"` + '```' + '```' +`\n\nUnknown: "EVERY DAY PARTICIPANTS MUST RACE AGAINST TIME TO POST A FIGURE DRAWING OR BE ELIMINATED"` + '```');
 
           const confirmButton = new ButtonBuilder ()
           .setCustomId('startConfirm')
@@ -109,7 +109,7 @@ module.exports = async (client, kimoServer) => {
           }
 
           const embed = new EmbedBuilder()
-          .setDescription(`Unknown:  "FINE... GOOD LUCK OUT THERE I GUESS **${result.name.toUpperCase()}**"`)
+          .setDescription('```' + `Unknown:  "FINE... GOOD LUCK OUT THERE I GUESS **${result.name.toUpperCase()}**"` + '```')
           .addFields(
             {
             name: "**END OF TRANSMISSION**",
@@ -123,7 +123,7 @@ module.exports = async (client, kimoServer) => {
 
           //message = await announcementChannel.send(`${interaction.member} has arrived.`);
           await interaction.reply({ content: '', embeds: [embed], ephemeral: true })
-          interaction.followUp({content: `# Post your first daily figure drawing in >>${postDailyChannel}<< to complete the tutorial and gain full channel access. `, ephemeral: true});
+          interaction.followUp({content: `# Post your first daily figure drawing in ${postDailyChannel} \n to complete the tutorial and gain full channel access. `, ephemeral: true});
           interaction.member.roles.set(['1206976652383625307']);
 
         }
