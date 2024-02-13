@@ -1,4 +1,4 @@
-const { Events, ButtonBuilder, ActionRowBuilder, ButtonStyle } = require("discord.js");
+const { Events, ButtonBuilder, ActionRowBuilder, ButtonStyle, EmbedBuilder } = require("discord.js");
 const Stock = require("../models/stock");
 const Inventory = require("../models/inventory");
 const getAllMessagesInChannel = require("./getAllMessagesInChannel");
@@ -25,6 +25,18 @@ module.exports = async (client) => {
   // })
 
   // newStock.save();
+
+  client.on(Events.MessageCreate, async (message) => {
+
+    console.log ('new message detected');
+
+    if (message.member.user.bot) return;
+
+    if (message.channel.id != '1206930735315943444') return;
+
+    createStockMarket(client);
+
+  });
 
   console.log ('StockMarket Module Engaged');
 
@@ -83,13 +95,14 @@ module.exports = async (client) => {
 
         await checkExistingInventory.save();
 
-
-        if (interaction.message.ephemeral == true) {
+        if (interaction.channel.id === '1206930735315943444') {
+          interaction.deferUpdate();
+        }
+        else {
           interaction.reply({content: `You bought ${stock.stockName} stock for ${stock.currentValue}, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
         }
-
         
-        refChannel1.send (`${interaction.member.displayName} bought ${stock.stockName} stock for ${stock.currentValue}, you currently have ${checkExistingInventory.quantity} shares.`);
+        refChannel1.send (`${interaction.member.displayName} bought ${stock.stockName} stock for ${stock.currentValue}, they currently have ${checkExistingInventory.quantity} shares.`);
         createStockMarket(client);
       }
       else if (interaction.customId === 'sell' + stock.stockName) {
@@ -110,11 +123,14 @@ module.exports = async (client) => {
         checkPouch.money += stock.currentValue;
         await checkPouch.save();
 
-        if (interaction.message.ephemeral == true) {
+        if (interaction.channel.id === '1206930735315943444') {
+          interaction.deferUpdate();
+        }
+        else {
           interaction.reply({content: `You sold ${stock.stockName} Stock for ${stock.currentValue} shells, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
         }
 
-        refChannel1.send (`${interaction.member.displayName} sold ${stock.stockName} Stock for ${stock.currentValue} shells, you currently have ${checkExistingInventory.quantity} shares.`);
+        refChannel1.send (`${interaction.member.displayName} sold ${stock.stockName} Stock for ${stock.currentValue} shells, they currently have ${checkExistingInventory.quantity} shares.`);
         createStockMarket(client);
       }
 
@@ -211,7 +227,7 @@ async function createStockMarket(client) {
         const refChannel1 = kimoServer.channels.cache.get('1206930735315943444');
         const messages = await refChannel1.messages.fetch();
         messages.forEach(message => {
-          if (message.content === '**KIMO STOCK MARKET** shift every 12 hours.') {
+          if (message.content === '**KIMO STOCK MARKET**') {
             message.delete();
           }
         });
@@ -279,7 +295,11 @@ async function createStockMarket(client) {
           actionRowArray.push(newActionRow);
   
         });
+
+        const embed = new EmbedBuilder()
+        .setDescription(`use /stocks to see your current portfolio. \n Prices shift every 12 hours.`
+        );
   
-        refChannel1.send ({ content: '**KIMO STOCK MARKET** shift every 12 hours.', components: actionRowArray , ephemeral: false })
+        refChannel1.send ({ content: '**KIMO STOCK MARKET**', components: actionRowArray , ephemeral: false, embeds: [embed] })
 
 }
