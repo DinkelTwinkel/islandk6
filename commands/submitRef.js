@@ -40,6 +40,7 @@ module.exports = {
 
             const refChannel1 = kimoServer.channels.cache.get('1202622867863506945');
             const refChannel2 = kimoServer.channels.cache.get('1202877025032081438');
+            
 
             let description = '';
 

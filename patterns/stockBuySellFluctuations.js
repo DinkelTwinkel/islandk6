@@ -101,7 +101,7 @@ module.exports = async (client) => {
         else {
           interaction.reply({content: `You bought ${stock.stockName} stock for ${stock.currentValue}, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
         }
-        
+
         refChannel1.send (`${interaction.member.displayName} bought ${stock.stockName} stock for ${stock.currentValue}, they currently have ${checkExistingInventory.quantity} shares.`);
         createStockMarket(client);
       }
@@ -189,7 +189,7 @@ async function shiftStock (client) {
         stock.stockName = await getStockName(client);
         stock.currentValue = Math.ceil(Math.random() * 100);
         stock.passiveFluctuation = Math.ceil(Math.random() * 30);
-        stock.onePercentChanceFluctuation = Math.ceil(Math.random() * 1000);
+        stock.onePercentChanceFluctuation = Math.ceil(Math.random() * 100);
         stock.currentShift = 0;
         stock.rising = true;
 
