@@ -16,6 +16,8 @@ module.exports = async (client) => {
 
         if (message.channel.id != '1202747652345962496' && message.channel.id != '1193665461699739738') return;
 
+        if (message.member.roles.cache.get('1206976652383625307')) return;
+
         if (attachmentTest(message) != null) {
             
             console.log ('valid post detected by user: '+ message.author.id );
@@ -31,8 +33,6 @@ module.exports = async (client) => {
             }
 
             if (result.currentState === 'DEAD' || result.currentState === 'SAFE') return;
-
-                        //tutorial mode
 
 
             if (userFortune) {
