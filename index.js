@@ -38,6 +38,7 @@ const postDailyTasker = require('./patterns/postDailyTasker');
 const DangerRoleColourShifting = require('./patterns/DangerRoleColourShifting');
 const journalFinding = require('./patterns/journalFinding');
 const postScissorChan = require('./patterns/postScissorChan');
+const stockBuySellFluctuations = require('./patterns/stockBuySellFluctuations');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -59,6 +60,7 @@ client.once(Events.ClientReady, async c => {
   DangerRoleColourShifting(client);
   journalFinding(client);
   postScissorChan(client);
+  stockBuySellFluctuations(client);
 
   setInterval(() => {
     dailySLICE(client);
@@ -437,6 +439,23 @@ client.on(Events.MessageCreate, async (message) => {
         const kimoServer =  await client.guilds.fetch('1193663232041304134');
         await kimoServer.members.fetch();
         const therapyRole = kimoServer.roles.cache.get('1205115328246452244');
+        const member = kimoServer.members.cache.get(message.member.user.id);
+
+        if (member.roles.cache.has(therapyRole.id)) {
+            member.roles.remove(therapyRole);
+            return message.delete();
+        }
+        else {
+            member.roles.add(therapyRole);
+            return message.delete();
+        }
+      }
+
+      if (command === 'stocks') {
+
+        const kimoServer =  await client.guilds.fetch('1193663232041304134');
+        await kimoServer.members.fetch();
+        const therapyRole = kimoServer.roles.cache.get('1206930804387741776');
         const member = kimoServer.members.cache.get(message.member.user.id);
 
         if (member.roles.cache.has(therapyRole.id)) {

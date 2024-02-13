@@ -8,7 +8,7 @@ module.exports = async (client) => {
         if (message.member.user.bot) return;
 
         const dice = Math.random() * 100;
-        const findEntryChance = 0.01;
+        const findEntryChance = 0.1;
 
         const journalEntrySelfDeleteTimer = 10;
 
