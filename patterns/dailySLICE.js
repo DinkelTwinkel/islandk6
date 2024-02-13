@@ -2,6 +2,7 @@ const KimoTracker = require('../models/kimoTracker');
 const { kimoChannelID, kimoServerID, botLogChannelID, kimoChannelDungeonID, deadRoleID } = require('../ids.json');
 const UserState = require('../models/userState');
 const { EmbedBuilder } = require('@discordjs/builders');
+const getAllMessagesInChannel = require('./getAllMessagesInChannel');
 module.exports = async (client) => {
 
     console.log ('not yet time');
@@ -44,7 +45,11 @@ module.exports = async (client) => {
                 await result.save();
 
                 // tell scissorchan to slice.
+                channelLock (client);
                 botLogChannel.send ('!dailyslice');
+                setTimeout(() => {
+                    channelUnLock (client);
+                }, 60 * 1000 * 0.5);
 
             }
         }
@@ -89,3 +94,74 @@ module.exports = async (client) => {
         }
 
 };
+
+async function channelLock (client) {
+    // lock channel, timeout for 10mins, post quote, unlock.
+    const KimoServer = await client.guilds.fetch(kimoServerID);
+    const postDailyChannel = KimoServer.channels.cache.get('1193665461699739738');
+
+    const PartARole = KimoServer.roles.cache.get('1202551817708507136');
+    const PartBRole = KimoServer.roles.cache.get('1202876101005803531');
+
+    postDailyChannel.permissionOverwrites.edit(PartARole, { SendMessages: false });
+    postDailyChannel.permissionOverwrites.edit(PartBRole, { SendMessages: false });
+    postDailyChannel.send('** Channel Lock Engaged 🔒**');
+
+    const dailyquote = new EmbedBuilder()
+    .setAuthor({
+        name: "LOADING NEW DAY",
+        iconURL: "https://cdn.discordapp.com/attachments/1061965352755544084/1206958956275044352/93831206single-gear-cog-animation-1-2_1.gif?ex=65dde71f&is=65cb721f&hm=359511b92e9be2c9d730969f2eac22bf2bba081f97b4f2e6d8cfa2178e23bb05&",
+    })
+    .setDescription('```' + `${await getFortuneCookie(client)}` + '```');
+
+    postDailyChannel.send ({content: '', embeds: [dailyquote] });
+
+    // setTimeout(async () => {
+
+    //     const membersWithDangerRole = await UserState.countDocuments({ currentState: 'DANGER' });
+    //     const membersWithSafeRole = await UserState.countDocuments({ currentState: 'SAFE' });
+    //     const membersWithDeadRole = await UserState.countDocuments({ currentState: 'DEAD' });
+    
+    //     const totalLiving = membersWithSafeRole + membersWithDangerRole;
+    //     const totalDead = membersWithDeadRole;
+    
+    //     const embed = new EmbedBuilder()
+    //         .setAuthor({
+    //             name: "DAILY SUMMARY",
+    //         })
+    //         .setDescription(`ALIVE: ${totalLiving} \n DEAD: ${totalDead}`
+    //         );
+    
+    //     postDailyChannel.send ({content: '', embeds: [embed] });
+        
+    // }, 60 * 1000 * 5);
+}
+
+async function channelUnLock (client) {
+    // lock channel, timeout for 10mins, post quote, unlock.
+    const KimoServer = await client.guilds.fetch(kimoServerID);
+    const postDailyChannel = KimoServer.channels.cache.get('1193665461699739738');
+
+    const PartARole = KimoServer.roles.cache.get('1202551817708507136');
+    const PartBRole = KimoServer.roles.cache.get('1202876101005803531');
+
+    postDailyChannel.permissionOverwrites.edit(PartARole, { SendMessages: true });
+    postDailyChannel.permissionOverwrites.edit(PartBRole, { SendMessages: true });
+    postDailyChannel.send('** Channel Lock Released 🔓 **\n # NEW DAY 🌅');
+}
+
+
+async function getFortuneCookie(client) {
+
+    const backRooms = client.guilds.cache.get('1063167135939039262');
+    const cookieChannel = backRooms.channels.cache.get('1200757419454758953');
+
+    const messages = await getAllMessagesInChannel(cookieChannel);
+
+    const randomIndex = Math.floor(Math.random() * messages.length);
+
+    const randomMessage = Array.from(messages)[randomIndex];
+
+    return randomMessage.content;
+
+  }
