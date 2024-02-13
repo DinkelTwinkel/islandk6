@@ -118,10 +118,13 @@ module.exports = async (client, kimoServer) => {
             },
           );
 
-          message = await announcementChannel.send(`${interaction.member} has arrived.`);
+          const KimoServer = await client.guilds.fetch('1193663232041304134');
+          const postDailyChannel = KimoServer.channels.cache.get('1193665461699739738');  
+
+          //message = await announcementChannel.send(`${interaction.member} has arrived.`);
           await interaction.reply({ content: '', embeds: [embed], ephemeral: true })
-          interaction.followUp({content: `Click here > ${message.url}`, ephemeral: true});
-          interaction.member.roles.set([finalRole]);
+          interaction.followUp({content: `Post your first daily figure drawing **here** to complete the tutorial -> ${postDailyChannel}`, ephemeral: true});
+          interaction.member.roles.set(['1206976652383625307']);
 
         }
 

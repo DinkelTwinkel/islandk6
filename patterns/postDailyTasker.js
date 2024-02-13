@@ -1,9 +1,10 @@
-const { Events, EmbedBuilder } = require("discord.js");
+const { Events, EmbedBuilder, InteractionCollector } = require("discord.js");
 const getAllMessagesInChannel = require("./getAllMessagesInChannel");
 const Fortune = require("../models/dailyFortune");
 const UserState = require("../models/userState");
 const EdgeKing = require("../models/edgeKing");
 const KimoTracker = require("../models/kimoTracker");
+const UserData = require("../models/userData");
 
 module.exports = async (client) => {
 
@@ -22,7 +23,17 @@ module.exports = async (client) => {
             let userFortune = await Fortune.findOne ({ userId: message.author.id });
             let result = await UserState.findOne({ userID: message.author.id });
 
+            if (!result) {
+                result = new UserState ({
+                    userID: message.member.id,
+                    currentState: 'DANGER',
+                })
+            }
+
             if (result.currentState === 'DEAD' || result.currentState === 'SAFE') return;
+
+                        //tutorial mode
+
 
             if (userFortune) {
                 if (result.postedToday == false) {
