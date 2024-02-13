@@ -45,7 +45,7 @@ module.exports = async (client) => {
                 await result.save();
 
                 // tell scissorchan to slice.
-                channelLock (client);
+                await channelLock (client);
                 botLogChannel.send ('!dailyslice');
                 setTimeout(() => {
                     channelUnLock (client);
@@ -147,6 +147,7 @@ async function channelUnLock (client) {
 
     postDailyChannel.permissionOverwrites.edit(PartARole, { SendMessages: true });
     postDailyChannel.permissionOverwrites.edit(PartBRole, { SendMessages: true });
+    postDailyChannel.send('Slicing Complete.');
     postDailyChannel.send('** Channel Lock Released 🔓 **\n # NEW DAY 🌅');
 }
 
