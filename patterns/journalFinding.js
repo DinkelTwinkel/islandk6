@@ -8,8 +8,9 @@ module.exports = async (client) => {
         if (message.member.user.bot) return;
 
         const dice = Math.random() * 100;
-        const findEntryChance = 1;
+        const findEntryChance = 5;
 
+        console.log (dice);
         const journalEntrySelfDeleteTimer = 10;
 
         if (findEntryChance > dice) {
@@ -17,7 +18,7 @@ module.exports = async (client) => {
             // reply with journal entry. Self delete.
 
             const embed = new EmbedBuilder()
-            .setDescription(await getFortuneCookie(client))
+            .setDescription('```' + await getFortuneCookie(client) + '```')
             .setFooter({
                 text: `Scattered Journal`,
             });
