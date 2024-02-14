@@ -49,7 +49,7 @@ module.exports = async (client) => {
                 botLogChannel.send ('!dailyslice');
                 setTimeout(() => {
                     channelUnLock (client);
-                }, 60 * 1000 * 0.5);
+                }, 60 * 1000 * 5);
 
             }
         }
@@ -148,7 +148,8 @@ async function channelUnLock (client) {
     postDailyChannel.permissionOverwrites.edit(PartARole, { SendMessages: true });
     postDailyChannel.permissionOverwrites.edit(PartBRole, { SendMessages: true });
     postDailyChannel.send('Slicing Complete.');
-    postDailyChannel.send('** Channel Lock Released 🔓 **\n # NEW DAY 🌅');
+    postDailyChannel.send('** Channel Lock Released 🔓 **');
+    postDailyChannel.send('# NEW DAY 🌅');
 }
 
 
