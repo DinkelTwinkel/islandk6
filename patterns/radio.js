@@ -44,7 +44,7 @@ module.exports = async (client) => {
 async function relayMessage (kimoServer, channelID, message) {
 
     const targetChannel = await kimoServer.channels.fetch(channelID);
-    cypherSpeak(limitStringLength(obfuscateString(message.content), 100), targetChannel, 300, 5)
+    cypherSpeak(limitStringLength(obfuscateString(message.content), 500), targetChannel, 300, 5)
 
 }
 

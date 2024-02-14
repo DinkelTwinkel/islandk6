@@ -104,7 +104,7 @@ module.exports = async (client) => {
           interaction.reply({content: `You bought ${stock.stockName} stock for ${stock.currentValue}, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
         }
 
-        refChannel1.send (`${interaction.member.displayName} bought ${stock.stockName} stock for ${stock.currentValue}, they currently have ${checkExistingInventory.quantity} shares.`);
+        refChannel1.send (`${interaction.member.displayName} bought ${stock.stockName} stock for ${stock.currentValue} sea shells, they currently have ${checkExistingInventory.quantity} shares.`);
         createStockMarket(client);
       }
       else if (interaction.customId === 'sell' + stock.stockName) {
@@ -132,7 +132,7 @@ module.exports = async (client) => {
           interaction.reply({content: `You sold ${stock.stockName} Stock for ${stock.currentValue} shells, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
         }
 
-        refChannel1.send (`${interaction.member.displayName} sold ${stock.stockName} Stock for ${stock.currentValue} shells, they currently have ${checkExistingInventory.quantity} shares.`);
+        refChannel1.send (`${interaction.member.displayName} sold ${stock.stockName} Stock for ${stock.currentValue} sea shells, they currently have ${checkExistingInventory.quantity} shares.`);
         createStockMarket(client);
       }
 
