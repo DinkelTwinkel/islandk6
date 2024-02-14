@@ -45,7 +45,9 @@ module.exports = async (client) => {
   setInterval(async () => {
 
     await shiftStock (client);
-    createStockMarket(client);
+    setTimeout(() => {
+      createStockMarket(client);
+    }, 1000);
     
   }, 1000 * 60 * stockFluctuationTimer);
 

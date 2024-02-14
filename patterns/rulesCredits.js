@@ -8,7 +8,7 @@ module.exports = async (client, interaction, customID) => {
   .setTitle("KIMO 6 TEAM ♦")
   .addFields(
     {
-      name: "ZOMBIE",
+      name: "JASON",
       value: "https://www.instagram.com/_zantide/\n(leadership, code-rat, design, art)",
       inline: false
     },
