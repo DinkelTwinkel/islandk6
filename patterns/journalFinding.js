@@ -18,9 +18,9 @@ module.exports = async (client) => {
             // reply with journal entry. Self delete.
 
             const embed = new EmbedBuilder()
-            .setDescription('```' + await getFortuneCookie(client) + '```')
+            .setDescription('```\n' + await getFortuneCookie(client) + '```')
             .setFooter({
-                text: `Scattered Journal`,
+                text: `Scattered Journal Entries 📜`,
             });
             const confirmationMessage = await message.reply({embeds: [embed]})
             // setTimeout(() => {
