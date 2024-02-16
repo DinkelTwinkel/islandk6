@@ -55,8 +55,8 @@ module.exports = {
                 text: `SOURCE: ${interaction.options.getString('credit')}`,
               });
 
-            refChannel1.send({ embeds: [embed], files: [{ attachment: link }]});
-            refChannel2.send({ embeds: [embed], files: [{ attachment: link }]});
+            await refChannel1.send({ embeds: [embed], files: [{ attachment: link }]});
+            await refChannel2.send({ embeds: [embed], files: [{ attachment: link }]});
 
             interaction.reply({ content: 'Submission Successful! You gained 1 shell!', ephemeral: true })
 
