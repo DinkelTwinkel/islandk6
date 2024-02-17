@@ -18,7 +18,7 @@ module.exports = async (client, kimoServer) => {
     .setTitle("UNKNOWN TRANSMISSION")
     .addFields(
         {
-        name: "**Welcome to Kimodameshi 6 Art Challenge\n type /start and fill in your name, pronouns and social medialink to get started...**",
+        name: "**Welcome to Kimodameshi 6 Art Challenge! \nTo get started type /start and fill in your name, pronouns and social link ...**",
         value: "\n",
         inline: false
         },
