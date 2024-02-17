@@ -35,7 +35,7 @@ module.exports = {
           const imageExtensions = /\.(png|jpeg|jpg|jpg|webp|gif)/i;
           if (imageExtensions.test(link)) {
 
-            interaction.deferReply({ ephemeral: true });
+            interaction.reply({ content: 'Submission Successful! You gained 1 shell!', ephemeral: true })
 
             // send ref into ref channels.
             kimoServer = await client.guilds.fetch('1193663232041304134');
@@ -59,8 +59,6 @@ module.exports = {
 
             await refChannel1.send({ embeds: [embed], files: [{ attachment: link }]});
             await refChannel2.send({ embeds: [embed], files: [{ attachment: link }]});
-
-            interaction.editReply({ content: 'Submission Successful! You gained 1 shell!', ephemeral: true })
 
             const target = interaction.member;
             const targetResult = await UserData.findOne({ userID: target.id });
