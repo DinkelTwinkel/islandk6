@@ -35,6 +35,8 @@ module.exports = {
           const imageExtensions = /\.(png|jpeg|jpg|jpg|webp|gif)/i;
           if (imageExtensions.test(link)) {
 
+            interaction.deferReply({ ephemeral: true });
+
             // send ref into ref channels.
             kimoServer = await client.guilds.fetch('1193663232041304134');
 
