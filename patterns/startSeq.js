@@ -1,6 +1,8 @@
 const { ButtonBuilder, ActionRowBuilder, ButtonStyle, Events, EmbedBuilder} = require("discord.js");
 const UserData = require('../models/userData');
 const UserState = require("../models/userState");
+const Stats = require("../models/statistics");
+const { kimoServerID } = require('../ids.json');
 
 module.exports = async (client, kimoServer) => {
 
@@ -32,6 +34,10 @@ module.exports = async (client, kimoServer) => {
         // starting button sequence
 
         if ( interaction.customId === 'startyes') {
+
+          const statTrak = await Stats.findOne({serverID: kimoServerID});
+          statTrak.newUsers += 1;
+          await statTrak.save();
 
           const embed = new EmbedBuilder()
           .setTitle("\n")
@@ -74,6 +80,10 @@ module.exports = async (client, kimoServer) => {
         }
 
         if (interaction.customId === 'startno') {
+
+          const statTrak = await Stats.findOne({serverID: kimoServerID});
+          statTrak.returnees += 1;
+          await statTrak.save();
 
             const final2 = new ButtonBuilder ()
             .setCustomId('startFinal2')
