@@ -60,7 +60,7 @@ module.exports = {
             await refChannel1.send({ embeds: [embed], files: [{ attachment: link }]});
             await refChannel2.send({ embeds: [embed], files: [{ attachment: link }]});
 
-            interaction.reply({ content: 'Submission Successful! You gained 1 shell!', ephemeral: true })
+            interaction.editReply({ content: 'Submission Successful! You gained 1 shell!', ephemeral: true })
 
             const target = interaction.member;
             const targetResult = await UserData.findOne({ userID: target.id });
