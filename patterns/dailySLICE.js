@@ -60,16 +60,19 @@ module.exports = async (client) => {
             const KimoServer = await client.guilds.fetch(kimoServerID);
             const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
             const summaryChannel = KimoServer.channels.cache.get('1205107070941134908');
+            const lastWords = KimoServer.channels.cache.get('1202633424381153300');
 
             result.deadKickedToday = true;
             await result.save();
             const members = KimoServer.members.cache.filter(member => member.roles.cache.has(deadRoleID));
             botLogChannel.send(`auto kicking dead.`);
             botLogChannel.send(`creating daily summary.`);
+            lastWords.send('# Flushing Dead 🚽');
 
             members.forEach(async member => {
                 member.kick();
                 botLogChannel.send(`kicking ${member}`);
+                lastWords.send(`flushing ${member}`);
             })
 
             // create daily summary.
