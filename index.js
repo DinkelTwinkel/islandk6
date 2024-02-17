@@ -39,6 +39,7 @@ const DangerRoleColourShifting = require('./patterns/DangerRoleColourShifting');
 const journalFinding = require('./patterns/journalFinding');
 const postScissorChan = require('./patterns/postScissorChan');
 const stockBuySellFluctuations = require('./patterns/stockBuySellFluctuations');
+const Stats = require('./models/statistics');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -152,6 +153,9 @@ client.once(Events.ClientReady, async c => {
 // new user join auto role
 client.on(Events.GuildMemberAdd, async (member) => {
   // updateUserState(member);
+  const statTrak = await Stats.findOne({serverID: kimoServerID});
+  statTrak.totalEntries += 1;
+
 });
 
 client.on(Events.InteractionCreate, async (interaction) => {
