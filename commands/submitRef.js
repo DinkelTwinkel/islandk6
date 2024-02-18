@@ -14,7 +14,7 @@ module.exports = {
     .addStringOption(option =>
         option
             .setName('imagelink')
-            .setDescription('cdn link only!')
+            .setDescription('discord copy links!')
             .setRequired(true))
     .addStringOption(option =>
         option
@@ -30,7 +30,7 @@ module.exports = {
         
         const link = interaction.options.getString('imagelink');
 
-        if (link.startsWith('https://cdn.discordapp.com/attachments/')) {
+        if (link.startsWith('https://cdn.discordapp.com/attachments/') || link.startsWith('https://media.discordapp.net/attachments/')) {
 
           const imageExtensions = /\.(png|jpeg|jpg|jpg|webp|gif)/i;
           if (imageExtensions.test(link)) {
