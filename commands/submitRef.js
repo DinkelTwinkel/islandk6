@@ -67,7 +67,7 @@ module.exports = {
             await targetResult.save();
 
             const guidelineEmbed = new EmbedBuilder()
-            .setDescription("use **/shareref** to add images to this channel.\n Artistic nudity is allowed. \nAvoid pornographic nudity and obscenity. \nSamples are okay to post, but avoid fully posting the contents of paid packs. \nCredit the creator directly: do not use repost links such as from pinterest. Thank you!");
+            .setDescription("use **/shareref** to add images to this channel.\n Artistic nudity is allowed. \nAvoid pornographic nudity and obscenity. \nSamples are okay to post, but avoid fully posting the contents of paid packs. \n ```Credit the creator directly: do not use repost links such as from pinterest. Thank you!```");
 
             const messages = await refChannel1.messages.fetch();
             messages.forEach(message => {

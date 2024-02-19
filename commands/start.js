@@ -66,6 +66,7 @@ module.exports = {
       result.name = name;
       result.socialLink = socials;
       result.pronouns = pronouns;
+      result.profilePicture = interaction.member.displayAvatarURL();
 
       await result.save();
 

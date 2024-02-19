@@ -58,7 +58,9 @@ module.exports = async (client) => {
         }
         cooldowns.set(interaction.member.user.id, now);
 
-        interaction.reply ({ embeds: [ await kimoIDMaker(interaction.message.content)], ephemeral: false });
+        console.log(interaction.member.displayAvatarURL());
+
+        interaction.channel.send ({ embeds: [ await kimoIDMaker(interaction.message.content)], ephemeral: false });
       }
 
 
