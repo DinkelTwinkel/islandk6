@@ -14,7 +14,7 @@ module.exports = {
 
         // money check.
 
-        const cost = 100;
+        const cost = 500;
 
         const userWallet = await UserData.findOne({ userID: interaction.member.id });
         if (userWallet.money < cost) return interaction.reply({ content: `Insufficient shells, you need ${cost} shells to use this.`, ephemeral: true });
