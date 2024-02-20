@@ -18,7 +18,7 @@ setInterval(async () => {
     nextUTCDay.setSeconds(0);
     nextUTCDay.setDate(result.nextDate);
 
-    const differenceMiliUTC = nextUTCDay.getTime() - currentDate.getTime();
+    const differenceMiliUTC = result.nextDate - currentDate.getTime();
 
     console.log (differenceMiliUTC);
     console.log (currentDate.getTime());
