@@ -31,4 +31,18 @@ module.exports = async (client) => {
             });
             client.user.setStatus('idle');
 
+            const watchingArray = ['𝗦𝗨𝗡𝗡𝗬 𝗪𝗘𝗔𝗧𝗛𝗘𝗥', '𝗟𝗜𝗚𝗛𝗧 𝗗𝗥𝗜𝗭𝗭𝗟𝗘', '𝗛𝗜𝗚𝗛 𝗪𝗜𝗡𝗗𝗦', '𝗛𝗘𝗔𝗩𝗬 𝗥𝗔𝗜𝗡', '𝗧𝗛𝗨𝗡𝗗𝗘𝗥 𝗦𝗧𝗢𝗥𝗠', '𝗔 𝗖𝗛𝗔𝗡𝗖𝗘 𝗢𝗙 𝗠𝗘𝗔𝗧𝗕𝗔𝗟𝗟', '𝗖𝗟𝗘𝗔𝗥 𝗦𝗞𝗜𝗘𝗦', '𝗛𝗜𝗚𝗛 𝗧𝗜𝗗𝗘', '𝗟𝗜𝗚𝗛𝗧 𝗙𝗢𝗚', '𝗛𝗘𝗔𝗩𝗬 𝗙𝗢𝗚', '𝗦𝗜𝗟𝗘𝗡𝗧 𝗛𝗜𝗟𝗟 𝗙𝗢𝗚', '𝗢𝗩𝗘𝗥𝗖𝗔𝗦𝗧']
+
+            setInterval(() => {
+
+                const dice = Math.floor(Math.random() * watchingArray.length);
+
+                client.user.setPresence({
+                    activities: [{ name: `${watchingArray[dice]}`, type: ActivityType.Watching }],
+                    status: 'dnd',
+                    });
+                    client.user.setStatus('idle');
+
+            }, 1000 * 60 * 60 * Math.random());
+
 };
