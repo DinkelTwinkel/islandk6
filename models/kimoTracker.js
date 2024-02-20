@@ -10,6 +10,9 @@ const kimoTracker = new Schema({
 	kimoInfiniteMode: { type: Boolean, default: false },
 	kimoLiveDays: { type: Number, required: true,  default: 0  },
 	deadKickedToday: { type: Boolean, default: false },
+	alarmOne: { type: Boolean, default: false },
+	alarmTwo: { type: Boolean, default: false },
+	alarmThree: { type: Boolean, default: false },
 
 }, { timestamps: true });
 

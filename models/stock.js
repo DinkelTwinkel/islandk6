@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const stockSchema = new Schema({
 
-	stockName: { type: String, required: true, unique: true },
+	stockName: { type: String, required: true, unique: false },
 	currentValue: { type: Number, required: true },
 	passiveFluctuation: { type: Number, required: true },
 	onePercentChanceFluctuation: { type: Number, required: true },

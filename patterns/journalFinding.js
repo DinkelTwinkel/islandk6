@@ -9,11 +9,14 @@ module.exports = async (client) => {
         // total message sent tracking:
         const stats = await UserStats.findOne({ userID: message.member.user.id });
 
-        stats.totalMessages += 1;
-        if (message.content) {
-            stats.lastMessageSent = message.content;
+        if (stats) {
+            stats.totalMessages += 1;
+
+            if (message.content) {
+                stats.lastMessageSent = message.content;
+            }
+            await stats.save();
         }
-        await stats.save();
 
         if (message.member.user.bot) return;
 

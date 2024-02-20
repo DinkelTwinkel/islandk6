@@ -42,6 +42,8 @@ const stockBuySellFluctuations = require('./patterns/stockBuySellFluctuations');
 const Stats = require('./models/statistics');
 const eventVCLock = require('./patterns/eventVCLock');
 const UserStats = require('./models/userStatistics');
+const fleaMarketController = require('./patterns/fleaMarketController');
+const honourTheFallen = require('./patterns/honourTheFallen');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -65,6 +67,7 @@ client.once(Events.ClientReady, async c => {
   postScissorChan(client);
   stockBuySellFluctuations(client);
   eventVCLock(client);
+  fleaMarketController(client);
 
   setInterval(() => {
     dailySLICE(client);
@@ -355,6 +358,12 @@ client.on(Events.MessageCreate, async (message) => {
 
       } 
 
+      if (command === 'honour') {
+
+        honourTheFallen(client, message.channel);
+
+      } 
+
       if (command === 'sight') {
         // create button to give role power.
         console.log('createKimoDetected');
@@ -457,6 +466,74 @@ client.on(Events.MessageCreate, async (message) => {
         const kimoServer =  await client.guilds.fetch('1193663232041304134');
         await kimoServer.members.fetch();
         const therapyRole = kimoServer.roles.cache.get('1205115328246452244');
+        const member = kimoServer.members.cache.get(message.member.user.id);
+
+        if (member.roles.cache.has(therapyRole.id)) {
+            member.roles.remove(therapyRole);
+            return message.delete();
+        }
+        else {
+            member.roles.add(therapyRole);
+            return message.delete();
+        }
+      }
+
+      if (command === 'panem') {
+
+        const kimoServer =  await client.guilds.fetch('1193663232041304134');
+        await kimoServer.members.fetch();
+        const therapyRole = kimoServer.roles.cache.get('1209350256115060766');
+        const member = kimoServer.members.cache.get(message.member.user.id);
+
+        if (member.roles.cache.has(therapyRole.id)) {
+            member.roles.remove(therapyRole);
+            return message.delete();
+        }
+        else {
+            member.roles.add(therapyRole);
+            return message.delete();
+        }
+      }
+
+      if (command === 'memes') {
+
+        const kimoServer =  await client.guilds.fetch('1193663232041304134');
+        await kimoServer.members.fetch();
+        const therapyRole = kimoServer.roles.cache.get('1203621646611644476');
+        const member = kimoServer.members.cache.get(message.member.user.id);
+
+        if (member.roles.cache.has(therapyRole.id)) {
+            member.roles.remove(therapyRole);
+            return message.delete();
+        }
+        else {
+            member.roles.add(therapyRole);
+            return message.delete();
+        }
+      }
+
+      if (command === 'music') {
+
+        const kimoServer =  await client.guilds.fetch('1193663232041304134');
+        await kimoServer.members.fetch();
+        const therapyRole = kimoServer.roles.cache.get('1203621668719960114');
+        const member = kimoServer.members.cache.get(message.member.user.id);
+
+        if (member.roles.cache.has(therapyRole.id)) {
+            member.roles.remove(therapyRole);
+            return message.delete();
+        }
+        else {
+            member.roles.add(therapyRole);
+            return message.delete();
+        }
+      }
+
+      if (command === 'alarm') {
+
+        const kimoServer =  await client.guilds.fetch('1193663232041304134');
+        await kimoServer.members.fetch();
+        const therapyRole = kimoServer.roles.cache.get('1209320167906087002');
         const member = kimoServer.members.cache.get(message.member.user.id);
 
         if (member.roles.cache.has(therapyRole.id)) {

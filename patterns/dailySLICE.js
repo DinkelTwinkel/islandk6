@@ -1,10 +1,11 @@
 const KimoTracker = require('../models/kimoTracker');
-const { kimoChannelID, kimoServerID, botLogChannelID, kimoChannelDungeonID, deadRoleID } = require('../ids.json');
+const { kimoChannelID, kimoServerID, botLogChannelID, kimoChannelDungeonID, deadRoleID, dangerRoleID } = require('../ids.json');
 const UserState = require('../models/userState');
 const { EmbedBuilder } = require('@discordjs/builders');
 const getAllMessagesInChannel = require('./getAllMessagesInChannel');
 const UserData = require('../models/userData');
 const EdgeKing = require('../models/edgeKing');
+const honourTheFallen = require('./honourTheFallen');
 module.exports = async (client) => {
 
     console.log ('not yet time');
@@ -24,12 +25,35 @@ module.exports = async (client) => {
         console.log ('kimo inactive');
     }
 
+    const KimoServer = await client.guilds.fetch(kimoServerID);
+    const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
+    const alarmChannel = KimoServer.channels.cache.get('1209334830345748531');
+    const panemChannel = KimoServer.channels.cache.get('1209350690342834276');
+
+    const dangerRole = KimoServer.roles.cache.get(dangerRoleID)
+
+    if (result.alarmOne === false && currentUTCHour >= 4) {
+        result.alarmOne = true;
+        await result.save();
+        alarmChannel.send(`8 HOURS LEFT <@&${dangerRole.id}>`);
+        honourTheFallen(client, panemChannel);
+    }
+
+    if (result.alarmTwo === false && currentUTCHour >= 9) {
+        result.alarmTwo = true;
+        await result.save();
+        alarmChannel.send(`3 HOURS LEFT <@&${dangerRole.id}>`);
+    }
+
+    if (result.alarmThree === false && currentUTCHour >= 11) {
+        result.alarmThree = true;
+        await result.save();
+        alarmChannel.send(`1 HOURS LEFT <@&${dangerRole.id}>`);
+    }
+
+
         // perform twelve o clock check
         if (currentUTCHour >= 12) {
-
-            const KimoServer = await client.guilds.fetch(kimoServerID);
-            const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
-
 
             if (result.nextDate == 1 && currentDate.getDate() != 1 ) {
                 return;
@@ -45,7 +69,7 @@ module.exports = async (client) => {
                 result.deadKickedToday = false;
                 const edgeTracker = await EdgeKing.findOne({KimoServerID: kimoServerID});
                 edgeTracker.firstPostered = false;
-                
+
                 await edgeTracker.save();
                 await result.save();
 

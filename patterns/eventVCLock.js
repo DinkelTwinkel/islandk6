@@ -1,10 +1,11 @@
 const { Events } = require('discord.js');
 const { kimoChannelID, kimoServerID, botLogChannelID, kimoChannelDungeonID, deadRoleID } = require('../ids.json');
+const UserStats = require('../models/userStatistics');
 let hostCurrentInChannel = false;
 
 module.exports = async (client) => {
 
-    client.on(Events.VoiceStateUpdate, async function(oldMember, newMember){
+    client.on(Events.VoiceStateUpdate, async function(oldMember, newMember) {
 
         const KimoServer = await client.guilds.fetch(kimoServerID);
     
@@ -72,5 +73,29 @@ module.exports = async (client) => {
 
     });
 
+    client.on(Event.VoiceStateUpdate, async (oldState, newState) => {
+        if (!newState.channel) {
+            // User left voice channel
+            const userId = newState.member.user.id;
+            const durationInVoiceChat = Date.now() - newState.member.voice.channel.joinedTimestamp;
+            
+            // Retrieve the user's entry from the database
+            let userVoiceChat = await UserStats.findOne({ userID: userId });
+            
+            if (!userVoiceChat) {
+              // If the user entry doesn't exist, create a new one
+              userVoiceChat = new UserStats({
+                userID: userId,
+                vcTime: durationInVoiceChat,
+              });
+            } else {
+              // If the user entry exists, update the total time
+              userVoiceChat.vcTime += durationInVoiceChat;
+            }
+        
+            // Save the updated entry to the database
+            await userVoiceChat.save();
+          }
+      });
 
 };
