@@ -26,7 +26,7 @@ module.exports = {
 
         // add role.
 
-        interaction.reply({ content: `💳 Hosting pass obtained! You can now create events. Abusing this power will lead to a spontaneous ban!`, ephemeral: false });
+        interaction.reply({ content: `💳 Hosting pass obtained! You can now create events and join the EVENT VOICE CHANNEL. Abusing this power will lead to a spontaneous ban!`, ephemeral: false });
 
     },
   };
