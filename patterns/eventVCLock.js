@@ -27,8 +27,10 @@ module.exports = async (client) => {
                     // unlock channel for all participants.
                     eventChannel.permissionOverwrites.edit(PartARole, { Connect: true, SendMessages: true });
                     eventChannel.permissionOverwrites.edit(PartBRole, { Connect: true, SendMessages: true });
+                    eventChannel.setUserLimit(15);
 
                     eventChannel.send('Host Detected. **EVENT CHANNEL UNLOCKED**');
+                    eventChannel.send(`Welcome to EVENT ROOM ${member}` + '\n```' +  'use /eventsetlimit to change the user limit on this channel.' + '```');
 
                     hostCurrentInChannel = true;
 
@@ -62,9 +64,10 @@ module.exports = async (client) => {
                 eventChannel.permissionOverwrites.edit(PartBRole, { Connect: false, SendMessages: false });
 
                 eventChannel.send('All hosts have left the chat. **EVENT CHANNEL LOCKED**');
+                eventChannel.setUserLimit(1);
 
                 await currentMembers.forEach(member => {
-                    member.voice.disconnect();
+                    //member.voice.disconnect();
                 });
 
             }

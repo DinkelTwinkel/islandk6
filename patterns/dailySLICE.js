@@ -53,19 +53,27 @@ module.exports = async (client) => {
 
 
         // perform twelve o clock check
-        if (currentUTCHour >= 12) {
+        if (currentDate.getTime() >= result.nextDate) {
 
-            if (result.nextDate == 1 && currentDate.getDate() != 1 ) {
-                return;
-            }
+            // if (result.nextDate == 1 && currentDate.getDate() != 1 ) {
+            //     return;
+            // }
 
             // paste twelve o clock find next date.
 
-                if (currentDate.getDate() >= result.nextDate) {
+                if (currentDate.getTime() >= result.nextDate) {
 
-                const millisecondsInDay = 24 * 60 * 60 * 1000;
+                if (result.slaughter === true) {
+                    result.currentPeriodLength = result.currentPeriodLength / 2;
+                }
+                else {
+                    result.currentPeriodLength = 24 * 60 * 60 * 1000;
+                }
+
+                const millisecondsInDay = parseInt(result.currentPeriodLength);
+                currentDate.setSeconds(0);
                 const nextUTCDay = new Date(currentDate.getTime() + millisecondsInDay);
-                result.nextDate = nextUTCDay.getDate();
+                result.nextDate = nextUTCDay.getTime();
                 result.deadKickedToday = false;
                 const edgeTracker = await EdgeKing.findOne({KimoServerID: kimoServerID});
                 edgeTracker.firstPostered = false;

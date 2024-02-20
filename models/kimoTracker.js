@@ -13,6 +13,8 @@ const kimoTracker = new Schema({
 	alarmOne: { type: Boolean, default: false },
 	alarmTwo: { type: Boolean, default: false },
 	alarmThree: { type: Boolean, default: false },
+	currentPeriodLength: { type: Number, default: 0 },
+	slaughter: { type: Boolean, default: false },
 
 }, { timestamps: true });
 

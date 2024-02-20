@@ -106,6 +106,6 @@ async function getNextCutoff() {
     nextUTCDay.setMinutes(0);
     nextUTCDay.setSeconds(0);
     nextUTCDay.setDate(result.nextDate);
-    return Math.floor ( nextUTCDay.getTime() / 1000 );
+    return Math.floor ( result.nextDate / 1000 );
 }
   
