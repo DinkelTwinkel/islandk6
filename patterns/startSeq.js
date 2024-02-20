@@ -18,10 +18,10 @@ module.exports = async (client, kimoServer) => {
     .catch(console.error);
 
     const embed = new EmbedBuilder()
-    .setTitle("UNKNOWN TRANSMISSION")
+    .setTitle("**Welcome to Kimodameshi 6 Art Challenge!**")
     .addFields(
         {
-        name: "**Welcome to Kimodameshi 6 Art Challenge! \nTo get started type /start and fill in your name, pronouns and social link ...**",
+        name: "To get started type /start and fill in your name, pronouns and social link ...",
         value: "\n",
         inline: false
         },

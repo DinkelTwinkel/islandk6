@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ChannelType } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -19,13 +19,13 @@ module.exports = {
         .addStringOption(option =>
             option
                 .setName('timelimit')
-                .setDescription('how long it should last')
+                .setDescription('how long they have to complete the quest')
                 .setRequired(true),
                 )
         .addStringOption(option =>
             option
                 .setName('reward')
-                .setDescription('how much to reward')
+                .setDescription('what you are rewarding')
                 .setRequired(true),
                 )
         .addStringOption(option =>
@@ -40,20 +40,34 @@ module.exports = {
                     { name: 'Red', value: 'C5002D' },
                     { name: 'Black', value: '000000' },
                     { name: 'Green', value: '3fd467' },
-                )),
+                ))
+        .addAttachmentOption(option =>
+            option
+                .setName('questimage')
+                .setDescription('upload quest banner image')
+                .setRequired(true)),
 
 	async execute(interaction) {
 
         if (!interaction.member.roles.cache.get('1203377553763475497')) return interaction.reply ({content: 'Only quest npcs can use this.', ephemeral: true});
 
+        await interaction.deferReply({ ephemeral: true });
+        
+        const { options } = interaction;
+        const avatar = options.getAttachment('questimage');
+
+		if (avatar.contentType.startsWith('image/')) {
+		await interaction.channel.send({ files: [{ attachment: avatar.url }] });
+		interaction.editReply({ content: 'image posted', ephemeral: true });
+		}
+		else {
+		interaction.editReply({ content: 'invalid image', ephemeral: true });
+		}
+
         const quest = new EmbedBuilder()
-        .setDescription(`Quest Issuer: ${interaction.member}`)
+        .setTitle(`📜 ${interaction.options.getString('title')}`)
+        .setDescription('```' + `${interaction.options.getString('description')}` + '```')
         .addFields(
-            {
-                name: `${interaction.options.getString('title')}`,
-                value: `${interaction.options.getString('description')}`,
-                inline: true,
-            },
           {
             name: 'Time Limit',
             value: `${interaction.options.getString('timelimit')}`,
@@ -69,9 +83,17 @@ module.exports = {
 
         console.log (quest);
 
-        interaction.channel.send({ embeds: [quest] });
+        const message = await interaction.channel.send({ embeds: [quest] });
 
-        return interaction.reply({ content: 'quest created', ephemeral: true });
+        const thread = await message.startThread({
+            name: '📜 QUEST: ' + `${interaction.options.getString('title')}`,
+            autoArchiveDuration: 1440,
+            // 24 hours
+            type:  ChannelType.PublicThread,
+            // flags: ThreadFlags.FLAGS.CREATED_FROM_MESSAGE,
+          });
+
+        return interaction.editReply({ content: 'quest created', ephemeral: true });
 
 	},
 };
