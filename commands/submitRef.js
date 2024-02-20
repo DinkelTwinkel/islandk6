@@ -58,7 +58,6 @@ module.exports = {
                 text: `SOURCE: ${interaction.options.getString('credit')}`,
               });
 
-              console.log (avatar);
 
             await refChannel1.send({ embeds: [embed], files: [{ attachment: avatar.url }]});
             await refChannel2.send({ embeds: [embed], files: [{ attachment: avatar.url }]});
