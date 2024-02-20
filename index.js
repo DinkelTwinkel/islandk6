@@ -512,6 +512,23 @@ client.on(Events.MessageCreate, async (message) => {
         }
       }
 
+      if (command === 'backrooms') {
+
+        const kimoServer =  await client.guilds.fetch('1193663232041304134');
+        await kimoServer.members.fetch();
+        const therapyRole = kimoServer.roles.cache.get('1202553750523478036');
+        const member = kimoServer.members.cache.get(message.member.user.id);
+
+        if (member.roles.cache.has(therapyRole.id)) {
+            member.roles.remove(therapyRole);
+            return message.delete();
+        }
+        else {
+            member.roles.add(therapyRole);
+            return message.delete();
+        }
+      }
+
       if (command === 'music') {
 
         const kimoServer =  await client.guilds.fetch('1193663232041304134');

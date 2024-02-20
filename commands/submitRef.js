@@ -12,11 +12,11 @@ module.exports = {
             .setName('credit')
             .setDescription('source of ref')
             .setRequired(true))
-    .addStringOption(option =>
-        option
-            .setName('imagelink')
-            .setDescription('discord copy links!')
-            .setRequired(true))
+    .addAttachmentOption(option =>
+      option
+          .setName('reference')
+          .setDescription('the reference you wish to add')
+          .setRequired(true))      
     .addStringOption(option =>
         option
             .setName('description')
@@ -28,15 +28,15 @@ module.exports = {
         // reward 1 shell per submission.
 
         // Check for valid Link.
+
+        await interaction.deferReply({ ephemeral: true });
         
-        const link = interaction.options.getString('imagelink');
+        const { options } = interaction;
+        const avatar = options.getAttachment('reference');
+          if (avatar.contentType.startsWith('image/')) {
 
-        if (link.startsWith('https://cdn.discordapp.com/attachments/') || link.startsWith('https://media.discordapp.net/attachments/')) {
 
-          const imageExtensions = /\.(png|jpeg|jpg|jpg|webp|gif)/i;
-          if (imageExtensions.test(link)) {
-
-            interaction.reply({ content: 'Submission Successful! You gained 1 shell!', ephemeral: true })
+            interaction.editReply({ content: 'Submission Successful! You gained 1 shell!', ephemeral: true })
 
             // send ref into ref channels.
             kimoServer = await client.guilds.fetch('1193663232041304134');
@@ -58,8 +58,10 @@ module.exports = {
                 text: `SOURCE: ${interaction.options.getString('credit')}`,
               });
 
-            await refChannel1.send({ embeds: [embed], files: [{ attachment: link }]});
-            await refChannel2.send({ embeds: [embed], files: [{ attachment: link }]});
+              console.log (avatar);
+
+            await refChannel1.send({ embeds: [embed], files: [{ attachment: avatar.url }]});
+            await refChannel2.send({ embeds: [embed], files: [{ attachment: avatar.url }]});
 
             const target = interaction.member;
             const targetResult = await UserData.findOne({ userID: target.id });
@@ -95,12 +97,10 @@ module.exports = {
 
             // 
 
-          }
-
         }
         else {
 
-          return interaction.reply({ content: 'invalid link! must be CDN image!', ephemeral: true })
+          return interaction.editReply({ content: 'invalid link! an image!', ephemeral: true })
         }
 
 

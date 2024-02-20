@@ -20,7 +20,12 @@ module.exports = {
       subcommand
         .setName('picture')
         .setDescription(`profile picture`)
-        .addStringOption(option => option.setName('link').setDescription('cdn link only!').setRequired(true)))
+        .addAttachmentOption(option =>
+          option
+              .setName('avatar')
+              .setDescription('the avatar you wish to add.')
+              .setRequired(true))
+    )
     .addSubcommand(subcommand =>
       subcommand
         .setName('colour')
@@ -45,6 +50,8 @@ module.exports = {
     async execute(interaction) {
 
       // if (interaction.)
+
+      await interaction.deferReply({ephemeral: true});
 
       const result = await UserData.findOne({userID: interaction.member.user.id});
 
@@ -77,22 +84,17 @@ module.exports = {
       }
       else if (interaction.options.getSubcommand() === 'picture') {
         // change the name of the server
+        
+        const { options } = interaction;
+        const avatar = options.getAttachment('avatar');
+          if (avatar.contentType.startsWith('image/')) {
 
-        const link = interaction.options.getString('link');
-
-        if (link.startsWith('https://cdn.discordapp.com/attachments/')) {
-
-          const imageExtensions = /\.(png|jpeg|jpg|jpg|webp|gif)/i;
-          if (imageExtensions.test(link)) {
-
-            result.profilePicture = link;
+            result.profilePicture = avatar.url;
             await result.save();
-
-          }
 
         }
         else {
-          return interaction.reply({ content: 'invalid link! must be CDN image!', ephemeral: true })
+          return interaction.editReply({ content: 'invalid link! must be a valid image!', ephemeral: true })
         }
 
 
@@ -101,7 +103,7 @@ module.exports = {
         // change the name of the server
 
         if (!/^#(?:[0-9a-fA-F]{3}){1,2}$/.test(interaction.options.getString('hexcode'))) {
-          return interaction.reply({ content: 'Please provide a valid color in the format #RRGGBB\nhexcode finder:(https://g.co/kgs/YjmHzd).', ephemeral: true });
+          return interaction.editReply({ content: 'Please provide a valid color in the format #RRGGBB\nhexcode finder:(https://g.co/kgs/YjmHzd).', ephemeral: true });
         }
 
         result.profileColour = interaction.options.getString('hexcode');
@@ -116,7 +118,7 @@ module.exports = {
 
       }
 
-      interaction.reply({content: 'KIMO PASS updated!', embeds: [await kimoIDMaker(interaction.member.id)] , ephemeral: true });
+      interaction.editReply({content: 'KIMO PASS updated!', embeds: [await kimoIDMaker(interaction.member.id)] , ephemeral: true });
 
     },
   };
