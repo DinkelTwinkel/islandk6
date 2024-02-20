@@ -529,6 +529,10 @@ client.on(Events.MessageCreate, async (message) => {
         }
       }
 
+      if (command === 'cockcheck') {
+        message.channel.send('https://cdn.discordapp.com/attachments/1200550297500659782/1209584155721990174/image.png?ex=65e77407&is=65d4ff07&hm=778093eb37e04e1daf4164b5dbbb0d8973969e24b0b08e47bdbb31e5e888558e&')
+      }
+
       if (command === 'music') {
 
         const kimoServer =  await client.guilds.fetch('1193663232041304134');
