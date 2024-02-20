@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const kimoIDMaker = require('../patterns/kimoIDMaker');
 const UserData = require('../models/userData');
+const UserStats = require('../models/userStatistics');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -36,6 +37,14 @@ module.exports = {
         cookieChannel.send({content: interaction.options.getString('message'), embeds: [embed]});
 
         interaction.reply({ content: `Message bottled! bad or abusive messages are removed!`, ephemeral: true });
+
+        // user statistics total kimo posting tracking
+
+        const userStats = await UserStats.findOne({ userID: interaction.member.user.id });
+        userStats.messagesBottled += 1;
+        await userStats.save();
+
+        // 
 
     },
   };

@@ -40,6 +40,8 @@ const journalFinding = require('./patterns/journalFinding');
 const postScissorChan = require('./patterns/postScissorChan');
 const stockBuySellFluctuations = require('./patterns/stockBuySellFluctuations');
 const Stats = require('./models/statistics');
+const eventVCLock = require('./patterns/eventVCLock');
+const UserStats = require('./models/userStatistics');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -62,6 +64,7 @@ client.once(Events.ClientReady, async c => {
   journalFinding(client);
   postScissorChan(client);
   stockBuySellFluctuations(client);
+  eventVCLock(client);
 
   setInterval(() => {
     dailySLICE(client);
@@ -156,6 +159,16 @@ client.on(Events.GuildMemberAdd, async (member) => {
   const statTrak = await Stats.findOne({serverID: kimoServerID});
   statTrak.totalEntries += 1;
   await statTrak.save();
+
+  const result = await UserStats({ userID: member.user.id });
+  if (result) {
+    return;
+  }
+
+  const newStatTrack = new UserStats ({
+    userID: member.user.id,
+  })
+  newStatTrack.save();
 
 });
 

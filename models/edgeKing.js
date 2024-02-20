@@ -7,6 +7,7 @@ const edgeKingSchema = new Schema({
 	currentKingID: { type: String, required: true, unique: false },
 	edgeTime: { type: Number, required: true, unique: false },
 	previousKingID: { type: String, required: true, unique: false },
+	firstPostered: { type: Boolean, required: true, unique: false },
 
 }, { timestamps: true });
 

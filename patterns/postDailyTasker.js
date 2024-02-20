@@ -5,6 +5,7 @@ const UserState = require("../models/userState");
 const EdgeKing = require("../models/edgeKing");
 const KimoTracker = require("../models/kimoTracker");
 const UserData = require("../models/userData");
+const UserStats = require("../models/userStatistics");
 
 module.exports = async (client) => {
 
@@ -19,6 +20,14 @@ module.exports = async (client) => {
         if (message.member.roles.cache.get('1206976652383625307')) return;
 
         if (attachmentTest(message) != null) {
+
+            // user statistics total kimo posting tracking
+
+            const userStats = await UserStats.findOne({ userID: message.member.user.id });
+            userStats.totalKimoPost += 1;
+            await userStats.save();
+
+            // 
             
             console.log ('valid post detected by user: '+ message.author.id );
 
@@ -101,6 +110,25 @@ module.exports = async (client) => {
                 edgeTracker.save();
 
             }
+
+            // first poster 
+
+            if (edgeTracker.firstPostered === false) {
+
+                await message.guild.members.fetch();
+                const firstPosterMembers = message.guild.roles.cache.get('1203621622200672308').members;
+                
+                firstPosterMembers.forEach(member => {
+                    member.roles.remove('1203621622200672308')
+                });
+
+                message.member.roles.add('1203621622200672308');
+
+                edgeTracker.firstPostered = true;
+                edgeTracker.save();
+            }
+
+
         }
 
 

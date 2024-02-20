@@ -1,9 +1,19 @@
 const { EmbedBuilder, Events } = require('discord.js');
 const getAllMessagesInChannel = require('./getAllMessagesInChannel');
+const UserStats = require('../models/userStatistics');
 
 module.exports = async (client) => {
 
     client.on(Events.MessageCreate, async (message) => {
+
+        // total message sent tracking:
+        const stats = await UserStats.findOne({ userID: message.member.user.id });
+
+        stats.totalMessages += 1;
+        if (message.content) {
+            stats.lastMessageSent = message.content;
+        }
+        await stats.save();
 
         if (message.member.user.bot) return;
 
@@ -11,7 +21,7 @@ module.exports = async (client) => {
         const findEntryChance = 1;
 
         console.log (dice);
-        const journalEntrySelfDeleteTimer = 10;
+        const journalEntrySelfDeleteTimer = 30;
 
         if (findEntryChance > dice) {
 
@@ -23,9 +33,9 @@ module.exports = async (client) => {
                 text: `Scattered Journal Entries 📜`,
             });
             const confirmationMessage = await message.reply({embeds: [embed]})
-            // setTimeout(() => {
-            //     confirmationMessage.delete();
-            // }, journalEntrySelfDeleteTimer * 1000);
+            setTimeout(() => {
+                confirmationMessage.delete();
+            }, journalEntrySelfDeleteTimer * 1000);
                         
         }
 

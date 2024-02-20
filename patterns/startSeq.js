@@ -3,6 +3,7 @@ const UserData = require('../models/userData');
 const UserState = require("../models/userState");
 const Stats = require("../models/statistics");
 const { kimoServerID } = require('../ids.json');
+const getAllMessagesInChannel = require("./getAllMessagesInChannel");
 
 module.exports = async (client, kimoServer) => {
 
@@ -57,6 +58,12 @@ module.exports = async (client, kimoServer) => {
 
         if (interaction.customId === 'startConfirm') {
 
+            await interaction.deferReply({ ephemeral: true});
+
+            const exampleArtMessage = await getExamplePicture(client);
+            const artImage = await exampleArtMessage.attachments.first().url;
+            const artCredit = exampleArtMessage.content;
+
             const final1 = new ButtonBuilder ()
             .setCustomId('startFinal')
             .setLabel('I understand or will read it later')
@@ -70,12 +77,12 @@ module.exports = async (client, kimoServer) => {
               name: "🍗 KIMODAMESHI 6 - SURVIVAL GUIDE",
             })
             .setDescription("▪▪▪ ▪▪▪ ▪▪▪\n\n__Submission rules:__\n\nIn the case of submissions containing abstract styles, anthro creatures, and mechs, admins will decide whether they are human enough to pass. \nIf a submission does not pass, it will be invalidated and you will be unsafe until you make a valid post. \n\nPlease make a good faith attempt: there is a clear difference between a short-on-time post and a troll post. Admins may invalidate or kick troll-posters at their discretion. \n\nArtistic nudity is allowed, but kindly avoid pornographic nudity (as well as any obscenity) as this event is not age-gated. *If in doubt, submit your post as a spoiler. *\nYou will be instantly removed and permanently blacklisted if you post sexualized minors or any such offensive material. \n\n▪▪▪ ▪▪▪ ▪▪▪\n\n__Community Rules:__\n\nDo not engage in antisocial behaviour.\nYou may be kicked without warning. \n\nDon't hesitate to report anything suspicious or uncomfortable to an admin. We are here to take care of you. \n▪▪▪ ▪▪▪ ▪▪▪\n▪▪▪ ▪▪▪ ▪▪▪\n```We classify a figure drawing as a depiction of the human body,\n-> this can be a drawing, painting, or sculpt of any level of finish```\nHere is a guide for what we accept as a daily post:\nMinimum time spent is **1 minute**:\nNo upper limit for how much time and effort you want to spend on your post, or how many posts you make.\n\nalso allowed:\n\n- anthropomorphic creatures, \n- body parts,\n- skeletons,\n- mannequins,\n- anatomy-heavy mech/robots\n-compositions where the human(s) are a portion of the piece,\n-updates on previous posts that show progress.\n\nPlease submit in the form of an image or gif. Note that video files will not be accepted. \n\nYou must make at least one (1) post per day. Multiple posts only guarantee your safety for the day in which they are posted.  \nA 'day' occurs once every 24 hours. \nUse the command **/kimo **to check how much time is left until the next day. \n\n\n__FAILING THE CHALLENGE = KICK FROM SERVER__\n\nIf you are unsure of whether something qualifies or not, don't be afraid to message an event organizer. Thank you! - Scissor Squad.\n-----------------------------------------------")
-            .setImage("https://cdn.discordapp.com/attachments/1203262777628561428/1206376161530220584/image.png?ex=65dbc85a&is=65c9535a&hm=4be1cf3e9d62e57d8ff6bfdc09560926c60e8a3aa0a86d8bdc937395471d38fb&")
+            .setImage(artImage)
             .setColor("#f56e00")
             .setFooter({
-              text: "Example art by Amreio",
+              text: `example art by ${artCredit}`,
             });
-            interaction.reply({ content: '', ephemeral: true, embeds: [embed], components: [confirmRow] });
+            interaction.editReply({ content: '', ephemeral: true, embeds: [embed], components: [confirmRow] });
 
         }
 
@@ -148,3 +155,18 @@ module.exports = async (client, kimoServer) => {
       })
 
 };
+
+async function getExamplePicture(client) {
+
+  const backRooms = client.guilds.cache.get('1063167135939039262');
+  const cookieChannel = backRooms.channels.cache.get('1203262777628561428');
+
+  const messages = await getAllMessagesInChannel(cookieChannel);
+
+  const randomIndex = Math.floor(Math.random() * messages.length);
+
+  const randomMessage = Array.from(messages)[randomIndex];
+
+  return randomMessage;
+
+}

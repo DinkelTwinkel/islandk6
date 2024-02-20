@@ -3,6 +3,8 @@ const { kimoChannelID, kimoServerID, botLogChannelID, kimoChannelDungeonID, dead
 const UserState = require('../models/userState');
 const { EmbedBuilder } = require('@discordjs/builders');
 const getAllMessagesInChannel = require('./getAllMessagesInChannel');
+const UserData = require('../models/userData');
+const EdgeKing = require('../models/edgeKing');
 module.exports = async (client) => {
 
     console.log ('not yet time');
@@ -41,12 +43,16 @@ module.exports = async (client) => {
                 const nextUTCDay = new Date(currentDate.getTime() + millisecondsInDay);
                 result.nextDate = nextUTCDay.getDate();
                 result.deadKickedToday = false;
-
+                const edgeTracker = await EdgeKing.findOne({KimoServerID: kimoServerID});
+                edgeTracker.firstPostered = false;
+                
+                await edgeTracker.save();
                 await result.save();
 
                 // tell scissorchan to slice.
                 await channelLock (client);
                 botLogChannel.send ('!dailyslice');
+                // dailyHighlight (client);
                 setTimeout(() => {
                     channelUnLock (client);
                 }, 60 * 1000 * 5);
@@ -117,7 +123,10 @@ async function channelLock (client) {
     })
     .setDescription('```' + `${await getFortuneCookie(client)}` + '```');
 
-    postDailyChannel.send ({content: '', embeds: [dailyquote] });
+    const message = await postDailyChannel.send ({content: '', embeds: [dailyquote] });
+    console.log(message);
+
+    dailyHighlight(client);
 
     // setTimeout(async () => {
 
@@ -138,6 +147,27 @@ async function channelLock (client) {
     //     postDailyChannel.send ({content: '', embeds: [embed] });
         
     // }, 60 * 1000 * 5);
+}
+
+async function dailyHighlight (client) {
+    const KimoServer = await client.guilds.fetch(kimoServerID);
+    const postDailyChannel = KimoServer.channels.cache.get('1193665461699739738');
+    const randomMessage = await findRandomHighlightArt(client, postDailyChannel)
+
+    console.log(randomMessage);
+    const messageAuthorData = await UserData.findOne({ userID: randomMessage.author.id });
+    
+    const dailyHighlight = new EmbedBuilder()
+    .setAuthor({
+        name: "HIGHLIGHT OF THE DAY ⭐",
+        url: randomMessage.url,
+    })
+    .setImage(await randomMessage.attachments.first().url)
+    .setFooter({
+        text: "by " + messageAuthorData.socialLink,
+    });
+
+    postDailyChannel.send ({content: '', embeds: [dailyHighlight] });
 }
 
 async function channelUnLock (client) {
@@ -168,5 +198,37 @@ async function getFortuneCookie(client) {
     const randomMessage = Array.from(messages)[randomIndex];
 
     return randomMessage.content;
+
+  }
+
+  async function findRandomHighlightArt(client, postDailyChannel) {
+
+
+    //const now = new Date(); // current time
+
+		const lastTwelveNoon = new Date();
+		lastTwelveNoon.setHours(12);
+		lastTwelveNoon.setTime(lastTwelveNoon.getTime() - (24 * 60 * 60 * 1000)); // subtract one day
+
+    // const deadlineTracker = await Daily.findOne ({ serverID: kimoServerID });
+
+    console.log('Last cut off was: ' + lastTwelveNoon);
+
+    const messages = await getAllMessagesInChannel(postDailyChannel)
+        // Filter the messages by creation date
+    let filteredMessages = messages.filter(msg => msg.createdAt.getTime() > lastTwelveNoon);
+    filteredMessages = filteredMessages.filter(msg => !msg.author.bot);
+    // console.log('Messages found is ' + filteredMessages.size); // Output the number of filtered messages
+    
+    //logging to admin reports channel.
+    console.log('Woah I found ' + filteredMessages.length + ' kimo channel messages since last deadline\n**[Picking random highlight now.}]**');
+
+    const randomIndex = Math.floor(Math.random() * filteredMessages.length);
+
+    const randomMessage = Array.from(filteredMessages)[randomIndex];
+    
+
+    // console.log(randomMessage);
+    return randomMessage;
 
   }

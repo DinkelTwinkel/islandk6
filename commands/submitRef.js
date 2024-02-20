@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder, Embed } = require('discord.js');
 const kimoIDMaker = require('../patterns/kimoIDMaker');
 const UserData = require('../models/userData');
+const UserStats = require('../models/userStatistics');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -86,6 +87,13 @@ module.exports = {
             refChannel1.send({ content: '**REF BOOK GUIDELINES**', embeds: [guidelineEmbed]});
             refChannel2.send({ content: '**REF BOOK GUIDELINES**', embeds: [guidelineEmbed]});
             
+            // user statistics total ref submission
+
+            const userStats = await UserStats.findOne({ userID: interaction.member.user.id });
+            userStats.messagesBottled += 1;
+            await userStats.save();
+
+            // 
 
           }
 

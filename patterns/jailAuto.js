@@ -71,7 +71,7 @@ module.exports = async (client) => {
         // }
 
         const bannedWords = ["retard", "andrew's underwear", "premo", "boney", "zuckerberg", "shemale", "boku no pico", "league of legends", "faggot", "tranny", "fag", "lesbo", "dyke"];
-        const replacementWord = ["sweetiepie", "i love u", "i have found jesus", "honey darling", "my bum is itchy", "my love", "bby", "habibi", '[REDACTED]'];
+        const replacementWord = ["sweetiepie", "JASON IS AWESOME", "i have found jesus", "honey darling", "my bum is itchy", "my love", "bby", "habibi", '[REDACTED]'];
 
         bannedWords.forEach( async element => {
 
