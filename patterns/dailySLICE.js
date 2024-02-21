@@ -75,6 +75,9 @@ module.exports = async (client) => {
                 const nextUTCDay = new Date(currentDate.getTime() + millisecondsInDay);
                 result.nextDate = nextUTCDay.getTime();
                 result.deadKickedToday = false;
+                result.alarmOne = false;
+                result.alarmTwo = false;
+                result.alarmThree = false;
                 const edgeTracker = await EdgeKing.findOne({KimoServerID: kimoServerID});
                 edgeTracker.firstPostered = false;
 
