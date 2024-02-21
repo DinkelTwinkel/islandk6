@@ -20,11 +20,11 @@ module.exports = {
         const avatar = options.getAttachment('questimage');
 
 		if (avatar.contentType.startsWith('image/')) {
-		interaction.channel.send({ files: [{ attachment: avatar.url }] });
+		await interaction.channel.send({ files: [{ attachment: avatar.url }] });
 		return interaction.editReply({ content: 'image posted', ephemeral: true });
 		}
 		else {
-			interaction.editReply({ content: 'invalid image', ephemeral: true });
+			return interaction.editReply({ content: 'invalid image', ephemeral: true });
 		}
 
 	},
