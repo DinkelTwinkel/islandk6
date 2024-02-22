@@ -84,7 +84,7 @@ client.once(Events.ClientReady, async c => {
 
   setInterval(() => {
     botLogChannel.send('!assignall');
-  }, 1000 * 10 * 60);
+  }, 1000 * 20 * 60);
 
   reactionRewards(client);
 

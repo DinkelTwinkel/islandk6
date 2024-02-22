@@ -18,6 +18,10 @@ module.exports = async (client) => {
         const members = await KimoServer.members.cache.filter(member => member.roles.cache.has('1202749571957006348'));
 
         members.forEach(async jailedMember => {
+
+            if (message.guild.id != KimoServer.id) return;
+            if (message.member.roles.cache.get('1202749571957006348')) return;
+            if (message.author.bot) return;
             
             const result = await Jail.findOne({userId: jailedMember.user.id});
 

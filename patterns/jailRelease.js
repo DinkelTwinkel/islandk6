@@ -7,9 +7,20 @@ module.exports = async (client, jailTarget) => {
 
     let jailTracker = await Jail.findOne({ userId: jailTarget.user.id});
 
-    await jailTarget.roles.set(jailTracker.roles);
-    jailTarget.roles.add(degenerateRoleID);
 
+    if (jailTarget.roles.cache.get('1210274450679922748')) {
+        jailTarget.roles.remove(jailedRoleID);
+        if (jailTracker.roles.includes('1202876101005803531')) {
+            jailTarget.roles.add('1202876101005803531');
+        }
+        else {
+            jailTarget.roles.add('1202551817708507136');
+        }
+    }
+    else {
+        await jailTarget.roles.set(jailTracker.roles);
+        jailTarget.roles.add(degenerateRoleID);
+    }
 
     // set time and set other stats.
     let embedDescription = "```" + `TOTAL TIME SERVED: ${jailTracker.totalTimeServed} mins \n TIMES JAILED: ${jailTracker.numberOfTimesJailed} ` + "```";

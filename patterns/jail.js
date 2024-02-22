@@ -34,7 +34,16 @@ module.exports = async (client, jailTarget, reason, jailer, time) => {
 
     await jailTracker.save();
 
-    jailTarget.roles.set([jailedRoleID, dangerRoleID]);
+    if (jailTarget.roles.cache.get('1210274450679922748')) {
+        jailTarget.roles.add(jailedRoleID);
+        jailTarget.roles.remove('1202876101005803531');
+        jailTarget.roles.remove('1202551817708507136');
+    }
+    else {
+        jailTarget.roles.set([jailedRoleID, dangerRoleID]);
+    }
+
+
 
     // set time and set other stats.
 
