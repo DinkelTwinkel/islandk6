@@ -3,8 +3,8 @@ const UserData = require('../models/userData');
 
 module.exports = {
     data: new SlashCommandBuilder()
-    .setName('report')
-    .setDescription('report to admins')
+    .setName('applyhost')
+    .setDescription('apply for hosting an event')
     .addStringOption(option =>
       option
           .setName('contents')
