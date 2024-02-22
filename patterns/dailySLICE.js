@@ -94,9 +94,7 @@ module.exports = async (client) => {
                 botLogChannel.send ('!dailyslice');
 
                 if (result.slaughter === true) {
-
-                    // to do code for slaughter slices. No channel locking. Only moving forward.
-                    return
+                    return slaughterMode(client);
                 }
 
                 // tell scissorchan to slice.
@@ -152,6 +150,48 @@ module.exports = async (client) => {
         }
 
 };
+
+async function slaughterMode (client) {
+
+    const membersWithDangerRole = await UserState.countDocuments({ currentState: 'DANGER' });
+    const membersWithSafeRole = await UserState.countDocuments({ currentState: 'SAFE' });
+    const membersWithDeadRole = await UserState.countDocuments({ currentState: 'DEAD' });
+
+    const totalLiving = membersWithSafeRole + membersWithDangerRole;
+    const totalDead = membersWithDeadRole;
+
+    const tracker = await KimoTracker.findOne({serverId: kimoServerID});
+
+    const postDailyEmbed = new EmbedBuilder()
+        .setAuthor({
+            name: "ROUND COMPLETE",
+        })
+        .setDescription(`ALIVE: ${totalLiving} \n DEAD: ${totalDead}\n NEXT CUTOFF <t:${Math.floor(tracker.nextDate/1000)}:R>`
+        );
+
+    const embed = new EmbedBuilder()
+        .setTitle("Blood on the Ocean, Blood on the Deck 🩸")
+        .setDescription("```Welcome to the secret final level of Kimodameshi 6. Good work surviving so far. Let's end this. [CUT OFF REACTIVATED]```\nSCENARIO CONDITION:\n**After every cutoff, the next cutoff is HALVED**\nDie or survive and die later. Good luck." + `\n\n CUT OFF: ${Math.floor(result.nextDate/1000)})`)
+        .setColor("#520000")
+        .setFooter({
+            text: "Scenario Clear Condition: ?????????",
+    });
+
+    const KimoServer = await client.guilds.fetch(kimoServerID);
+    const postDailyChannel = KimoServer.channels.cache.get('1193665461699739738');
+    const trueKimoStoryChannel = KimoServer.channels.cache.get('1209919923241885706'); 
+
+    const messages = await trueKimoStoryChannel.messages.fetch();
+    messages.forEach(message => {
+      if (message.content === 'KIMODAMESHI HIDDEN SCENARIO') {
+        message.edit({ content: 'KIMODAMESHI HIDDEN SCENARIO', embeds: [embed] });
+      }
+    });
+
+    return postDailyChannel.send({embeds: [ postDailyEmbed ]});
+
+    // to do code for slaughter slices. No channel locking. Only moving forward.
+}
 
 async function channelLock (client) {
     // lock channel, timeout for 10mins, post quote, unlock.

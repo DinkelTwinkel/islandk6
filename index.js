@@ -47,6 +47,7 @@ const honourTheFallen = require('./patterns/honourTheFallen');
 const kickall = require('./patterns/kickall');
 const forceRecheck = require('./patterns/forceRecheck');
 const outPutFinalFile = require('./patterns/outPutFinalFile');
+const slaughter = require('./patterns/slaughter');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -377,6 +378,12 @@ client.on(Events.MessageCreate, async (message) => {
       if (command === 'kickall') {
 
         kickall(client);
+
+      } 
+
+      if (command === 'slaughter') {
+
+        slaughter(client);
 
       } 
 
