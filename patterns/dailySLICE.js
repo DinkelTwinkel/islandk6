@@ -77,10 +77,10 @@ module.exports = async (client) => {
                     result.currentPeriodLength = 24 * 60 * 60 * 1000;
                 }
 
-                const millisecondsInDay = parseInt(result.currentPeriodLength);
+                const millisecondsInDay = parseInt();
                 currentDate.setSeconds(0);
-                const nextUTCDay = new Date(result.nextDate + millisecondsInDay);
-                result.nextDate = nextUTCDay.getTime();
+                //const nextUTCDay = new Date();
+                result.nextDate = currentDate.getTime() + result.currentPeriodLength;
                 result.deadKickedToday = false;
                 result.alarmOne = false;
                 result.alarmTwo = false;
@@ -171,15 +171,62 @@ async function slaughterMode (client) {
 
     const embed = new EmbedBuilder()
         .setTitle("Blood on the Ocean, Blood on the Deck 🩸")
-        .setDescription("```Welcome to the secret final level of Kimodameshi 6. Good work surviving so far. Let's end this. [CUT OFF REACTIVATED]```\nSCENARIO CONDITION:\n**After every cutoff, the next cutoff is HALVED**\nDie or survive and die later. Good luck." + `\n\n CUT OFF: ${Math.floor(result.nextDate/1000)})`)
-        .setColor("#520000")
+        .setDescription("```Welcome to the secret final level of Kimodameshi 6. Good work surviving so far. Let's end this. [CUT OFF REACTIVATED]```\nSCENARIO CONDITION:\n**After every cutoff, the next cutoff is HALVED**\nDie or survive and die later. Good luck." + `\n\n CUT OFF: <t:${Math.floor(tracker.nextDate/1000)}:R>`)
+        //.setColor("#520000")
         .setFooter({
             text: "Scenario Clear Condition: ?????????",
     });
 
     const KimoServer = await client.guilds.fetch(kimoServerID);
-    const postDailyChannel = KimoServer.channels.cache.get('1193665461699739738');
+    const postDailyChannel = KimoServer.channels.cache.get('1210228380436398122');
     const trueKimoStoryChannel = KimoServer.channels.cache.get('1209919923241885706'); 
+
+    // check if condition met aka less then 2mins remaining.
+
+    if (totalLiving <= 0) {
+        // scenario fail
+        tracker.nextDate = new Date().getTime() + (60 * 60 * 1000 * 5000);
+        await tracker.save();
+        const embed = new EmbedBuilder()
+        .setTitle("SCENARIO COMPLETE:")
+        .setDescription("```Ending 1:\nEscaping the confines of Kimo Island, the party boat unwittingly harbored a malevolent entity. Chaos ensued as the crew fought for their lives, but their struggles proved futile. In the end, there were no survivors aboard the vessel, leaving it adrift, a grim monument to their doomed voyage.```\nTotal Survivors: 0");
+        
+        postDailyChannel.send({embeds: [embed]});
+        postDailyChannel.send({content: '# Thank you for playing Kimodameshi 6 🌴'});
+        trueKimoStoryChannel.send({embeds: [embed]});
+        trueKimoStoryChannel.send({content: '# Thank you for playing Kimodameshi 6 🌴'});
+        return;
+    }
+
+    else if (tracker.currentPeriodLength < 1000 * 60 * 2  && totalLiving < 50) {
+        // clear condition met.
+        tracker.nextDate = new Date().getTime() + (60 * 60 * 1000 * 5000);
+        await tracker.save();
+        const embed = new EmbedBuilder()
+        .setTitle("SCENARIO COMPLETE:")
+        .setDescription("```Ending 2:\nEscaping the confines of Kimo Island, the party boat unwittingly harbored a malevolent entity. Chaos ensued as the crew fought for their lives, but their struggles proved futile. In the end, there were ??? survivors aboard the vessel, where will they go now? Find out next time on Dragon Ba- wait does anyone know how to sail this shi-```" + `\nTotal Survivors: ${totalLiving}`);
+      
+        postDailyChannel.send({embeds: [embed]});
+        postDailyChannel.send({content: '# Thank you for playing Kimodameshi 6 🌴'});
+        trueKimoStoryChannel.send({embeds: [embed]});
+        trueKimoStoryChannel.send({content: '# Thank you for playing Kimodameshi 6 🌴'});
+        return;
+    }
+
+    else if (tracker.currentPeriodLength < 1000 * 60 * 30 && totalLiving >= 50) {
+        // clear condition met.
+        tracker.nextDate = new Date().getTime() + (60 * 60 * 1000 * 5000);
+        await tracker.save();
+        const embed = new EmbedBuilder()
+        .setTitle("SCENARIO COMPLETE:")
+        .setDescription("```Ending 3:\nThey lived somehow.```" + `\nTotal Survivors: ${totalLiving}`);
+
+        postDailyChannel.send({embeds: [embed]});
+        postDailyChannel.send({content: '# Thank you for playing Kimodameshi 6 🌴'});
+        trueKimoStoryChannel.send({embeds: [embed]});
+        trueKimoStoryChannel.send({content: '# Thank you for playing Kimodameshi 6 🌴'});
+        return;
+    }
 
     const messages = await trueKimoStoryChannel.messages.fetch();
     messages.forEach(message => {

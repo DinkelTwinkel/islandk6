@@ -77,6 +77,7 @@ module.exports = async (client) => {
                             postTime.postNumber += 1;
                             postTime.averagePostTime = postTime.totalPostingTime/postTime.postNumber;
                             await postTime.save();
+                            
                         }
                 }
                 else {

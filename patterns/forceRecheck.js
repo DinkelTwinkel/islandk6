@@ -84,7 +84,7 @@ module.exports = async (client) => {
             clearInterval(intervalId);
         }
         
-    }, 500);
+    }, 1000);
     
 
     // Get all members who are currently safe or in danger.

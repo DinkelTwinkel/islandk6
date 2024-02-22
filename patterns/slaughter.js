@@ -17,9 +17,13 @@ module.exports = async (client) => {
     const channeltoDelete2 = KimoServer.channels.cache.get('1210076698268143626');
     const trueKimoStoryChannel = KimoServer.channels.cache.get('1209919923241885706'); 
     const botLogChannel = KimoServer.channels.cache.get(botLogChannelID); 
+    const postDailyChannel = KimoServer.channels.cache.get('1210228380436398122');
 
     const result = await KimoTracker.findOne({serverId: kimoServerID});
-    //result.slaughter = true;
+    result.nextDate = new Date().getTime() + (1000 * 60 * 60 * 8);
+    result.currentPeriodLength= 1000 * 60 * 60 * 8;
+    result.slaughter = true;
+    result.kimoActive = true;
     await result.save();
 
     //botLogChannel.send ('!dailyslice');
@@ -37,13 +41,12 @@ module.exports = async (client) => {
     sendPuppetCommand(0, trueKimoStoryChannel, `# Kimo Activated`, 8);
     sendPuppetCommand(1, trueKimoStoryChannel, `# Kimo Activated`, 8);
 
-
     const embed = new EmbedBuilder()
         // .setAuthor({
         //     name: "",
         // })
         .setTitle("Blood on the Ocean, Blood on the Deck 🩸")
-        .setDescription("```Welcome to the secret final level of Kimodameshi 6. Good work surviving so far. Let's end this. [CUT OFF REACTIVATED]```\nSCENARIO CONDITION:\n**After every cutoff, the next cutoff is HALVED**\nDie or survive and die later. Good luck." + `\n\n CUT OFF: ${Math.floor(result.nextDate/1000)})`)
+        .setDescription("```Welcome to the secret final level of Kimodameshi 6. Good work surviving so far. Let's end this. [CUT OFF REACTIVATED]```\nSCENARIO CONDITION:\n**After every cutoff, the next cutoff is HALVED**\nDie or survive and die later. Good luck." + `\n\n CUT OFF: <t:${Math.floor(result.nextDate/1000)}:R>`)
         .setColor("#520000")
         .setFooter({
             text: "Scenario Clear Condition: ?????????",
@@ -52,6 +55,7 @@ module.exports = async (client) => {
     setTimeout(() => {
 
         trueKimoStoryChannel.send({ content: 'KIMODAMESHI HIDDEN SCENARIO', embeds: [embed] });
+        postDailyChannel.send({ content: 'KIMODAMESHI HIDDEN SCENARIO', embeds: [embed] });
         
     }, 2000 * 9);
 

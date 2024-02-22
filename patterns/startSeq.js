@@ -27,7 +27,7 @@ module.exports = async (client, kimoServer) => {
         },
     );
 
-    channel.send({content: '', embeds: [embed], files: [{ attachment: 'https://cdn.discordapp.com/attachments/1154159412160757810/1205170118628347946/transmission.gif?ex=65d76523&is=65c4f023&hm=b7dc8b8280df6668e238c52cc0c5af754a53daca81125050e13923263fe5ae66&' }]});
+    channel.send({content: '', embeds: [embed], files: [{ attachment: 'https://cdn.discordapp.com/attachments/1061965352755544084/1210258543907966996/transmission.gif?ex=65e9e81a&is=65d7731a&hm=b421ba04088e0a03ba7df94e15b95b25351d632cfe5aa76a4396bd2028e13570&' }]});
 
 
     client.on(Events.InteractionCreate, async (interaction) => {

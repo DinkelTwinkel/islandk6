@@ -2,7 +2,6 @@ const { SlashCommandBuilder, EmbedBuilder, Embed } = require('discord.js');
 const kimoIDMaker = require('../patterns/kimoIDMaker');
 const UserData = require('../models/userData');
 const getAllMessagesInChannel = require('../patterns/getAllMessagesInChannel');
-const Stats = require('../models/statistics');
 const UserStats = require('../models/userStatistics');
 
 module.exports = {

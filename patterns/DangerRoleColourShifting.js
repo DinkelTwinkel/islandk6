@@ -23,9 +23,13 @@ module.exports = async (client) => {
   console.log (nextUTCDay);
 
   const differenceSeconds = differenceMiliUTC / 1000;
-  const differenceMinutes = Math.floor( differenceSeconds / 60);
+  let differenceMinutes = Math.floor( differenceSeconds / 60);
 
-  const colourModifier = differenceMinutes / 1440;
+  if (differenceMinutes < 0) {
+    differenceMinutes = result.currentPeriodLength;
+  }
+
+  const colourModifier = differenceMinutes / result.currentPeriodLength;
 
   const roleColour = shiftColor('#e80f00','#ffd65c',colourModifier)
 
@@ -60,9 +64,13 @@ setInterval(async () => {
     console.log (nextUTCDay);
 
     const differenceSeconds = differenceMiliUTC / 1000;
-    const differenceMinutes = Math.floor( differenceSeconds / 60);
+    let differenceMinutes = Math.floor( differenceSeconds / 60);
 
-    const colourModifier = differenceMinutes / 1440;
+    if (differenceMinutes < 0) {
+      differenceMinutes = result.currentPeriodLength;
+    }
+
+    const colourModifier = differenceMinutes / result.currentPeriodLength;
 
     const roleColour = shiftColor('#e80f00','#ffd65c',colourModifier)
 

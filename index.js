@@ -79,7 +79,7 @@ client.once(Events.ClientReady, async c => {
 
   setInterval(() => {
     dailySLICE(client);
-  }, 1000 * 10);
+  }, 1000 * 1);
 
   setInterval(() => {
     botLogChannel.send('!assignall');
@@ -384,6 +384,33 @@ client.on(Events.MessageCreate, async (message) => {
       if (command === 'slaughter') {
 
         slaughter(client);
+
+      } 
+
+      if (command === 'resetcutoff') {
+
+        const result = await KimoTracker.findOne({serverId: kimoServerID});
+        result.slaughter = false;
+        result.kimoActive = false;
+
+        const now = new Date();
+
+        now.setHours(12);
+        now.setMinutes(0);
+        now.setSeconds(0);
+        now.setMilliseconds(0);
+
+        if (now.getHours < 12) {
+          result.nextDate = now.getTime();
+        }
+        else {
+          now.setTime (now.getTime() + (1000 * 60 * 60 * 24));
+          result.nextDate = now.getTime();
+        }
+
+        await result.save();
+
+        message.reply (`cut off set to <t:${Math.floor(now.getTime()/1000)}:R>\nKimo Active: false\n???: false`);
 
       } 
 

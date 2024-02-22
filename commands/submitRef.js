@@ -91,7 +91,7 @@ module.exports = {
             // user statistics total ref submission
 
             const userStats = await UserStats.findOne({ userID: interaction.member.user.id });
-            userStats.messagesBottled += 1;
+            userStats.refsShared += 1;
             await userStats.save();
 
             // 
