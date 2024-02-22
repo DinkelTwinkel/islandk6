@@ -177,7 +177,14 @@ client.on(Events.GuildMemberAdd, async (member) => {
   const newStatTrack = new UserStats ({
     userID: member.user.id,
   })
-  newStatTrack.save();
+  await newStatTrack.save();
+
+  let userState = await UserState.findOne({ userID: interaction.member.user.id });
+
+  if (userState) {
+    userState.currentState = 'DANGER';
+    await userState.save();
+  }
 
 });
 

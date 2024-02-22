@@ -110,12 +110,6 @@ module.exports = async (client, kimoServer) => {
         if (interaction.customId === 'startFinal' || interaction.customId === 'startFinal2') {
 
           let result = await UserData.findOne({ userID: interaction.member.user.id })
-          let userState = await UserState.findOne({ userID: interaction.member.user.id });
-
-          if (userState) {
-            userState.currentState = 'DANGER';
-            await userState.save();
-          }
 
           let announcementChannel;
           let message;
