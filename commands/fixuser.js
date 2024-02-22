@@ -12,7 +12,7 @@ module.exports = {
         option
             .setName('target')
             .setDescription('the user to fix.')
-            .setRequired(false)),
+            .setRequired(true)),
 
     async execute(interaction, client) {
 
