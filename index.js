@@ -392,6 +392,7 @@ client.on(Events.MessageCreate, async (message) => {
         const result = await KimoTracker.findOne({serverId: kimoServerID});
         result.slaughter = false;
         result.kimoActive = false;
+        result.currentPeriodLength = (1000 * 60 * 60 * 24);
 
         const now = new Date();
 
