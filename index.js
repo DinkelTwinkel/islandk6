@@ -48,6 +48,7 @@ const kickall = require('./patterns/kickall');
 const forceRecheck = require('./patterns/forceRecheck');
 const outPutFinalFile = require('./patterns/outPutFinalFile');
 const slaughter = require('./patterns/slaughter');
+const UserState = require('./models/userState');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
