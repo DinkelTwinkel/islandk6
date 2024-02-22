@@ -3,6 +3,7 @@ const { kimoServerID, deadRoleID } = require('../ids.json');
 const UserStats = require('../models/userStatistics');
 const Jail = require('../models/jailTracker');
 const UserData = require('../models/userData');
+const statEmbed = require('./statEmbed');
 
 module.exports = async (client, channel) => {
 
@@ -32,6 +33,7 @@ module.exports = async (client, channel) => {
 
         setTimeout(async () => {
             channel.send ({ content: '# BANG 💥' });
+            channel.send ({ content: 'HONOURING THE FALLEN' });
         }, (index + 0.5) * 1000 );
 
         setTimeout(async () => {
@@ -50,59 +52,6 @@ module.exports = async (client, channel) => {
 
 async function createCannonEmbed (member) {
 
-    const userStat = await UserStats.findOne({ userID: member.user.id });
-    let jailTracker = await Jail.findOne({ userId: member.user.id });
-    const userData = await UserData.findOne({ userID: member.user.id });
-
-    if (!jailTracker) {
-        jailTracker = new Jail ({
-            userId: member.user.id,
-            roles: ['1202533924040081408'],
-        })
-    }
-
-    console.log ( jailTracker );
-
-    const cannonEmbed = new EmbedBuilder()
-        .setTitle(`HONOUR THE FALLEN: ${member.displayName}`)
-        .setDescription(`${userData.money} 🐚 seashells collected\n` + "```" + `LAST MESSAGE:\n${userStat.lastMessageSent}` + "```")
-        .addFields(
-            {
-              name: "Messages Sent",
-              value: `${userStat.totalMessages}`,
-              inline: true
-            },
-            {
-              name: "Submissions",
-              value: `${userStat.totalKimoPost}`,
-              inline: true
-            },
-            {
-              name: "VC TIME",
-              value: `${userStat.vcTime + 'mins'}`,
-              inline: true
-            },
-            {
-              name: "REFs Shared:",
-              value: `${userStat.refsShared}`,
-              inline: true
-            },
-            {
-              name: "Messaged Bottled:",
-              value: `${userStat.messagesBottled}`,
-              inline: true
-            },
-            {
-              name: "Jail Time",
-              value: `${jailTracker.totalTimeServed}` + 'mins',
-              inline: true
-            },
-          )
-        .setThumbnail(member.displayAvatarURL())
-        .setFooter({
-            text: userData.socialLink,
-    });
-
-    return cannonEmbed;
+    return await statEmbed(member);
 
 }

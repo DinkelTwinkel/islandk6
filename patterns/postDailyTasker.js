@@ -6,6 +6,7 @@ const EdgeKing = require("../models/edgeKing");
 const KimoTracker = require("../models/kimoTracker");
 const UserData = require("../models/userData");
 const UserStats = require("../models/userStatistics");
+const PostTime = require("../models/averageposttimes");
 
 module.exports = async (client) => {
 
@@ -20,6 +21,8 @@ module.exports = async (client) => {
         if (message.member.roles.cache.get('1206976652383625307')) return;
 
         if (attachmentTest(message) != null) {
+
+            const kimoTracker = await KimoTracker.findOne({ serverId: message.guild.id });
 
             // user statistics total kimo posting tracking
 
@@ -41,93 +44,113 @@ module.exports = async (client) => {
                 })
             }
 
-            if (result.currentState === 'DEAD' || result.currentState === 'SAFE') return;
+            if (result.currentState === 'DEAD') return;
 
+            if (result.postedToday == false) {
+                result.postedToday = true;
+                await result.save();
 
-            if (userFortune) {
-                if (result.postedToday == false) {
+                if (userFortune) {
+                        userFortune.Fortune = await getFortuneCookie(client);
+                        await userFortune.save();
+                        
+                    
+                        postFortune(message, userFortune.Fortune);
 
-                    userFortune.Fortune = await getFortuneCookie(client);
+                        // AVERAGE POST TIME TRACKER.
 
-                    result.postedToday = true;
-                    await userFortune.save();
-                    await result.save();
-                
-                    postFortune(message, userFortune.Fortune);
+                        const utcMiliBeforeCutOff = kimoTracker.nextDate - new Date ().getTime();
+
+                        let postTime = await PostTime.findOne({ userID: message.member.id });
+                        if (!postTime) {
+                            postTime = new PostTime({
+                                userID: message.member.id,
+                                averagePostTime: utcMiliBeforeCutOff,
+                                totalPostingTime: utcMiliBeforeCutOff,
+                                postNumber: 1,
+                            })
+                            await postTime.save();
+                        }
+                        else {
+                            
+                            postTime.totalPostingTime += utcMiliBeforeCutOff;
+                            postTime.postNumber += 1;
+                            postTime.averagePostTime = postTime.totalPostingTime/postTime.postNumber;
+                            await postTime.save();
+                        }
                 }
-            }
-            else {
+                else {
 
-              userFortune = new Fortune ({
-                userId: message.author.id,
-                Fortune: await getFortuneCookie(client),
-                lastFortuneDay: new Date ().getDate(),
-              })
-              await userFortune.save();
+                userFortune = new Fortune ({
+                    userId: message.author.id,
+                    Fortune: await getFortuneCookie(client),
+                    lastFortuneDay: new Date ().getDate(),
+                })
+                await userFortune.save();
 
-              postFortune(message, userFortune.Fortune);
+                postFortune(message, userFortune.Fortune);
 
-            }
+                }
 
 
-            // edge king maker
+                // edge king maker
 
-            const edgeTracker = await EdgeKing.findOne({ KimoServerID: message.guild.id});
-            const kimoTracker = await KimoTracker.findOne({ serverId: message.guild.id });
+                const edgeTracker = await EdgeKing.findOne({ KimoServerID: message.guild.id});
 
-            console.log ('cutoff clock');
-        
-            const millisecondsInDay = 24 * 60 * 60 * 1000;
-        
-            const currentDate = new Date();
-            const nextUTCDay = new Date(currentDate.getTime() + millisecondsInDay);
-            nextUTCDay.setHours(12);
-            nextUTCDay.setMinutes(0);
-            nextUTCDay.setSeconds(0);
-            nextUTCDay.setDate(kimoTracker.nextDate);
-        
-            const differenceMiliUTC = nextUTCDay.getTime() - currentDate.getTime();
-            const differenceSeconds = differenceMiliUTC / 1000;
-            const differenceMinutes = differenceSeconds / 60;
+                console.log ('cutoff clock');
+            
+                const millisecondsInDay = 24 * 60 * 60 * 1000;
+            
+                const currentDate = new Date();
+                const nextUTCDay = new Date(currentDate.getTime() + millisecondsInDay);
+                nextUTCDay.setHours(12);
+                nextUTCDay.setMinutes(0);
+                nextUTCDay.setSeconds(0);
+                nextUTCDay.setDate(kimoTracker.nextDate);
+            
+                const differenceMiliUTC = nextUTCDay.getTime() - currentDate.getTime();
+                const differenceSeconds = differenceMiliUTC / 1000;
+                const differenceMinutes = differenceSeconds / 60;
 
-            if (edgeTracker.edgeTime > differenceMinutes) {
+                if (edgeTracker.edgeTime > differenceMinutes) {
 
-                // remove crown from all users who possess it.
-                // add crown to new user. add user id to database.
+                    // remove crown from all users who possess it.
+                    // add crown to new user. add user id to database.
 
-                console.log('new edge king crowned');
-                message.member.roles.add('1203621959292952636');
+                    console.log('new edge king crowned');
+                    message.member.roles.add('1203621959292952636');
 
-                // remove from previous king.
-                const oldKing = message.guild.members.cache.get(edgeTracker.currentKingID);
+                    // remove from previous king.
+                    const oldKing = message.guild.members.cache.get(edgeTracker.currentKingID);
 
-                oldKing.roles.remove('1203621959292952636');
-                console.log('removing role from old king');
+                    oldKing.roles.remove('1203621959292952636');
+                    console.log('removing role from old king');
 
-                edgeTracker.edgeTime = differenceMinutes;
-                edgeTracker.previousKingID = edgeTracker.currentKingID;
-                edgeTracker.currentKingID = message.author.id;
-                edgeTracker.save();
+                    edgeTracker.edgeTime = differenceMinutes;
+                    edgeTracker.previousKingID = edgeTracker.currentKingID;
+                    edgeTracker.currentKingID = message.author.id;
+                    edgeTracker.save();
 
-            }
+                }
 
-            // first poster 
+                // first poster 
 
-            if (edgeTracker.firstPostered === false) {
+                if (edgeTracker.firstPostered === false) {
 
-                await message.guild.members.fetch();
-                const firstPosterMembers = message.guild.roles.cache.get('1203621622200672308').members;
+                    await message.guild.members.fetch();
+                    const firstPosterMembers = message.guild.roles.cache.get('1203621622200672308').members;
+                    
+                    firstPosterMembers.forEach(member => {
+                        member.roles.remove('1203621622200672308')
+                    });
+
+                    message.member.roles.add('1203621622200672308');
+
+                    edgeTracker.firstPostered = true;
+                    edgeTracker.save();
+                }
                 
-                firstPosterMembers.forEach(member => {
-                    member.roles.remove('1203621622200672308')
-                });
-
-                message.member.roles.add('1203621622200672308');
-
-                edgeTracker.firstPostered = true;
-                edgeTracker.save();
             }
-
 
         }
 

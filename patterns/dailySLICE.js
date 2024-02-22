@@ -6,6 +6,7 @@ const getAllMessagesInChannel = require('./getAllMessagesInChannel');
 const UserData = require('../models/userData');
 const EdgeKing = require('../models/edgeKing');
 const honourTheFallen = require('./honourTheFallen');
+const forceRecheck = require('./forceRecheck');
 module.exports = async (client) => {
 
     console.log ('not yet time');
@@ -32,23 +33,29 @@ module.exports = async (client) => {
 
     const dangerRole = KimoServer.roles.cache.get(dangerRoleID)
 
-    if (result.alarmOne === false && currentUTCHour >= 4) {
+    if (result.alarmOne === false && currentUTCHour >= 4 && currentUTCHour < 12 ) {
         result.alarmOne = true;
         await result.save();
         alarmChannel.send(`8 HOURS LEFT <@&${dangerRole.id}>`);
         honourTheFallen(client, panemChannel);
+        console.log ('recheck auto requested');
+        forceRecheck(client);
     }
 
-    if (result.alarmTwo === false && currentUTCHour >= 9) {
+    if (result.alarmTwo === false && currentUTCHour >= 9 && currentUTCHour < 12) {
         result.alarmTwo = true;
         await result.save();
         alarmChannel.send(`3 HOURS LEFT <@&${dangerRole.id}>`);
+        console.log ('recheck auto requested');
+        forceRecheck(client);
     }
 
-    if (result.alarmThree === false && currentUTCHour >= 11) {
+    if (result.alarmThree === false && currentUTCHour >= 11 && currentUTCHour < 12) {
         result.alarmThree = true;
         await result.save();
         alarmChannel.send(`1 HOURS LEFT <@&${dangerRole.id}>`);
+        console.log ('recheck auto requested');
+        forceRecheck(client);
     }
 
 
@@ -72,7 +79,7 @@ module.exports = async (client) => {
 
                 const millisecondsInDay = parseInt(result.currentPeriodLength);
                 currentDate.setSeconds(0);
-                const nextUTCDay = new Date(currentDate.getTime() + millisecondsInDay);
+                const nextUTCDay = new Date(result.nextDate + millisecondsInDay);
                 result.nextDate = nextUTCDay.getTime();
                 result.deadKickedToday = false;
                 result.alarmOne = false;
@@ -84,9 +91,16 @@ module.exports = async (client) => {
                 await edgeTracker.save();
                 await result.save();
 
+                botLogChannel.send ('!dailyslice');
+
+                if (result.slaughter === true) {
+
+                    // to do code for slaughter slices. No channel locking. Only moving forward.
+                    return
+                }
+
                 // tell scissorchan to slice.
                 await channelLock (client);
-                botLogChannel.send ('!dailyslice');
                 // dailyHighlight (client);
                 setTimeout(() => {
                     channelUnLock (client);
@@ -199,10 +213,15 @@ async function dailyHighlight (client) {
     })
     .setImage(await randomMessage.attachments.first().url)
     .setFooter({
-        text: "by " + messageAuthorData.socialLink,
+        text: "Daily by " + messageAuthorData.socialLink,
     });
 
-    postDailyChannel.send ({content: '', embeds: [dailyHighlight] });
+    messageAuthorData.money += 5;
+    await messageAuthorData.save();
+
+    await postDailyChannel.send ({content: '', embeds: [dailyHighlight] });
+    await postDailyChannel.send ({ embeds: [await RandomRefOfTheDayEmbed(client)]});
+
 }
 
 async function channelUnLock (client) {
@@ -238,20 +257,24 @@ async function getFortuneCookie(client) {
 
   async function findRandomHighlightArt(client, postDailyChannel) {
 
+    const tracker = await KimoTracker.findOne({ serverId: kimoServerID });
+    const nextDateUtcMil = tracker.nextDate;
+    const period = tracker.currentPeriodLength;
+    const previousDateUtcMil = nextDateUtcMil - (period * 2);
 
     //const now = new Date(); // current time
 
-		const lastTwelveNoon = new Date();
-		lastTwelveNoon.setHours(12);
-		lastTwelveNoon.setTime(lastTwelveNoon.getTime() - (24 * 60 * 60 * 1000)); // subtract one day
+		// const lastTwelveNoon = new Date();
+		// lastTwelveNoon.setHours(12);
+		// lastTwelveNoon.setTime(lastTwelveNoon.getTime() - (24 * 60 * 60 * 1000)); // subtract one day
 
     // const deadlineTracker = await Daily.findOne ({ serverID: kimoServerID });
 
-    console.log('Last cut off was: ' + lastTwelveNoon);
+    console.log('Last cut off was: ' + previousDateUtcMil);
 
     const messages = await getAllMessagesInChannel(postDailyChannel)
         // Filter the messages by creation date
-    let filteredMessages = messages.filter(msg => msg.createdAt.getTime() > lastTwelveNoon);
+    let filteredMessages = messages.filter(msg => msg.createdAt.getTime() > previousDateUtcMil && msg.createdAt.getTime() < (nextDateUtcMil-(period * 1)));
     filteredMessages = filteredMessages.filter(msg => !msg.author.bot);
     // console.log('Messages found is ' + filteredMessages.size); // Output the number of filtered messages
     
@@ -265,5 +288,52 @@ async function getFortuneCookie(client) {
 
     // console.log(randomMessage);
     return randomMessage;
+
+  }
+
+  async function RandomRefOfTheDayEmbed(client) {
+
+
+    const kimoServer = await client.guilds.fetch('1193663232041304134');
+    const refChannel1 = kimoServer.channels.cache.get('1202622867863506945');
+    
+
+    const messages = await getAllMessagesInChannel(refChannel1);
+    const randomIndex = Math.floor(Math.random() * messages.length);
+    const randomMessage = Array.from(messages)[randomIndex];
+
+    const attachment = randomMessage.attachments.first();
+
+    console.log (randomMessage.embeds[0].data.description);
+    console.log (randomMessage.embeds[0].data.footer.text);
+
+    const text = randomMessage.embeds[0].data.description;
+    const numbers = text.match(/\d+/g);
+    const numbersString = numbers.join("");
+
+    console.log(numbersString);
+
+    const userData = await UserData.findOne({userID: numbersString});
+    userData.money += 1;
+    await userData.save();
+    console.log (`rewarding ${numbersString} for fish`);
+
+    const source = randomMessage.embeds[0].data.footer.text;
+    const index = source.indexOf("SOURCE:") + "SOURCE: ".length;
+    const result = source.substring(index);
+
+    console.log (result);
+
+    const highlight = new EmbedBuilder()
+        .setAuthor({
+            name: "ref of the day 💌",
+            url: randomMessage.url,
+        })
+        .setDescription('```' + "Source:" + `${result}` + '```')
+        .setThumbnail(`${attachment.url}`)
+        .setFooter({
+            text: `Submitted by ${userData.socialLink}`,
+        });
+    return highlight;
 
   }

@@ -33,7 +33,23 @@ module.exports = async (client, interaction, customID) => {
 
         const currentUser = await UserData.findOne({ userID: interaction.member.user.id }) 
         const allUsersInGroup = await UserData.find({ group: currentUser.group });
+
+        // const allSafe = await UserState.find({ currentState: 'SAFE' });
+        // const allDanger = await UserState.find({ currentState: 'DANGER' });
+
+        // console.log (allSafe);
+
+        // const totalAlive = allSafe.size + allDanger.size;
+
         const allUserStates = await UserState.find();
+
+        let totalAlive = 0;
+
+        allUserStates.forEach(state => {
+            if (state.currentState === 'DANGER' || state.currentState === 'SAFE') {
+                totalAlive += 1;
+            }
+        });
 
         let safe = 0;
         let danger = 0;
@@ -47,15 +63,15 @@ module.exports = async (client, interaction, customID) => {
 
         if (result.currentState === 'SAFE') {
             safe += 1;
-            console.log ('safe found');
+            //console.log ('safe found');
         }
         else if (result.currentState === 'DANGER') {
             danger += 1;
-            console.log ('danger found');
+            //console.log ('danger found');
         }
         else if (result.currentState === 'DEAD'){
             dead += 1;
-            console.log ('ddead found');
+            //console.log ('ddead found');
         }
 
         })
@@ -63,7 +79,24 @@ module.exports = async (client, interaction, customID) => {
         const embed = new EmbedBuilder()
 
         .setTitle("Welcome to KimoDaMeshi 6 🌴")
-        .setDescription(`**Daily Cut <t:${await getNextCutoff()}:R>**\n` + "```" + `Current Safe: ${safe}\nCurrent Danger: ${danger}\nCurrent Dead: ${dead}` + "```\nSTART OF KIMO: <t:1709294400:f> \nEND OF KIMO: <t:1711800000:f>")
+        .setDescription(`**Daily Cut <t:${await getNextCutoff()}:R>**\n` + "```" + `Current Safe: ${safe}\nCurrent Danger: ${danger}\nCurrent Dead: ${dead}` + "```")
+        .addFields(
+            {
+              name: "\n",
+              value: "\nSTART OF KIMO: <t:1709294400:f> \nEND OF KIMO: <t:1711800000:f>",
+              inline: true
+            },
+            {
+              name: "\n",
+              value: "🍉",
+              inline: true
+            },
+            {
+              name: "[???]",
+              value: `${totalAlive}`,
+              inline: true
+            },
+          )
         .setThumbnail("https://cdn.discordapp.com/attachments/1154159412160757810/1205160625718951966/fire.gif?ex=65d75c4b&is=65c4e74b&hm=b9632e3a70e9193e98569f36b11188a16a1741cf80034d64fdde4f74d5b73dbf&")
         .setColor("#ff4000")
         .setFooter({

@@ -189,6 +189,15 @@ async function shiftStock (client) {
         // })
 
         stock.stockName = await getStockName(client);
+
+        let stockCheckName = await Stock.findOne({ stockName: stock.stockName })
+
+        while (stockCheckName) {
+          stock.stockName = await getStockName(client);
+          stockCheckName = await Stock.findOne({ stockName: stock.stockName });
+          console.log ('whileLoop');
+        }
+
         stock.currentValue = Math.ceil(Math.random() * 100);
         stock.passiveFluctuation = Math.ceil(Math.random() * 30);
         stock.onePercentChanceFluctuation = Math.ceil(Math.random() * 100);

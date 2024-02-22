@@ -39,6 +39,12 @@ module.exports = {
         const target = interaction.options.getMember('target');
         const targetResult = await UserData.findOne({ userID: target.id });
 
+        if (!targetResult) {
+            targetResult = new UserData({ 
+                userID: target.user.id,
+            })
+        }
+
         const now = Date.now();
         const cooldownAmount = 0.5 * 60 * 1000;
         // 6 hours in milliseconds

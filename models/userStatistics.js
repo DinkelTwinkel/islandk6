@@ -10,6 +10,9 @@ const userStatSchema = new Schema({
 	totalKimoPost: ({ type: Number, default: 0 }),
 	messagesBottled: ({ type: Number, default: 0 }),
 	refsShared: ({ type: Number, default: 0 }),
+	fishcaught: ({ type: Number, default: 0 }),
+	timesPostedFirst: ({ type: Number, default: 0 }),
+	timesEdgeLorded: ({ type: Number, default: 0 }),
 
 }, { timestamps: true });
 

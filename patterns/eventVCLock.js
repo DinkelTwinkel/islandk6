@@ -1,4 +1,4 @@
-const { Events } = require('discord.js');
+const { Events, Collection } = require('discord.js');
 const { kimoChannelID, kimoServerID, botLogChannelID, kimoChannelDungeonID, deadRoleID } = require('../ids.json');
 const UserStats = require('../models/userStatistics');
 let hostCurrentInChannel = false;
@@ -76,29 +76,83 @@ module.exports = async (client) => {
 
     });
 
-    client.on(Event.VoiceStateUpdate, async (oldState, newState) => {
-        if (!newState.channel) {
-            // User left voice channel
-            const userId = newState.member.user.id;
-            const durationInVoiceChat = Date.now() - newState.member.voice.channel.joinedTimestamp;
-            
-            // Retrieve the user's entry from the database
-            let userVoiceChat = await UserStats.findOne({ userID: userId });
-            
-            if (!userVoiceChat) {
-              // If the user entry doesn't exist, create a new one
-              userVoiceChat = new UserStats({
-                userID: userId,
-                vcTime: durationInVoiceChat,
-              });
-            } else {
-              // If the user entry exists, update the total time
-              userVoiceChat.vcTime += durationInVoiceChat;
+    const voiceTimes = new Collection();
+
+    client.on(Events.VoiceStateUpdate, async function(oldMember, newMember) {
+        const oldChannel = oldMember.channel;
+        const newChannel = newMember.channel;
+    
+        if (oldChannel !== newChannel) {
+            // User moved from one channel to another or joined/left a channel
+            if (oldChannel) {
+                // User left a voice channel
+                const leaveTime = new Date();
+                const joinTime = voiceTimes.get(oldMember.id);
+                const timeSpent = leaveTime - joinTime;
+                // Update time spent in voice chat
+                if (voiceTimes.has(oldMember.id)) {
+                    voiceTimes.delete(oldMember.id);
+                }
+                console.log(`${oldMember.member.displayName} spent ${timeSpent / 1000} seconds in voice chat.`);
+
+                const userId = newMember.member.user.id;
+                let userVoiceChat = await UserStats.findOne({ userID: userId });
+
+                if (!userVoiceChat) {
+                // If the user entry doesn't exist, create a new one
+                userVoiceChat = new UserStats({
+                    userID: userId,
+                    vcTime: timeSpent,
+                });
+                } else {
+                // If the user entry exists, update the total time
+                userVoiceChat.vcTime += timeSpent;
+                }
+
+                await userVoiceChat.save();
+
+
             }
+
+            if (newChannel) {
+                console.log ('VC JOIN DETECTED');
+                // User joined a voice channel
+                const joinTime = new Date();
+                // Store the join time
+                voiceTimes.set(newMember.id, joinTime);
+            }
+        }
+    });
+
+    // client.on(Events.VoiceStateUpdate, async function(oldMember, newMember) {
+    //     console.log ('VC JOIN DETECTED');
+    //     console.log (newMember.member.voice);
+    //     console.log (newMember.member.voice.channel);
+    //     if (!newMember.channel) {
+    //         // User left voice channel
+    //         const userId = newMember.member.user.id;
+    //         const durationInVoiceChat = Date.now() - newMember.member.voice.channel.joinedTimestamp;
+            
+    //         // Retrieve the user's entry from the database
+    //         let userVoiceChat = await UserStats.findOne({ userID: userId });
+            
+    //         if (!userVoiceChat) {
+    //           // If the user entry doesn't exist, create a new one
+    //           userVoiceChat = new UserStats({
+    //             userID: userId,
+    //             vcTime: durationInVoiceChat,
+    //           });
+    //         } else {
+    //           // If the user entry exists, update the total time
+    //           userVoiceChat.vcTime += durationInVoiceChat;
+    //         }
+
+    //         console.log ('user left vc');
+    //         console.log (`VC DURATION ${durationInVoiceChat}`)
         
-            // Save the updated entry to the database
-            await userVoiceChat.save();
-          }
-      });
+    //         // Save the updated entry to the database
+    //         await userVoiceChat.save();
+    //       }
+    // });
 
 };

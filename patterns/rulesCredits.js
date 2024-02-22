@@ -59,7 +59,7 @@ module.exports = async (client, interaction, customID) => {
     },
     {
       name: "✂ SPECIAL CREDITS -",
-      value: "**DIV** DESIGNER OF SCISSORCHAN FOR KIMO 6\nhttps://www.instagram.com/devoidd/",
+      value: "**DIV** DESIGNER OF SCISSORCHAN FOR KIMO 6\nhttps://www.instagram.com/devoidd/\n",
       inline: false
     },
   )

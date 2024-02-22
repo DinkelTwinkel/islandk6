@@ -44,6 +44,9 @@ const eventVCLock = require('./patterns/eventVCLock');
 const UserStats = require('./models/userStatistics');
 const fleaMarketController = require('./patterns/fleaMarketController');
 const honourTheFallen = require('./patterns/honourTheFallen');
+const kickall = require('./patterns/kickall');
+const forceRecheck = require('./patterns/forceRecheck');
+const outPutFinalFile = require('./patterns/outPutFinalFile');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -54,6 +57,10 @@ client.once(Events.ClientReady, async c => {
   const botLogChannel = kimoServer.channels.cache.get(botLogChannelID);
   botLogChannel.send (`# I've awoken.`);
   botLogChannel.send('!assignall');
+
+  const KimoServer = await client.guilds.fetch(kimoServerID);
+  const memberCount = await KimoServer.members.fetch();
+  console.log ('total server members: ' + memberCount.size);
 
   startSeq(client, kimoServer);
   cutOffClock(client);
@@ -142,17 +149,15 @@ client.once(Events.ClientReady, async c => {
 
   }, 1000 * 60 * 10);
 
-  // const refChannel1 = kimoServer.channels.cache.get('1202622867863506945');
-  // const refChannel2 = kimoServer.channels.cache.get('1202877025032081438');
 
-  // const guidelineEmbed = new EmbedBuilder()
-  // .setAuthor({
-  //   name: "REF BOOK GUIDELINES",
-  // })
-  // .setDescription("use /shareref to add images to this channel.\nCredit the creator directly: do not use repost links such as from pinterest. Thank you!");
+// await UserStats.updateMany({$set:
+//     {
+//       fishcaught: 0,
+//       timesPostedFirst: 0,
+//       timesEdgeLorded: 0,
+//     }
+//  });
 
-  // refChannel1.send({embeds: [guidelineEmbed]})
-  // refChannel2.send({embeds: [guidelineEmbed]});
 
 });
 
@@ -310,7 +315,7 @@ client.on(Events.MessageCreate, async (message) => {
 //Check if user is also in the hell mart discord. Only work if so.
 client.on(Events.MessageCreate, async (message) => {
 
-  if (message.member.user.id != '865147754358767627') return;
+  if (message.member.user.id != '865147754358767627' && message.member.user.id != '236216554235232256') return;
 
   if (message.content.startsWith('!')) {
       console.log('commandDetected');
@@ -339,7 +344,6 @@ client.on(Events.MessageCreate, async (message) => {
           })
           await newKimoServer.save();
           message.reply ('New Server Document Created');
-
         }
       } 
 
@@ -361,6 +365,25 @@ client.on(Events.MessageCreate, async (message) => {
       if (command === 'honour') {
 
         honourTheFallen(client, message.channel);
+
+      } 
+
+      if (command === 'rollcredits') {
+
+        outPutFinalFile(client, message.channel);
+
+      } 
+
+      if (command === 'kickall') {
+
+        kickall(client);
+
+      } 
+
+      if (command === 'forcerecheck') {
+
+        console.log ('recheck requested by user');
+        forceRecheck(client);
 
       } 
 

@@ -14,7 +14,7 @@ module.exports = async (client) => {
   nextUTCDay.setHours(12);
   nextUTCDay.setMinutes(0);
   nextUTCDay.setSeconds(0);
-  nextUTCDay.setDate(result.nextDate);
+  nextUTCDay.setTime(result.nextDate);
 
   const differenceMiliUTC = result.nextDate - currentDate.getTime();
 
@@ -51,7 +51,7 @@ setInterval(async () => {
     nextUTCDay.setHours(12);
     nextUTCDay.setMinutes(0);
     nextUTCDay.setSeconds(0);
-    nextUTCDay.setDate(result.nextDate);
+    nextUTCDay.setTime(result.nextDate);
 
     const differenceMiliUTC = result.nextDate - currentDate.getTime();
 
