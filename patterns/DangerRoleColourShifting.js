@@ -1,5 +1,6 @@
 const KimoTracker = require('../models/kimoTracker');
 const { ActivityType } = require('discord.js');
+const { kimoChannelID, kimoServerID, botLogChannelID, kimoChannelDungeonID, deadRoleID, dangerRoleID } = require('../ids.json');
 
 module.exports = async (client) => {
   
@@ -38,7 +39,10 @@ module.exports = async (client) => {
   // find role and change role.
 
   const kimoServer = await client.guilds.fetch ('1193663232041304134');
+  const botLogChannel = kimoServer.channels.cache.get(botLogChannelID);
   const DangerRole = kimoServer.roles.cache.get('1202533924040081408');
+
+  botLogChannel.send({ content: `${DangerRole} set to ${roleColour}`});
 
   DangerRole.setColor(roleColour);
 
