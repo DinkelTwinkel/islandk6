@@ -58,7 +58,7 @@ client.once(Events.ClientReady, async c => {
   const kimoServer = await client.guilds.fetch (kimoServerID);
   const botLogChannel = kimoServer.channels.cache.get(botLogChannelID);
   botLogChannel.send (`# I've awoken.`);
-  botLogChannel.send('!assignall');
+  //botLogChannel.send('!assignall');
 
   const KimoServer = await client.guilds.fetch(kimoServerID);
   const memberCount = await KimoServer.members.fetch();
@@ -83,8 +83,8 @@ client.once(Events.ClientReady, async c => {
   }, 1000 * 1);
 
   setInterval(() => {
-    botLogChannel.send('!assignall');
-  }, 1000 * 20 * 60);
+    //botLogChannel.send('!assignall');
+  }, 1000 * 60 * 60);
 
   reactionRewards(client);
 
