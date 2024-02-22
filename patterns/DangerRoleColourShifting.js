@@ -29,7 +29,7 @@ module.exports = async (client) => {
     differenceMinutes = result.currentPeriodLength;
   }
 
-  const colourModifier = differenceMinutes / result.currentPeriodLength;
+  const colourModifier = differenceMinutes / (result.currentPeriodLength/1000/60);
 
   const roleColour = shiftColor('#e80f00','#ffd65c',colourModifier)
 
@@ -70,7 +70,7 @@ setInterval(async () => {
       differenceMinutes = result.currentPeriodLength;
     }
 
-    const colourModifier = differenceMinutes / result.currentPeriodLength;
+    const colourModifier = differenceMinutes / (result.currentPeriodLength/1000/60);
 
     const roleColour = shiftColor('#e80f00','#ffd65c',colourModifier)
 
