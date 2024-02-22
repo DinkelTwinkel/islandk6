@@ -52,7 +52,16 @@ module.exports = {
       await result.save();
       console.log (`rewarding ${numbersString} for fish`);
 
-      const statTracker = await UserStats.findOne({ userID: interaction.member.id })
+      let statTracker = await UserStats.findOne({ userID: interaction.member.id })
+
+      if (!statTracker) {
+        statTracker = new UserStats ({
+          userID: interaction.member.id,
+        })
+      }
+  
+      await statTracker.save();
+
       statTracker.fishcaught += 1;
       await statTracker.save();
 

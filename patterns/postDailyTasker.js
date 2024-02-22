@@ -26,7 +26,14 @@ module.exports = async (client) => {
 
             // user statistics total kimo posting tracking
 
-            const userStats = await UserStats.findOne({ userID: message.member.user.id });
+            let userStats = await UserStats.findOne({ userID: message.member.user.id });
+
+            if (!userStats) {
+                userStats = new UserStats ({
+                    userID: message.member.user.id,
+                    totalKimoPost: 1,
+                })
+            }
             userStats.totalKimoPost += 1;
             await userStats.save();
 

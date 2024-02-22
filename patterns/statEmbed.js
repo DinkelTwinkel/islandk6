@@ -6,7 +6,7 @@ const UserData = require('../models/userData');
 
 module.exports = async (member) => {
 
-    const userStat = await UserStats.findOne({ userID: member.user.id });
+    let userStat = await UserStats.findOne({ userID: member.user.id });
     let jailTracker = await Jail.findOne({ userId: member.user.id });
     const userData = await UserData.findOne({ userID: member.user.id });
 
@@ -14,8 +14,17 @@ module.exports = async (member) => {
         jailTracker = new Jail ({
             userId: member.user.id,
             roles: ['1202533924040081408'],
+            timeToFree: 0,
         })
     }
+
+    if (!userStat) {
+      userStat = new UserStats ({
+        userID: member.id,
+      })
+    }
+
+    await userStat.save();
 
     console.log ( jailTracker );
 

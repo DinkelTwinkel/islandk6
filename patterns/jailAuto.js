@@ -19,9 +19,8 @@ module.exports = async (client) => {
 
         members.forEach(async jailedMember => {
 
-            if (message.guild.id != KimoServer.id) return;
-            if (message.member.roles.cache.get('1202749571957006348')) return;
-            if (message.author.bot) return;
+            if (jailedMember.roles.cache.get('1202749571957006348')) return;
+            if (jailedMember.bot) return;
             
             const result = await Jail.findOne({userId: jailedMember.user.id});
 

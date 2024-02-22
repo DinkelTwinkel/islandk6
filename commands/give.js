@@ -39,6 +39,8 @@ module.exports = {
         const target = interaction.options.getMember('target');
         const targetResult = await UserData.findOne({ userID: target.id });
 
+        if (target.id === interaction.member.id) return interaction.reply({ content: `You cannot give to yourself.`, ephemeral: true});
+
         if (!targetResult) {
             targetResult = new UserData({ 
                 userID: target.user.id,
