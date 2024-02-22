@@ -180,7 +180,7 @@ client.on(Events.GuildMemberAdd, async (member) => {
   })
   await newStatTrack.save();
 
-  let userState = await UserState.findOne({ userID: interaction.member.user.id });
+  let userState = await UserState.findOne({ userID: member.user.id });
 
   if (userState) {
     userState.currentState = 'DANGER';
