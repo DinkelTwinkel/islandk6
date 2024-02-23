@@ -9,7 +9,6 @@ module.exports = async (client) => {
 
         await reaction.message.guild.members.fetch();
     
-    
         const member = reaction.message.guild.members.cache.get(user.id);
         //scissor squad check
         if (!member.roles.cache.get('1202555128352346143')) return;
@@ -47,8 +46,7 @@ module.exports = async (client) => {
             messageAuthorMember.roles.add (dangerRoleID);
             messageAuthorMember.roles.remove (safeRoleID);
             const notificationChannel = KimoServer.channels.cache.get('1210393681698496553');
-            notificationChannel.send({ content: `${messageAuthorMember} Hey an Kimo admin has marked your daily post as Invalid! This is likely because it doesn\'t fit with the guidelines we wrote in **/rules** and **/figure!** However if this is mistake let us know here.`})
-
+            notificationChannel.send({ content: `${messageAuthorMember} Hey an Kimo admin has marked your daily post as Invalid! This is likely because it doesn\'t fit with the guidelines we wrote in **/rules** and **/figure!** However if this is mistake let us know here.`});
     
         }
     });

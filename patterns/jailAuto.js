@@ -36,7 +36,6 @@ module.exports = async (client) => {
 
     client.on(Events.MessageCreate, async (message) => {
 
-
         if (message.guild.id != KimoServer.id) return;
         if (message.member.roles.cache.get('1202749571957006348')) return;
         if (message.member.roles.cache.get('1210274450679922748')) return;
