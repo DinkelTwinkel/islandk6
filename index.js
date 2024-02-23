@@ -49,6 +49,7 @@ const forceRecheck = require('./patterns/forceRecheck');
 const outPutFinalFile = require('./patterns/outPutFinalFile');
 const slaughter = require('./patterns/slaughter');
 const UserState = require('./models/userState');
+const adminReact = require('./patterns/adminReact');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -77,6 +78,7 @@ client.once(Events.ClientReady, async c => {
   stockBuySellFluctuations(client);
   eventVCLock(client);
   fleaMarketController(client);
+  adminReact(client);
 
   setInterval(() => {
     dailySLICE(client);
@@ -159,7 +161,6 @@ client.once(Events.ClientReady, async c => {
 //       timesEdgeLorded: 0,
 //     }
 //  });
-
 
 });
 

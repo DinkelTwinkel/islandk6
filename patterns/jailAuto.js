@@ -39,39 +39,10 @@ module.exports = async (client) => {
 
         if (message.guild.id != KimoServer.id) return;
         if (message.member.roles.cache.get('1202749571957006348')) return;
+        if (message.member.roles.cache.get('1210274450679922748')) return;
         if (message.author.bot) return;
 
         const messageLowercase = message.content.toLowerCase();
-
-        // if (messageLowercase.includes("feet") || messageLowercase.includes("foot")) {
-
-        //     const roleArray = [];
-        //     message.member.roles.cache.forEach(role => {
-        //       roleArray.push(role.id);
-        //     });
-        
-        //     let jailTracker = await Jail.findOne({ userId: message.member.id});
-        //     if (!jailTracker) {
-        //         jailTracker= new Jail({
-        //             userId: message.member.id,
-        //             roles: roleArray,
-        //             numberOfTimesJailed: 1,
-        //         })
-        //     }
-
-        //     jailTracker.feetMentionTracker += 1;
-        
-        //     await jailTracker.save();
-
-        //     console.log('feet message detected');
-
-        //     const jailTime = jailTracker.numberOfTimesJailed * 5;
-
-        //     jail(client, message.member, 'Spoke about feet', 'auto-sanitary-systems', jailTime);
-        //     message.reply(`${message.member} has been sent to the dungeon for ${jailTime} mins for unsanitary behaviour.`);
-        //     message.member.roles.add('1202633002790948865');
-
-        // }
 
         const bannedWords = ["retard", "andrew's underwear", "premo", "boney", "zuckerberg", "shemale", "boku no pico", "league of legends", "faggot", "tranny", "fag", "lesbo", "dyke"];
         const replacementWord = ["sweetiepie", "JASON IS AWESOME", "i have found jesus", "honey darling", "my bum is itchy", "my love", "bby", "habibi", '[REDACTED]'];

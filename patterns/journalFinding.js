@@ -7,16 +7,16 @@ module.exports = async (client) => {
     client.on(Events.MessageCreate, async (message) => {
 
         // total message sent tracking:
-        const stats = await UserStats.findOne({ userID: message.member.user.id });
+        let userStats = await UserStats.findOne({ userID: message.member.user.id });
 
-        if (stats) {
-            stats.totalMessages += 1;
-
-            if (message.content) {
-                stats.lastMessageSent = message.content;
-            }
-            await stats.save();
+        if (!userStats) {
+            userStats = new UserStats ({
+                userID: message.member.user.id,
+                totalMessages: 1,
+            })
         }
+        userStats.totalMessages += 1;
+        await userStats.save();
 
         if (message.member.user.bot) return;
 

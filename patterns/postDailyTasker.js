@@ -22,6 +22,11 @@ module.exports = async (client) => {
 
         if (attachmentTest(message) != null) {
 
+            // removing invalid post role if they have it.
+            if (message.member.roles.cache.get('1210393789043310672')) {
+                message.member.roles.remove ('1210393789043310672');
+            }
+
             const kimoTracker = await KimoTracker.findOne({ serverId: message.guild.id });
 
             // user statistics total kimo posting tracking
@@ -31,7 +36,7 @@ module.exports = async (client) => {
             if (!userStats) {
                 userStats = new UserStats ({
                     userID: message.member.user.id,
-                    totalKimoPost: 1,
+                    totalKimoPost: 0,
                 })
             }
             userStats.totalKimoPost += 1;

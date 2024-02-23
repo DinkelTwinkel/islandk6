@@ -8,6 +8,7 @@ module.exports = async (client) => {
     client.on(Events.VoiceStateUpdate, async function(oldMember, newMember) {
 
         const KimoServer = await client.guilds.fetch(kimoServerID);
+        // const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
     
         const PartARole = KimoServer.roles.cache.get('1202551817708507136');
         const PartBRole = KimoServer.roles.cache.get('1202876101005803531');
@@ -39,6 +40,7 @@ module.exports = async (client) => {
         }
 
         if (newMember.channelId === null && oldMember.channelId === '1203390855722041354') {
+            
             // user left event vc
             // get channel, check all current members inside channel. if no event host exists, lock channel. Send message to say it.
             const eventChannel = await oldMember.guild.channels.cache.get(oldMember.channelId);
@@ -67,7 +69,7 @@ module.exports = async (client) => {
                 eventChannel.setUserLimit(1);
 
                 await currentMembers.forEach(member => {
-                    //member.voice.disconnect();
+                    member.voice.disconnect();
                 });
 
             }
@@ -79,6 +81,9 @@ module.exports = async (client) => {
     const voiceTimes = new Collection();
 
     client.on(Events.VoiceStateUpdate, async function(oldMember, newMember) {
+
+        const KimoServer = await client.guilds.fetch(kimoServerID);
+        const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
         const oldChannel = oldMember.channel;
         const newChannel = newMember.channel;
     
@@ -96,21 +101,26 @@ module.exports = async (client) => {
                 console.log(`${oldMember.member.displayName} spent ${timeSpent / 1000} seconds in voice chat.`);
 
                 const userId = newMember.member.user.id;
-                let userVoiceChat = await UserStats.findOne({ userID: userId });
 
-                if (!userVoiceChat) {
-                // If the user entry doesn't exist, create a new one
-                userVoiceChat = new UserStats({
-                    userID: userId,
-                    vcTime: timeSpent,
-                });
-                } else {
-                // If the user entry exists, update the total time
-                userVoiceChat.vcTime += timeSpent;
+                try {
+                    let userVoiceChat = await UserStats.findOne({ userID: userId });
+
+                    if (!userVoiceChat) {
+                    // If the user entry doesn't exist, create a new one
+                    userVoiceChat = new UserStats({
+                        userID: userId,
+                        vcTime: timeSpent,
+                    });
+                    } else {
+                    // If the user entry exists, update the total time
+                    userVoiceChat.vcTime += timeSpent;
+                    }
+
+                    await userVoiceChat.save();
                 }
-
-                await userVoiceChat.save();
-
+                catch(err) {
+                    botLogChannel.send(err);
+                }
 
             }
 
