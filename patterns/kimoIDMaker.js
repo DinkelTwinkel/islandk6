@@ -1,8 +1,12 @@
 const { EmbedBuilder } = require('discord.js');
 const UserData = require('../models/userData');
+const { kimoChannelID, kimoServerID, botLogChannelID, kimoChannelDungeonID, deadRoleID, dangerRoleID } = require('../ids.json');
 
-module.exports = async (userid) => {
+module.exports = async (userid, member, client) => {
 
+
+    const KimoServer = await client.guilds.cache.get(kimoServerID);
+    const memberObject = KimoServer.members.cache.get(userid)
 
     let findPouch = await UserData.findOne({ userID: userid });
 
@@ -38,7 +42,7 @@ module.exports = async (userid) => {
           },
           {
             name: '\n',
-            value: `**『 ${findPouch.money} 🐚 』**\n ▪ ${findPouch.pronouns}`,
+            value: `**『 ${findPouch.money} 🐚 』**\n ▪ ${findPouch.pronouns}\n ${memberObject}`,
             inline: true
           },
         )

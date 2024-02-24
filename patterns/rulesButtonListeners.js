@@ -60,7 +60,8 @@ module.exports = async (client) => {
 
         console.log(interaction.member.displayAvatarURL());
 
-        interaction.channel.send ({ embeds: [ await kimoIDMaker(interaction.message.content)], ephemeral: false });
+        interaction.channel.send ({ embeds: [ await kimoIDMaker(interaction.message.content, interaction.member, client)], ephemeral: false });
+        return interaction.deferUpdate();
       }
 
 

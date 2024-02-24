@@ -24,10 +24,10 @@ module.exports = {
     if (interaction.options.getMember('target')) {
 
         const targetID =  interaction.options.getMember('target').id;
-        interaction.reply ({ content: targetID, embeds: [ await kimoIDMaker(targetID )], ephemeral: true, components: [row] });
+        interaction.reply ({ content: targetID, embeds: [ await kimoIDMaker(targetID, interaction.options.getMember('target'), client)], ephemeral: true, components: [row] });
     }
     else {
-        interaction.reply ({ content: interaction.member.id, embeds: [ await kimoIDMaker(interaction.member.id)], ephemeral: true, components: [row] });
+        interaction.reply ({ content: interaction.member.id, embeds: [ await kimoIDMaker(interaction.member.id, interaction.member, client)], ephemeral: true, components: [row] });
     }
 
     },
