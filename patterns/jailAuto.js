@@ -87,6 +87,26 @@ module.exports = async (client) => {
             
         });
 
+        if (messageLowercase.includes('feet')) {
+
+            let jailTracker = await Jail.findOne({ userId: message.member.id});
+            if (!jailTracker) {
+                jailTracker= new Jail({
+                    userId: message.member.id,
+                    prename: message.member.displayName,
+                    roles: roleArray,
+                    numberOfTimesJailed: 0,
+                    feetMentionTracker: 1,
+                })
+            }
+            else {
+                jailTracker.feetMentionTracker += 1;
+            }
+        
+            await jailTracker.save();
+
+        }
+
 
     })
 
