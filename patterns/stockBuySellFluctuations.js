@@ -40,7 +40,7 @@ module.exports = async (client) => {
 
   console.log ('StockMarket Module Engaged');
 
-  shiftStock (client);
+  // shiftStock (client);
 
   setInterval(async () => {
 
@@ -198,11 +198,11 @@ async function shiftStock (client) {
           console.log ('whileLoop');
         }
 
-        stock.currentValue = Math.ceil(Math.random() * 100);
+        stock.currentValue = Math.ceil(Math.random() * 100 + 5);
         stock.passiveFluctuation = Math.ceil(Math.random() * 30);
         stock.onePercentChanceFluctuation = Math.ceil(Math.random() * 100);
         stock.currentShift = 0;
-        stock.rising = true;
+        stock.rising = false;
 
         if (Math.random() < 0.2) stock.onePercentChanceFluctuation = stock.onePercentChanceFluctuation * -1;
 

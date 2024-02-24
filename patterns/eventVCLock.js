@@ -92,7 +92,12 @@ module.exports = async (client) => {
             if (oldChannel) {
                 // User left a voice channel
                 const leaveTime = new Date();
-                const joinTime = voiceTimes.get(oldMember.id);
+                let joinTime = voiceTimes.get(oldMember.id);
+
+                if (!joinTime) {
+                    joinTime = new Date().getTime() + (1000 * 60 * 5);
+                }
+
                 const timeSpent = leaveTime - joinTime;
                 // Update time spent in voice chat
                 if (voiceTimes.has(oldMember.id)) {
@@ -119,7 +124,7 @@ module.exports = async (client) => {
                     await userVoiceChat.save();
                 }
                 catch(err) {
-                    botLogChannel.send(err);
+                    botLogChannel.send({content: 'FAILED SOMETHING: ERROR IS' + err});
                 }
 
             }

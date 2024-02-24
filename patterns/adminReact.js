@@ -1,11 +1,13 @@
 const KimoTracker = require('../models/kimoTracker');
-const { ActivityType, Events } = require('discord.js');
+const { ActivityType, Events, EmbedBuilder } = require('discord.js');
 const { kimoChannelID, kimoServerID, botLogChannelID, kimoChannelDungeonID, deadRoleID, dangerRoleID, safeRoleID } = require('../ids.json');
 const UserState = require('../models/userState');
 
 module.exports = async (client) => {
 
     client.on(Events.MessageReactionAdd, async (reaction, user) => {
+
+        if (reaction.emoji.name != '❌') return;
 
         await reaction.message.guild.members.fetch();
     
@@ -46,7 +48,17 @@ module.exports = async (client) => {
             messageAuthorMember.roles.add (dangerRoleID);
             messageAuthorMember.roles.remove (safeRoleID);
             const notificationChannel = KimoServer.channels.cache.get('1210393681698496553');
-            notificationChannel.send({ content: `${messageAuthorMember} Hey an Kimo admin has marked your daily post as Invalid! This is likely because it doesn\'t fit with the guidelines we wrote in **/rules** and **/figure!** However if this is mistake let us know here.`});
+
+            console.log(reaction.message);
+
+            const dailyHighlight = new EmbedBuilder()
+            .setAuthor({
+                name: "INVALID POST ❌",
+                url: reaction.message.url,
+            })
+            .setImage(await reaction.message.attachments.first().url);
+
+            notificationChannel.send({ embeds: [dailyHighlight], content: `${messageAuthorMember} Hey an Kimo admin has marked your daily post as Invalid! This is likely because it doesn\'t fit with the guidelines we wrote in **/rules** and **/figure!** However if this is mistake let us know here. ${reaction.message.url}`});
     
         }
     });

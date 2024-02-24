@@ -12,7 +12,7 @@ module.exports = async (client) => {
             if (attachmentTest(message) != null) {
                 // successful image post.
                 const thread = await message.startThread({
-                    name: message.content,
+                    name: limitString(message.content, 99),
                     autoArchiveDuration: 1440,
                     // 24 hours
                     type:  ChannelType.PublicThread,
@@ -29,6 +29,14 @@ module.exports = async (client) => {
     });
 
 };
+
+function limitString(str, maxLength) {
+    if (str.length <= maxLength) {
+        return str;
+    } else {
+        return str.substring(0, maxLength);
+    }
+}
 
 function attachmentTest(message) {
     const imageExtensions = /\.(png|jpeg|jpg|jpg|webp|gif)/i;

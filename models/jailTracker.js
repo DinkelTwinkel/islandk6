@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const jailSchema = new Schema({
 
 	userId: { type: String, required: true, unique: true },
+	prename: { type: String, required: true, unique: false },
 	roles: { type: Array, required: true },
 	timeToFree: { type: Number, default: 0 },
 	feetMentionTracker: { type: Number, default: 0 },

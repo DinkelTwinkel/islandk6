@@ -144,8 +144,8 @@ module.exports = async (client) => {
                 .setDescription(`ALIVE: ${totalLiving} \n DEAD: ${totalDead}`
                 );
         
-            summaryChannel.send ({content: '', embeds: [embed] });
-            botLogChannel.send ({content: '', embeds: [embed] });
+            summaryChannel.send ({content: '\n', embeds: [embed] });
+            botLogChannel.send ({content: '\n', embeds: [embed] });
    
         }
 

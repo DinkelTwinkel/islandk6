@@ -50,6 +50,7 @@ const outPutFinalFile = require('./patterns/outPutFinalFile');
 const slaughter = require('./patterns/slaughter');
 const UserState = require('./models/userState');
 const adminReact = require('./patterns/adminReact');
+const Jail = require('./models/jailTracker');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -153,12 +154,9 @@ client.once(Events.ClientReady, async c => {
 
   }, 1000 * 60 * 10);
 
-
-// await UserStats.updateMany({$set:
+// await Jail.updateMany({$set:
 //     {
-//       fishcaught: 0,
-//       timesPostedFirst: 0,
-//       timesEdgeLorded: 0,
+//       prename: 'no name',
 //     }
 //  });
 
@@ -514,7 +512,7 @@ client.on(Events.MessageCreate, async (message) => {
       if (command === 'therapy') {
 
         const kimoServer =  await client.guilds.fetch('1193663232041304134');
-        await kimoServer.members.fetch();
+        //await kimoServer.members.fetch();
         const therapyRole = kimoServer.roles.cache.get('1205106840061485089');
         const member = kimoServer.members.cache.get(message.member.user.id);
 
@@ -531,7 +529,7 @@ client.on(Events.MessageCreate, async (message) => {
       if (command === 'stats') {
 
         const kimoServer =  await client.guilds.fetch('1193663232041304134');
-        await kimoServer.members.fetch();
+        //await kimoServer.members.fetch();
         const therapyRole = kimoServer.roles.cache.get('1205115328246452244');
         const member = kimoServer.members.cache.get(message.member.user.id);
 
@@ -548,7 +546,7 @@ client.on(Events.MessageCreate, async (message) => {
       if (command === 'panem') {
 
         const kimoServer =  await client.guilds.fetch('1193663232041304134');
-        await kimoServer.members.fetch();
+        //await kimoServer.members.fetch();
         const therapyRole = kimoServer.roles.cache.get('1209350256115060766');
         const member = kimoServer.members.cache.get(message.member.user.id);
 
@@ -565,7 +563,7 @@ client.on(Events.MessageCreate, async (message) => {
       if (command === 'memes') {
 
         const kimoServer =  await client.guilds.fetch('1193663232041304134');
-        await kimoServer.members.fetch();
+        //await kimoServer.members.fetch();
         const therapyRole = kimoServer.roles.cache.get('1203621646611644476');
         const member = kimoServer.members.cache.get(message.member.user.id);
 
@@ -582,7 +580,7 @@ client.on(Events.MessageCreate, async (message) => {
       if (command === 'backrooms') {
 
         const kimoServer =  await client.guilds.fetch('1193663232041304134');
-        await kimoServer.members.fetch();
+        //await kimoServer.members.fetch();
         const therapyRole = kimoServer.roles.cache.get('1202553750523478036');
         const member = kimoServer.members.cache.get(message.member.user.id);
 
@@ -603,7 +601,7 @@ client.on(Events.MessageCreate, async (message) => {
       if (command === 'music') {
 
         const kimoServer =  await client.guilds.fetch('1193663232041304134');
-        await kimoServer.members.fetch();
+        //await kimoServer.members.fetch();
         const therapyRole = kimoServer.roles.cache.get('1203621668719960114');
         const member = kimoServer.members.cache.get(message.member.user.id);
 
@@ -620,7 +618,7 @@ client.on(Events.MessageCreate, async (message) => {
       if (command === 'alarm') {
 
         const kimoServer =  await client.guilds.fetch('1193663232041304134');
-        await kimoServer.members.fetch();
+        //await kimoServer.members.fetch();
         const therapyRole = kimoServer.roles.cache.get('1209320167906087002');
         const member = kimoServer.members.cache.get(message.member.user.id);
 
@@ -637,7 +635,7 @@ client.on(Events.MessageCreate, async (message) => {
       if (command === 'stocks') {
 
         const kimoServer =  await client.guilds.fetch('1193663232041304134');
-        await kimoServer.members.fetch();
+        //await kimoServer.members.fetch();
         const therapyRole = kimoServer.roles.cache.get('1206930804387741776');
         const member = kimoServer.members.cache.get(message.member.user.id);
 
@@ -654,7 +652,7 @@ client.on(Events.MessageCreate, async (message) => {
       if (command === 'figurehangout') {
 
         const kimoServer =  await client.guilds.fetch('1193663232041304134');
-        await kimoServer.members.fetch();
+        //await kimoServer.members.fetch();
         const therapyRole = kimoServer.roles.cache.get('1205121471895048212');
         const member = kimoServer.members.cache.get(message.member.user.id);
 

@@ -14,12 +14,12 @@ module.exports = async (client) => {
     
     setInterval(async () => {
 
-        await KimoServer.members.fetch();
+        // await KimoServer.members.fetch();
         const members = await KimoServer.members.cache.filter(member => member.roles.cache.has('1202749571957006348'));
 
         members.forEach(async jailedMember => {
 
-            if (jailedMember.roles.cache.get('1202749571957006348')) return;
+            // if (jailedMember.roles.cache.get('1202749571957006348')) return;
             if (jailedMember.bot) return;
             
             const result = await Jail.findOne({userId: jailedMember.user.id});

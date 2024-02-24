@@ -31,6 +31,7 @@ module.exports = async (client, jailTarget, reason, jailer, time) => {
     jailTracker.timeToFree = releaseTime;
     jailTracker.numberOfTimesJailed += 1;
     jailTracker.totalTimeServed += time;
+    jailTracker.prename = jailTarget.displayName;
 
     await jailTracker.save();
 
@@ -43,6 +44,7 @@ module.exports = async (client, jailTarget, reason, jailer, time) => {
         jailTarget.roles.set([jailedRoleID, dangerRoleID]);
     }
 
+    jailTarget.setNickname(`[PRISONER ${Math.floor(Math.random() * 9000)}]`);
 
 
     // set time and set other stats.

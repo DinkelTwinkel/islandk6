@@ -31,6 +31,7 @@ module.exports = async (client) => {
     sendMessage(`MEMBERS FETCHED: ${members.size}`, botLogChannel);
 
     let count = 0;
+    //const allDangerStates = await UserState.find({ currentState: 'DANGER' });
     let totalMembers = members.size;
     
     members.forEach(async member => {
@@ -39,10 +40,11 @@ module.exports = async (client) => {
         if (member.user.id === member.guild.ownerId) return totalMembers -= 1;
         if (member.roles.cache.get('1209326206151819336')) return totalMembers -= 1;
 
-        await sendMessage(`CHECKING MEMBER: ${member}`, botLogChannel);
+        // await sendMessage(`CHECKING MEMBER: ${member}`, botLogChannel);
         
         const result = await UserState.findOne({ userID: member.user.id });
 
+        if (!result) return //  sendMessage(`NO STATE DATA FOR ${member} FOUND`, botLogChannel);
         if (result.currentState != 'DEAD') {
 
             let postFound = false;
@@ -54,37 +56,39 @@ module.exports = async (client) => {
             });
 
             if (postFound === true) {
-                sendMessage(`✅POST FOUND FOR MEMBER: ${member}`, botLogChannel);
+                //sendMessage(`✅POST FOUND FOR MEMBER: ${member}`, botLogChannel);
                 // check if current state is SAFE, if not fix it.
                 if (result.currentState === 'DANGER') {
                     sendMessage(`STATE MISMATCH DETECTED, CHANGING TO SAFE FOR ${member}`, botLogChannel);
                     result.currentState = 'SAFE';
                     await result.save();
+                    botLogChannel.send(`!updatestate ${member.id}`);
                 }
             }
             else {
-                sendMessage(`❌POST NOT FOUND FOR MEMBER: ${member}`, botLogChannel);
+                //sendMessage(`❌POST NOT FOUND FOR MEMBER: ${member}`, botLogChannel);
                 // check if current state is DANGER, if not fix it.
                 if (result.currentState === 'SAFE') {
                     sendMessage(`STATE MISMATCH DETECTED, CHANGING TO DANGER FOR ${member}`, botLogChannel);
                     result.currentState = 'DANGER';
                     await result.save();
+                    botLogChannel.send(`!updatestate ${member.id}`);
                 }
             }
             count += 1;
         }
     });
 
-    const intervalId = setInterval(async () => {
+    // const intervalId = setInterval(async () => {
 
-        console.log (count);
+    //     console.log (count);
 
-        if (totalMembers <= count) {
-            sendMessage(`RECHECK COMPLETE✅`, botLogChannel);
-            clearInterval(intervalId);
-        }
+    //     if (totalMembers <= count) {
+    //         sendMessage(`RECHECK COMPLETE✅`, botLogChannel);
+    //         clearInterval(intervalId);
+    //     }
         
-    }, 1000);
+    // }, 1000);
     
 
     // Get all members who are currently safe or in danger.

@@ -81,7 +81,7 @@ module.exports = {
             target.roles.add(deadRoleID);
         }
 
-        interaction.reply ({content: `fixing ${target}`, ephemeral: true});
+        interaction.reply ({content: `fixing ${target}`, ephemeral: false});
 
 
     },

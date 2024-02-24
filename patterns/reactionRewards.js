@@ -4,11 +4,11 @@ const UserData = require('../models/userData');
 
 module.exports = async (client) => {
 
-    client.on(Events.MessageReactionAdd, async (reaction, user) => {
+        client.on(Events.MessageReactionAdd, async (reaction, user) => {
 
         console.log ('emoji add detected');
       
-        await reaction.message.guild.members.fetch();
+        reaction.message.guild.members.fetch();
       
         if (reaction.partial) {
               // If the message this reaction belongs to was removed, the fetching might result in an API error which should be handled
@@ -40,7 +40,7 @@ module.exports = async (client) => {
       
         console.log ('emoji remove detected');
       
-        await reaction.message.guild.members.fetch();
+        reaction.message.guild.members.fetch();
       
         if (reaction.partial) {
               // If the message this reaction belongs to was removed, the fetching might result in an API error which should be handled

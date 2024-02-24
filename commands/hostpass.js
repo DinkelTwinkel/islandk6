@@ -10,23 +10,23 @@ module.exports = {
     async execute(interaction, client) {
 
 
-        if (interaction.member.roles.cache.get('1203384520976502824')) return interaction.reply({ content: `You already have a hosting pass.`, ephemeral: true });
+        // if (interaction.member.roles.cache.get('1203384520976502824')) return interaction.reply({ content: `You already have a hosting pass.`, ephemeral: true });
 
-        // money check.
+        // // money check.
 
-        const cost = 500;
+        // const cost = 500;
 
-        const userWallet = await UserData.findOne({ userID: interaction.member.id });
-        if (userWallet.money < cost) return interaction.reply({ content: `Insufficient shells, you need ${cost} shells to use this.`, ephemeral: true });
+        // const userWallet = await UserData.findOne({ userID: interaction.member.id });
+        // if (userWallet.money < cost) return interaction.reply({ content: `Insufficient shells, you need ${cost} shells to use this.`, ephemeral: true });
 
-        userWallet.money -= cost;
-        await userWallet.save();
+        // userWallet.money -= cost;
+        // await userWallet.save();
 
-        interaction.member.roles.add('1203384520976502824');
+        // interaction.member.roles.add('1203384520976502824');
 
-        // add role.
+        // // add role.
 
-        interaction.reply({ content: `💳 Hosting pass obtained! You can now create events and join the EVENT VOICE CHANNEL. Abusing this power will lead to a spontaneous ban!`, ephemeral: false });
+        interaction.reply({ content: `💳 To get a hosting pass for events do /applyhost with your idea! Approved ideas and held events are rewarded with 200 Seashells. Thank you.`, ephemeral: false });
 
     },
   };

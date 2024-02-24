@@ -7,6 +7,8 @@ module.exports = async (client) => {
     client.on(Events.MessageCreate, async (message) => {
 
         // total message sent tracking:
+        // no journal checking in kimo channel.
+        if (message.channel.id === '1193665461699739738') return;
         let userStats = await UserStats.findOne({ userID: message.member.user.id });
 
         if (!userStats) {
