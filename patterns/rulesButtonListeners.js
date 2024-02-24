@@ -64,6 +64,5 @@ module.exports = async (client) => {
         return interaction.deferUpdate();
       }
 
-
       })
 };
