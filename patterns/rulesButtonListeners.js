@@ -1,4 +1,4 @@
-const { Events } = require('discord.js');
+const { Events, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const UserData = require('../models/userData');
 const rulesKimoState = require('./rulesKimoState');
 const rulesFigure = require('./rulesFigure');
@@ -128,7 +128,34 @@ module.exports = async (client) => {
             target.roles.add(deadRoleID);
         }
 
-        interaction.reply ({content: `skipping tutorial for ${target}`, ephemeral: false});
+        await interaction.channel.send ({content: `skipping tutorial for ${target}`, ephemeral: false});
+
+        // create button to give role power.
+        console.log('createKimoDetected');
+
+        const powerButton = new ButtonBuilder ()
+        .setCustomId('skiptutorial')
+        .setLabel('SKIP TUTORIAL')
+        .setStyle(ButtonStyle.Danger);
+
+        const powerRow = new ActionRowBuilder()
+        .addComponents(powerButton)
+
+        const embed = new EmbedBuilder()
+        .setTitle("⁉ SKIP TUTORIAL")
+        .setDescription("Having trouble completing the tutorial or using **/start?** PLEASE READ:\n```Kimodameshi is a draw everyday challenge for figure studies. It's Practice mode and invite week right now. People will die and be kicked if they forget to post in #post-daily.``` \nEVENT START: <t:1709294400:f>\n\nYou can skip the tutorial with this button but please use **/rules /figure /help** commands to learn more about the event later.\n\n_If you forget to post once the event starts, You will fail the challenge and be automatically **ejected** from the server._")
+        .setFooter({
+          text: "Click below to skip the tutorial and enter the main server:",
+        });
+
+        const messages = await interaction.channel.messages.fetch();
+        messages.forEach(message => {
+          if (message.content === 'HELP:') {
+            message.delete();
+          }
+        });
+        
+        interaction.channel.send ({content: 'HELP:', embeds: [embed], components: [powerRow]});
 
       }
 

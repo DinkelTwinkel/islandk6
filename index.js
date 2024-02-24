@@ -505,7 +505,14 @@ client.on(Events.MessageCreate, async (message) => {
         const powerRow = new ActionRowBuilder ()
         .addComponents(powerButton)
 
-        message.channel.send ({content: 'Having trouble completing the tutorial or using **/start?**\nClick here to skip tutorial:', components: [powerRow]});
+        const embed = new EmbedBuilder()
+        .setTitle("⁉ SKIP TUTORIAL")
+        .setDescription("Having trouble completing the tutorial or using **/start?** PLEASE READ:\n```Kimodameshi is a draw everyday challenge for figure studies. It's Practice mode and invite week right now. People will die and be kicked if they forget to post in #post-daily.``` \nEVENT START: <t:1709294400:f>\n\nYou can skip the tutorial with this button but please use **/rules /figure /help** commands to learn more about the event later.\n\n_If you forget to post once the event starts, You will fail the challenge and be automatically **ejected** from the server._")
+        .setFooter({
+          text: "Click below to skip the tutorial and enter the main server:",
+        });
+
+        message.channel.send ({content: 'HELP:', embeds: [embed], components: [powerRow]});
 
       } 
 
@@ -663,6 +670,21 @@ client.on(Events.MessageCreate, async (message) => {
             member.roles.add(therapyRole);
             return message.delete();
         }
+      }
+
+      if (command === 'dio.exe') {
+        const dialogueArray = ['Where is my pen', 'WHERE IS MY PEN', 'Where art thou pen', 'URF URF URF'];
+        const rIndex = Math.floor(Math.random() * dialogueArray.length);
+        message.reply ({content: '``` dio: ' + dialogueArray[rIndex] + '```' });
+      }
+
+      if (command === 'andrew.exe') {
+
+        const dialogueArray = ['florida', 'go gators', 'wanna play the finals?'];
+        const rIndex = Math.floor(Math.random() * dialogueArray.length);
+
+        message.reply ({content: '``` andrew: ' + dialogueArray[rIndex] + '```' });
+
       }
 
       if (command === 'figurehangout') {

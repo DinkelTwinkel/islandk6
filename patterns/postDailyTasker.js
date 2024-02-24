@@ -103,64 +103,6 @@ module.exports = async (client) => {
                 postFortune(message, userFortune.Fortune);
 
                 }
-
-
-                // edge king maker
-
-                const edgeTracker = await EdgeKing.findOne({ KimoServerID: message.guild.id});
-
-                console.log ('cutoff clock');
-            
-                const millisecondsInDay = 24 * 60 * 60 * 1000;
-            
-                const currentDate = new Date();
-                const nextUTCDay = new Date(currentDate.getTime() + millisecondsInDay);
-                nextUTCDay.setHours(12);
-                nextUTCDay.setMinutes(0);
-                nextUTCDay.setSeconds(0);
-                nextUTCDay.setDate(kimoTracker.nextDate);
-            
-                const differenceMiliUTC = nextUTCDay.getTime() - currentDate.getTime();
-                const differenceSeconds = differenceMiliUTC / 1000;
-                const differenceMinutes = differenceSeconds / 60;
-
-                if (edgeTracker.edgeTime > differenceMinutes) {
-
-                    // remove crown from all users who possess it.
-                    // add crown to new user. add user id to database.
-
-                    console.log('new edge king crowned');
-                    message.member.roles.add('1203621959292952636');
-
-                    // remove from previous king.
-                    const oldKing = message.guild.members.cache.get(edgeTracker.currentKingID);
-
-                    oldKing.roles.remove('1203621959292952636');
-                    console.log('removing role from old king');
-
-                    edgeTracker.edgeTime = differenceMinutes;
-                    edgeTracker.previousKingID = edgeTracker.currentKingID;
-                    edgeTracker.currentKingID = message.author.id;
-                    edgeTracker.save();
-
-                }
-
-                // first poster 
-
-                if (edgeTracker.firstPostered === false) {
-
-                    await message.guild.members.fetch();
-                    const firstPosterMembers = message.guild.roles.cache.get('1203621622200672308').members;
-                    
-                    firstPosterMembers.forEach(member => {
-                        member.roles.remove('1203621622200672308')
-                    });
-
-                    message.member.roles.add('1203621622200672308');
-
-                    edgeTracker.firstPostered = true;
-                    edgeTracker.save();
-                }
                 
             }
 
