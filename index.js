@@ -493,6 +493,22 @@ client.on(Events.MessageCreate, async (message) => {
 
       } 
 
+      if (command === 'skiptutorial') {
+        // create button to give role power.
+        console.log('createKimoDetected');
+
+        const powerButton = new ButtonBuilder ()
+        .setCustomId('skiptutorial')
+        .setLabel('SKIP TUTORIAL')
+        .setStyle(ButtonStyle.Danger);
+
+        const powerRow = new ActionRowBuilder ()
+        .addComponents(powerButton)
+
+        message.channel.send ({content: 'Having trouble completing the tutorial or using **/start?**\nClick here to skip tutorial:', components: [powerRow]});
+
+      } 
+
     }
 })
 
