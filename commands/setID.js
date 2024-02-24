@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, Client } = require('discord.js');
 const UserData = require('../models/userData');
 const kimoIDMaker = require('../patterns/kimoIDMaker');
 
@@ -47,7 +47,7 @@ module.exports = {
         .setDescription(`change your pronouns!`)
         .addStringOption(option => option.setName('values').setDescription('new pronouns').setRequired(true))),
 
-    async execute(interaction) {
+    async execute(interaction, client) {
 
       // if (interaction.)
 
@@ -118,7 +118,7 @@ module.exports = {
 
       }
 
-      interaction.editReply({content: 'KIMO PASS updated!', embeds: [await kimoIDMaker(interaction.member.id)] , ephemeral: true });
+      await interaction.editReply({content: 'KIMO PASS updated!', embeds: [await kimoIDMaker(interaction.member.id, interaction.member, client)] , ephemeral: true });
 
     },
   };
