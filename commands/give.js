@@ -2,7 +2,6 @@ const { SlashCommandBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = re
 const kimoIDMaker = require('../patterns/kimoIDMaker');
 const UserData = require('../models/userData');
 const cooldowns = new Map();
-const cooldownAmount = 5000;
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -20,6 +19,8 @@ module.exports = {
             .setRequired(true)),
 
     async execute(interaction, client) {
+
+        const cooldownAmount = 5000;
 
         if (cooldowns.has(interaction.member.user.id)) {
             const expirationTime = cooldowns.get(interaction.member.user.id) + cooldownAmount;
@@ -49,7 +50,6 @@ module.exports = {
         }
 
         const now = Date.now();
-        const cooldownAmount = 0.5 * 60 * 1000;
         // 6 hours in milliseconds
 
         cooldowns.set(interaction.member.user.id, now);
