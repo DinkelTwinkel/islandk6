@@ -7,6 +7,8 @@ module.exports = async (client) => {
 
     client.on(Events.MessageReactionAdd, async (reaction, user) => {
 
+        if (reaction.message.channelId != '1193665461699739738') return;
+
         if (reaction.emoji.name != '❌') return;
 
         await reaction.message.guild.members.fetch();
@@ -57,9 +59,12 @@ module.exports = async (client) => {
                 url: reaction.message.url,
             })
             .setImage(await reaction.message.attachments.first().url);
+           //  embeds: [dailyHighlight],
 
-            notificationChannel.send({ embeds: [dailyHighlight], content: `${messageAuthorMember} Hey an Kimo admin has marked your daily post as Invalid! This is likely because it doesn\'t fit with the guidelines we wrote in **/rules** and **/figure!** However if this is mistake let us know here. ${reaction.message.url}`});
-    
+            // await notificationChannel.send({ files: [{ attachment: reaction.message.attachments.first().url }], content: `${messageAuthorMember} Hey an Kimo admin has marked your daily post as Invalid! This is likely because it doesn\'t fit with the guidelines we wrote in **/rules** and **/figure!** However if this is mistake let us know here. ${reaction.message.url}`});
+            await notificationChannel.send({ embeds: [dailyHighlight], content: `${messageAuthorMember} Hey an Kimo admin has marked your daily post as Invalid! This is likely because it doesn\'t fit with the guidelines we wrote in **/rules** and **/figure!** However if this is mistake let us know here. ${reaction.message.url}`});
+            reaction.message.delete();
+            
         }
     });
     
