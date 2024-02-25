@@ -90,7 +90,13 @@ module.exports = {
             
             // user statistics total ref submission
 
-            const userStats = await UserStats.findOne({ userID: interaction.member.user.id });
+            let userStats = await UserStats.findOne({ userID: interaction.member.user.id });
+
+            if (!userStats) {
+              userStats = new UserStats({
+                userID: interaction.member.id,
+              })
+            }
             userStats.refsShared += 1;
             await userStats.save();
 

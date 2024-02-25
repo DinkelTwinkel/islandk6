@@ -49,7 +49,7 @@ module.exports = async (client) => {
 
         bannedWords.forEach( async element => {
 
-            if (messageLowercase.includes(element)) {
+            if (messageLowercase.includes(' ' + element) || messageLowercase.includes(element + ' ' || messageLowercase === element)) {
 
                 console.log('banned word detected');
 
@@ -94,7 +94,7 @@ module.exports = async (client) => {
                 jailTracker= new Jail({
                     userId: message.member.id,
                     prename: message.member.displayName,
-                    roles: roleArray,
+                    roles: [],
                     numberOfTimesJailed: 0,
                     feetMentionTracker: 1,
                 })

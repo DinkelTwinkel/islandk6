@@ -51,6 +51,8 @@ const slaughter = require('./patterns/slaughter');
 const UserState = require('./models/userState');
 const adminReact = require('./patterns/adminReact');
 const Jail = require('./models/jailTracker');
+const campfireVCs = require('./patterns/campfireVCs');
+const Stock = require('./models/stock');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -80,6 +82,7 @@ client.once(Events.ClientReady, async c => {
   eventVCLock(client);
   fleaMarketController(client);
   adminReact(client);
+  campfireVCs(client);
 
   setInterval(() => {
     dailySLICE(client);
@@ -114,22 +117,21 @@ client.once(Events.ClientReady, async c => {
   }, 1000 * 60 * 5);
 
   // campfire vc emoji
-
-  const campfireChannels = ['1202623019122434048', '1202623019122434048'];
+  // const campfireChannels = ['1202623019122434048', '1202623019122434048'];
   const microwaveChannels = ['1202877555053428766', '1202632696296382505'];
-  const caveChannels = ['1202877492512432128', '1202632483053764628'];
+  const caveChannels = ['1202877492512432128', '1202623019122434048'];
 
   setInterval(async () => {
 
-    campfireChannels.forEach(id => {
-      const channel = kimoServer.channels.cache.get(id)
-      if (Math.random() > 0.5) {
-        channel.setName('🔥 campfire');
-      }
-      else {
-        channel.setName('campfire');
-      }
-    });
+    // campfireChannels.forEach(id => {
+    //   const channel = kimoServer.channels.cache.get(id)
+    //   if (Math.random() > 0.5) {
+    //     channel.setName('🔥 campfire');
+    //   }
+    //   else {
+    //     channel.setName('campfire');
+    //   }
+    // });
   
     caveChannels.forEach(id => {
       const channel = kimoServer.channels.cache.get(id)
@@ -154,9 +156,9 @@ client.once(Events.ClientReady, async c => {
 
   }, 1000 * 60 * 10);
 
-// await Jail.updateMany({$set:
+// await Stock.updateMany({$set:
 //     {
-//       prename: 'no name',
+//       nextUpdateTime: 0,
 //     }
 //  });
 

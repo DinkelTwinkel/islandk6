@@ -1,6 +1,8 @@
 const KimoTracker = require('../models/kimoTracker');
 const { ActivityType, Events } = require('discord.js');
 const UserData = require('../models/userData');
+const { kimoChannelID, kimoServerID, botLogChannelID, kimoChannelDungeonID, deadRoleID, dangerRoleID } = require('../ids.json');
+const ReactionLimit = require('../models/reactionRewardTracker');
 
 module.exports = async (client) => {
 
@@ -24,6 +26,22 @@ module.exports = async (client) => {
         const messageAuthor = reaction.message.author;
       
         if (messageAuthor.id === user.id) return;
+        
+        const result = await ReactionLimit.findOne({
+          messageId: reaction.message.id,
+          reactorId: user.id,
+        })
+
+        console.log (user);
+
+        if (result) return console.log ('already reacted to this post before, reward cancelled.');
+
+        const newReactionTracker = new ReactionLimit ({
+          messageId: reaction.message.id,
+          reactorId: user.id,
+        })
+
+        await newReactionTracker.save();
       
         let userData = await UserData.findOne({ userID: messageAuthor.id });
         if (!userData) {
@@ -31,6 +49,8 @@ module.exports = async (client) => {
             userID: messageAuthor.id,
           })
         }
+
+        console.log ('Not reacted to this post before, reward gained');
         userData.money += 1;
         await userData.save();
       

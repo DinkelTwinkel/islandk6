@@ -2,6 +2,7 @@ const { SlashCommandBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = re
 const kimoIDMaker = require('../patterns/kimoIDMaker');
 const UserData = require('../models/userData');
 const cooldowns = new Map();
+const cooldownAmount = 5000;
 
 module.exports = {
     data: new SlashCommandBuilder()

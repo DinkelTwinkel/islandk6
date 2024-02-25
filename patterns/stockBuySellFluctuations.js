@@ -42,14 +42,36 @@ module.exports = async (client) => {
 
   // shiftStock (client);
 
-  setInterval(async () => {
+  const allStocks = await Stock.find({});
 
-    await shiftStock (client);
-    setTimeout(() => {
-      createStockMarket(client);
-    }, 1000);
+  allStocks.forEach(stock => {
     
-  }, 1000 * 60 * stockFluctuationTimer);
+    const now = new Date().getTime();
+    
+    if (now > stock.nextUpdateTime) {
+
+      shiftStock(client);
+      setTimeout(() => {
+        createStockMarket(client);
+      }, 1000);
+
+      stock.nextUpdateTime = now + (60 * 1000 * 60 * 12);
+      stock.save();
+
+    }
+
+
+  });
+
+
+  // setInterval(async () => {
+
+  //   await shiftStock (client);
+  //   setTimeout(() => {
+  //     createStockMarket(client);
+  //   }, 1000);
+    
+  // }, 1000 * 60 * stockFluctuationTimer);
 
   createStockMarket(client);
 

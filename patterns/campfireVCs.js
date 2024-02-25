@@ -1,50 +1,135 @@
 const KimoTracker = require('../models/kimoTracker');
-const { ActivityType } = require('discord.js');
+const { Events, ChannelType } = require('discord.js');
+const { kimoChannelID, kimoServerID, botLogChannelID, kimoChannelDungeonID, deadRoleID, dangerRoleID } = require('../ids.json');
+const Fire = require('../models/activeFires');
 
 module.exports = async (client) => {
 
-    // const result = await KimoTracker.findOne({ serverId: '1192955466872004669' });
+    const KimoServer = await client.guilds.fetch(kimoServerID);
 
+    // check any left over fires in case of bot crash.
 
-    // // Target UTC timestamp in milliseconds (1709294400000 represents a specific date)
-    // var targetTimestamp = 1709294400000; // 1st march
+    const allActiveFires = await Fire.find({});
+    if (allActiveFires) {
+        allActiveFires.forEach(async fire => {
+            let voiceChannel = await KimoServer.channels.fetch(fire.channelId, { force: true });
+            checkVCEmpty(voiceChannel)
+        });
+    }
 
-    // // Current UTC timestamp in milliseconds
-    // var currentTimestamp = Date.now();
+// upon user join to x vc channel
+// create new vc channel and move user there.
+// every 5 seconds, scan  the vc channels stored and if they don't exist then remove them from the database and if they exist then check if there are more then 1 user inside of it.
+// upon user leave also perform vc usercount check. If count is 0, delete channel and delete it on the database.
 
-    // // Calculate the difference in milliseconds
-    // var timeDifference = targetTimestamp - currentTimestamp;
+// upon voice state update check if channel is one of the ones on the data base and if yes.
 
-    // // Convert milliseconds to days
-    // var daysUntilTarget = Math.floor (timeDifference / (1000 * 60 * 60 * 24));
+    client.on(Events.VoiceStateUpdate, async function(oldMember, newMember) {
 
-    // console.log(`There are ${daysUntilTarget} days until the target timestamp.`);
+        if ((newMember.channelId === '1202877516679876648' || newMember.channelId === '1211107198998937711' )) {
 
-    //     client.user.setPresence({
-    //     activities: [{ name: `${daysUntilTarget} days until start.`, type: ActivityType.Watching }],
-    //     status: 'dnd',
-    //     });
-            const watchingArray = ['𝗦𝗨𝗡𝗡𝗬 𝗪𝗘𝗔𝗧𝗛𝗘𝗥 🌄', '𝗟𝗜𝗚𝗛𝗧 𝗗𝗥𝗜𝗭𝗭𝗟𝗘💦', '𝗛𝗜𝗚𝗛 𝗪𝗜𝗡𝗗𝗦💨', '𝗛𝗘𝗔𝗩𝗬 𝗥𝗔𝗜𝗡🌧', '𝗧𝗛𝗨𝗡𝗗𝗘𝗥 𝗦𝗧𝗢𝗥𝗠⛈', '𝗔 𝗖𝗛𝗔𝗡𝗖𝗘 𝗢𝗙 𝗠𝗘𝗔𝗧𝗕𝗔𝗟𝗟🧆', '𝗖𝗟𝗘𝗔𝗥 𝗦𝗞𝗜𝗘𝗦🌅', '𝗛𝗜𝗚𝗛 𝗧𝗜𝗗𝗘🌊', '𝗟𝗜𝗚𝗛𝗧 𝗙𝗢𝗚', '𝗛𝗘𝗔𝗩𝗬 𝗙𝗢𝗚', '𝗦𝗜𝗟𝗘𝗡𝗧 𝗛𝗜𝗟𝗟 𝗙𝗢𝗚', '𝗢𝗩𝗘𝗥𝗖𝗔𝗦𝗧']
-    
-            let dice = Math.floor(Math.random() * watchingArray.length);
+            const createVCChannel = KimoServer.channels.cache.get(newMember.channelId);
+            const parentCategory = KimoServer.channels.cache.get(createVCChannel.parentId);
+            console.log ('join campfire detected');
+            console.log (createVCChannel);
+            // create new channel in same category 
 
-            client.user.setPresence({
-            activities: [{ name: `${watchingArray[dice]}`, type: ActivityType.Watching }],
-            status: 'dnd',
+            const buildFire = await KimoServer.channels.create({
+                name: '🎇spark',
+                type: ChannelType.GuildVoice,
+                parent: parentCategory,
             });
-            client.user.setStatus('online');
 
+            newMember.setChannel(buildFire);
 
-            setInterval(() => {
+            buildFire.send (`<@${newMember.id}> Hi Welcome to your fire! You can change the limit of your fire with **/vclimit** and the name with **/vcname!**`);
 
-                dice = Math.floor(Math.random() * watchingArray.length);
+            // create database entry of VC chat.
 
-                client.user.setPresence({
-                    activities: [{ name: `${watchingArray[dice]}`, type: ActivityType.Watching }],
-                    status: 'dnd',
-                    });
-                    client.user.setStatus('online');
+            const newFire = new Fire({
+                channelId: buildFire.id,
+                ownerId: newMember.id,
+            });
 
-            }, 1000 * 60 * 60 * Math.random());
+            await newFire.save();
+        }
+
+        // if channelid = any of the ones on the database then do a check vc empty.
+
+        const allActiveFires = await Fire.find({});
+
+        allActiveFires.forEach(async fire => {
+
+            if (newMember.channelId === null) {
+                // left a vc.
+                // look for vc id on database
+                const result = await Fire.findOne({channelId: oldMember.channelId});
+                if (result) {
+                    let voiceChannel = await KimoServer.channels.fetch(oldMember.channelId, { force: true });
+                    checkVCEmpty(voiceChannel)
+                }
+            }
+            
+            if (newMember.channelId === fire.channelId) {
+                const result = await Fire.findOne({channelId: newMember.channelId});
+                if (result) {
+                    let voiceChannel = await KimoServer.channels.fetch(newMember.channelId, { force: true });
+                    checkVCEmpty(voiceChannel);
+                }
+            }
+
+            if (oldMember.channelId === fire.channelId) {
+                const result = await Fire.findOne({channelId: newMember.channelId});
+                if (result) {
+                    let voiceChannel = await KimoServer.channels.fetch(oldMember.channelId, { force: true });
+                    checkVCEmpty(voiceChannel);
+                }
+            }
+
+        });
+
+    });
 
 };
+
+async function checkVCEmpty(channel) {
+    // console.log(channel);
+    console.log ('checking VC current Size');
+    console.log (channel.members?.size);
+
+    if (channel.members?.size === 0) {
+        channel.delete();
+        const result = await Fire.deleteMany({channelId: channel.id});
+    }
+
+    const result = await Fire.findOne({channelId: channel.id});
+
+    if (result && result.defaultNaming === true) {
+        
+        if (channel.members?.size <= 2) {
+            channel.setName('🔥 kindling');
+            console.log('🔥 kindling');
+        }
+        else if (channel.members?.size <= 5) {
+            channel.setName('🔥 ember');
+            console.log('🔥 ember');
+        }
+        else if (channel.members?.size <= 10) {
+            channel.setName('🔥 CAMPFIRE ');
+            console.log('🔥 CAMPFIRE ');
+        }
+        else if (channel.members?.size <= 20) {
+            channel.setName('🔥 BONFIRE 🔥');
+            console.log('🔥 BONFIRE 🔥');
+        }
+        else if (channel.members?.size <= 30) {
+            channel.setName('🔥👿 𝗛𝗘𝗟𝗟 𝗙𝗜𝗥𝗘 👿🔥');
+            console.log('🔥👿 𝗛𝗘𝗟𝗟 𝗙𝗜𝗥𝗘 👿🔥');
+        }
+        else if (channel.members?.size >= 35) {
+            channel.setName('⁉⁉⁉⁉⁉⁉FIRE⁉⁉⁉⁉⁉⁉');
+            console.log('⁉⁉⁉⁉⁉⁉FIRE⁉⁉⁉⁉⁉⁉');
+        }
+    }
+
+}
