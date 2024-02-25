@@ -19,7 +19,8 @@ module.exports = {
             .setRequired(true)),
 
     async execute(interaction, client) {
-
+        
+        const now = Date.now();
         const cooldownAmount = 5000;
 
         if (cooldowns.has(interaction.member.user.id)) {
@@ -49,7 +50,7 @@ module.exports = {
             })
         }
 
-        const now = Date.now();
+
         // 6 hours in milliseconds
 
         cooldowns.set(interaction.member.user.id, now);
