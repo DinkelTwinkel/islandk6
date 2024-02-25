@@ -18,6 +18,7 @@ module.exports = async (client) => {
             })
         }
         userStats.totalMessages += 1;
+        userStats.lastMessageSent = message.content;
         await userStats.save();
 
         if (message.member.user.bot) return;
