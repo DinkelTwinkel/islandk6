@@ -17,6 +17,16 @@ module.exports = async (client) => {
         });
     }
 
+    setInterval(async () => {
+        const allActiveFires = await Fire.find({});
+        if (allActiveFires) {
+            allActiveFires.forEach(async fire => {
+                let voiceChannel = await KimoServer.channels.fetch(fire.channelId, { force: true });
+                checkVCEmpty(voiceChannel)
+            });
+        }
+    }, 60 * 1000 * 0.5);
+
 // upon user join to x vc channel
 // create new vc channel and move user there.
 // every 5 seconds, scan  the vc channels stored and if they don't exist then remove them from the database and if they exist then check if there are more then 1 user inside of it.
