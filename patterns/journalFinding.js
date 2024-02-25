@@ -6,6 +6,8 @@ module.exports = async (client) => {
 
     client.on(Events.MessageCreate, async (message) => {
 
+        if (message.guild.id != '1193663232041304134') return;
+
         // total message sent tracking:
         // no journal checking in kimo channel.
         if (message.channel.id === '1193665461699739738') return;
