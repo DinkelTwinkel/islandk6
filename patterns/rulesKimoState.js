@@ -8,6 +8,7 @@ const rulesButtons = require('./rulesButtons');
 
 module.exports = async (client, interaction, customID) => {
 
+
     let userFortune = await Fortune.findOne ({ userId: interaction.member.id });
 
     if (userFortune) {
@@ -32,6 +33,8 @@ module.exports = async (client, interaction, customID) => {
     // Find by user Role.
 
         const currentUser = await UserData.findOne({ userID: interaction.member.user.id }) 
+
+        if (!currentUser) return interaction.reply({ content: `You can't use this yet`, ephemeral: true });
         const allUsersInGroup = await UserData.find({ group: currentUser.group });
 
         // const allSafe = await UserState.find({ currentState: 'SAFE' });

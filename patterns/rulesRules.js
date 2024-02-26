@@ -4,6 +4,8 @@ const rulesButtons = require('./rulesButtons');
 
 module.exports = async (client, interaction, customID) => {
 
+  console.log (interaction.member.id + ' used Kimo Rules');
+
     const DangerRole = interaction.guild.roles.cache.get('1202533924040081408');
     const SafeRole = interaction.guild.roles.cache.get('1202533882822397972');
 

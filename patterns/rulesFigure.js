@@ -4,6 +4,8 @@ const rulesButtons = require('./rulesButtons');
 
 module.exports = async (client, interaction, customID) => {
 
+    console.log (interaction.member.id + ' used Figure Command');
+
     await interaction.deferReply({ ephemeral: true});
 
     const exampleArtMessage = await getExamplePicture(client);

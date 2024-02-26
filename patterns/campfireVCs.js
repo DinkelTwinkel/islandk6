@@ -22,7 +22,12 @@ module.exports = async (client) => {
         if (allActiveFires) {
             allActiveFires.forEach(async fire => {
                 let voiceChannel = await KimoServer.channels.fetch(fire.channelId, { force: true });
-                checkVCEmpty(voiceChannel)
+                try {
+                    checkVCEmpty(voiceChannel);
+                }
+                catch(err) {
+                    console.log (err);
+                }
             });
         }
     }, 60 * 1000 * 0.5);
