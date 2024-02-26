@@ -72,9 +72,7 @@ module.exports = async (client) => {
                 console.log('feet message detected');
     
                 const jailTime = jailTracker.numberOfTimesJailed * 5 + 1;
-                if (!message.member.roles.cache.get('1210274450679922748')) {
-                    jail(client, message.member, `Used banned word: ${element}`, 'auto-sanitary-systems', jailTime);
-                }
+                jail(client, message.member, `Used banned word: ${element}`, 'auto-sanitary-systems', jailTime);
                 // message.reply(`${message.member} has been sent to the dungeon for ${jailTime} mins for poor word choice. Social score lowered...`);
                 message.member.roles.add('1202633002790948865');
     

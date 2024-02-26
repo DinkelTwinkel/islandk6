@@ -623,6 +623,10 @@ client.on(Events.MessageCreate, async (message) => {
         message.channel.send('https://cdn.discordapp.com/attachments/1200550297500659782/1209584155721990174/image.png?ex=65e77407&is=65d4ff07&hm=778093eb37e04e1daf4164b5dbbb0d8973969e24b0b08e47bdbb31e5e888558e&')
       }
 
+      if (command === 'jason.exe') {
+        message.channel.send('https://media.discordapp.net/attachments/1200550297500659782/1208803857371758593/image.png?ex=65edd7d2&is=65db62d2&hm=2a33621988b3710559753eece43c554b35f8e3340cdb0f4ab54006c44ac4a933&=&format=webp&quality=lossless&width=736&height=910')
+      }
+
       if (command === 'socks') {
         message.channel.send('https://cdn.discordapp.com/attachments/1200550297500659782/1211472604238585967/image.png?ex=65ee52c8&is=65dbddc8&hm=3dea85567320998094194f9993e3968584b2a65e51c11eb9880526f07c52be2b&')
       }

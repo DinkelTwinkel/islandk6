@@ -8,6 +8,7 @@ const rulesButtons = require('./rulesButtons');
 
 module.exports = async (client, interaction, customID) => {
 
+  console.log (interaction.member.id + ' used Kimo State Command');
 
     let userFortune = await Fortune.findOne ({ userId: interaction.member.id });
 
