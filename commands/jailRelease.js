@@ -27,6 +27,7 @@ module.exports = {
         jailRelease(client, jailTarget);
 
         interaction.reply({ content: `${jailTarget.displayName} released from jail! `, ephemeral: true });
+        
     },
   };
 
