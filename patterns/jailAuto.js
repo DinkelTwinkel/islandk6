@@ -24,7 +24,7 @@ module.exports = async (client) => {
             if (jailedMember.bot) return;
             
             const result = await Jail.findOne({userId: jailedMember.user.id});
-            const userData = await UserData.findOne({ userId: jailedMember.user.id });
+            const userData = await UserData.findOne({ userID: jailedMember.user.id });
 
             const now = new Date();
 
