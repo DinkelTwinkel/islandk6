@@ -38,7 +38,6 @@ module.exports = async (client) => {
 
         if (message.guild.id != KimoServer.id) return;
         if (message.member.roles.cache.get('1202749571957006348')) return;
-        if (message.member.roles.cache.get('1210274450679922748')) return;
         if (message.channel.id === '1206930735315943444') return;
         if (message.author.bot) return;
 
@@ -73,8 +72,9 @@ module.exports = async (client) => {
                 console.log('feet message detected');
     
                 const jailTime = jailTracker.numberOfTimesJailed * 5 + 1;
-    
-                jail(client, message.member, `Used banned word: ${element}`, 'auto-sanitary-systems', jailTime);
+                if (!message.member.roles.cache.get('1210274450679922748')) {
+                    jail(client, message.member, `Used banned word: ${element}`, 'auto-sanitary-systems', jailTime);
+                }
                 // message.reply(`${message.member} has been sent to the dungeon for ${jailTime} mins for poor word choice. Social score lowered...`);
                 message.member.roles.add('1202633002790948865');
     

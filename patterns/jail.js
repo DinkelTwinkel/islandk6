@@ -6,6 +6,8 @@ const UserData = require('../models/userData');
 
 module.exports = async (client, jailTarget, reason, jailer, time) => {
 
+    if (jailTarget.roles.cache.get('1210274450679922748')) return;
+
     const roleArray = [];
     jailTarget.roles.cache.forEach(role => {
       roleArray.push(role.id);

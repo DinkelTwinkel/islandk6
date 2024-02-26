@@ -31,6 +31,8 @@ module.exports = {
 
         const jailTarget = await interaction.options.getMember('target');
 
+        if (jailTarget.roles.cache.get('1210274450679922748')) return interaction.reply({ content: `Can't jail server boosters.`, ephemeral: true });
+
         if (jailTarget.roles.cache.get(jailedRoleID)) 
             return interaction.reply({ content: `You cannot jail someone already in Jail!`, ephemeral: true });
 
