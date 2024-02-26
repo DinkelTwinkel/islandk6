@@ -723,11 +723,11 @@ client.on(Events.MessageCreate, async (message) => {
 
         if (member.roles.cache.has(therapyRole.id)) {
             member.roles.remove(therapyRole);
-            return message.reply ('figure draw together ping role removed!');
+            return message.reply ('character draw together ping role removed!');
         }
         else {
             member.roles.add(therapyRole);
-            return message.reply ('figure draw together ping role added!');
+            return message.reply ('character draw together ping role added!');
         }
       }
 
@@ -740,11 +740,11 @@ client.on(Events.MessageCreate, async (message) => {
 
         if (member.roles.cache.has(therapyRole.id)) {
             member.roles.remove(therapyRole);
-            return message.reply ('figure draw together ping role removed!');
+            return message.reply ('beginner channel/ping role removed!');
         }
         else {
             member.roles.add(therapyRole);
-            return message.reply ('figure draw together ping role added!');
+            return message.reply ('beginner channel/ping role added!');
         }
       }
 
