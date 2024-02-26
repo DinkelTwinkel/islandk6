@@ -713,6 +713,41 @@ client.on(Events.MessageCreate, async (message) => {
             return message.reply ('figure draw together ping role added!');
         }
       }
+
+      if (command === 'characterhangout') {
+
+        const kimoServer =  await client.guilds.fetch('1193663232041304134');
+        //await kimoServer.members.fetch();
+        const therapyRole = kimoServer.roles.cache.get('1211782824756121610');
+        const member = kimoServer.members.cache.get(message.member.user.id);
+
+        if (member.roles.cache.has(therapyRole.id)) {
+            member.roles.remove(therapyRole);
+            return message.reply ('figure draw together ping role removed!');
+        }
+        else {
+            member.roles.add(therapyRole);
+            return message.reply ('figure draw together ping role added!');
+        }
+      }
+
+      if (command === 'beginner') {
+
+        const kimoServer =  await client.guilds.fetch('1193663232041304134');
+        //await kimoServer.members.fetch();
+        const therapyRole = kimoServer.roles.cache.get('1211782906696048701');
+        const member = kimoServer.members.cache.get(message.member.user.id);
+
+        if (member.roles.cache.has(therapyRole.id)) {
+            member.roles.remove(therapyRole);
+            return message.reply ('figure draw together ping role removed!');
+        }
+        else {
+            member.roles.add(therapyRole);
+            return message.reply ('figure draw together ping role added!');
+        }
+      }
+
     }
 
     
