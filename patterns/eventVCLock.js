@@ -39,7 +39,9 @@ module.exports = async (client) => {
             }
         }
 
-        if (newMember.channelId === null && oldMember.channelId === '1203390855722041354') {
+        const member = newMember.guild.members.cache.get(newMember.id);
+
+        if (newMember.channelId === null && oldMember.channelId === '1203390855722041354' && member.roles.cache.get('1203384520976502824')) {
             
             // user left event vc
             // get channel, check all current members inside channel. if no event host exists, lock channel. Send message to say it.
