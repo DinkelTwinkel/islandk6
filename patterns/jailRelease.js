@@ -23,7 +23,7 @@ module.exports = async (client, jailTarget) => {
         jailTarget.roles.add(degenerateRoleID);
     }
 
-    jailTarget.setNickname(changeName(jailTracker.prename));
+    await jailTarget.setNickname(changeName(jailTracker.prename));
 
     // set time and set other stats.
     let embedDescription = "```" + `TOTAL TIME SERVED: ${jailTracker.totalTimeServed} mins \n TIMES JAILED: ${jailTracker.numberOfTimesJailed} ` + "```";
