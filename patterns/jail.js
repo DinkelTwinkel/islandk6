@@ -35,7 +35,7 @@ module.exports = async (client, jailTarget, reason, jailer, time) => {
         })
     }
 
-    userData.money -= (time * 5);
+    userData.money -= (time * 1);
     await userData.save();
 
     // give jiandao money
