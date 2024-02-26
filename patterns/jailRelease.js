@@ -53,12 +53,15 @@ function changeName(name) {
     const vowels = ['a', 'e', 'i', 'o', 'u'];
     let changedName = '';
     for (let i = 0; i < name.length; i++) {
-      if (vowels.includes(name[i].toLowerCase())) {
-        const randomVowel = vowels[Math.floor(Math.random() * vowels.length)];
-        changedName += randomVowel.toUpperCase(); // Change vowel to a random uppercase vowel
-      } else {
-        changedName += name[i];
-      }
+
+        if (Math.random() > 0.5){
+            if (vowels.includes(name[i].toLowerCase())) {
+                const randomVowel = vowels[Math.floor(Math.random() * vowels.length)];
+                changedName += randomVowel.toUpperCase(); // Change vowel to a random uppercase vowel
+            } else {
+                changedName += name[i];
+            }
+        }
     }
     return changedName;
   }
