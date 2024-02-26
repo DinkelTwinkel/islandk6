@@ -8,7 +8,7 @@ module.exports = async (client, jailTarget) => {
     let jailTracker = await Jail.findOne({ userId: jailTarget.user.id});
 
     if (jailTarget.roles.cache.get('1210274450679922748')) {
-        jailTarget.roles.remove(jailedRoleID);
+        jailTarget.roles.remove('1202749571957006348');
         if (jailTracker.roles.includes('1202876101005803531')) {
             jailTarget.roles.add('1202876101005803531');
         }

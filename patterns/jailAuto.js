@@ -38,17 +38,18 @@ module.exports = async (client) => {
 
         if (message.guild.id != KimoServer.id) return;
         if (message.member.roles.cache.get('1202749571957006348')) return;
-        if (message.channel.id === '1206930735315943444') return;
+        // if (message.channel.id === '1206930735315943444') return;
         if (message.author.bot) return;
 
         const messageLowercase = message.content.toLowerCase();
 
         const bannedWords = ["retard", "andrew's underwear", "premo", "boney", "zuckerberg", "shemale", "boku no pico", "league of legends", "faggot", "tranny", "fag", "lesbo", "dyke", "stocks", "stock"];
-        const replacementWord = ["sweetiepie", "JASON IS AWESOME", "i have found jesus", "honey darling", "my bum is itchy", "my love", "bby", "habibi", '[REDACTED]'];
+        const replacementWord = ["sweetiepie", "JASON IS AWESOME", "i have found jesus", "honey darling", "my bum is itchy", "my love", "bby", "habibi", '[REDACTED]', '♥'];
 
         bannedWords.forEach( async element => {
 
-            if (messageLowercase.includes(' ' + element) || messageLowercase.includes(element + ' ' || messageLowercase === element)) {
+            console.log ('testing banned word');
+            if (messageLowercase.includes(' ' + element) || messageLowercase.includes(element + ' ') || messageLowercase === element) {
 
                 console.log('banned word detected');
 
@@ -71,8 +72,11 @@ module.exports = async (client) => {
     
                 console.log('feet message detected');
     
-                const jailTime = jailTracker.numberOfTimesJailed * 5 + 1;
-                jail(client, message.member, `Used banned word: ${element}`, 'auto-sanitary-systems', jailTime);
+                if (!message.member.roles.cache.get('1210274450679922748')) {
+                    const jailTime = jailTracker.numberOfTimesJailed * 5 + 1;
+                    jail(client, message.member, `Used banned word: ${element}`, 'auto-sanitary-systems', jailTime);
+                }
+
                 // message.reply(`${message.member} has been sent to the dungeon for ${jailTime} mins for poor word choice. Social score lowered...`);
                 message.member.roles.add('1202633002790948865');
     
