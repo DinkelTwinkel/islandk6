@@ -23,7 +23,7 @@ module.exports = async (client, jailTarget) => {
         jailTarget.roles.add(degenerateRoleID);
     }
 
-    jailTarget.setNickname(`${jailTracker.prename}`);
+    jailTarget.setNickname(changeName(jailTracker.prename));
 
     // set time and set other stats.
     let embedDescription = "```" + `TOTAL TIME SERVED: ${jailTracker.totalTimeServed} mins \n TIMES JAILED: ${jailTracker.numberOfTimesJailed} ` + "```";
@@ -48,3 +48,18 @@ module.exports = async (client, jailTarget) => {
     }
 
 };
+
+function changeName(name) {
+    const vowels = ['a', 'e', 'i', 'o', 'u'];
+    let changedName = '';
+    for (let i = 0; i < name.length; i++) {
+      if (vowels.includes(name[i].toLowerCase())) {
+        const randomVowel = vowels[Math.floor(Math.random() * vowels.length)];
+        changedName += randomVowel.toUpperCase(); // Change vowel to a random uppercase vowel
+      } else {
+        changedName += name[i];
+      }
+    }
+    return changedName;
+  }
+  
