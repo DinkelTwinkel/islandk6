@@ -28,7 +28,7 @@ module.exports = {
 
             if (now < expirationTime) {
               const timeLeft = (expirationTime - now) / 1000 / 60;
-              return interaction.reply({ content: `Please wait ${timeLeft.toFixed(1)} more minutes before showing ID again`, ephemeral: true});
+              return interaction.reply({ content: `Please wait ${timeLeft.toFixed(1)} more minutes before giving shells again`, ephemeral: true});
             }
         }
 
