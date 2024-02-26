@@ -3,6 +3,7 @@ const KimoTracker = require('../models/kimoTracker');
 const { ActivityType, EmbedBuilder, Events } = require('discord.js');
 const jailRelease = require('./jailRelease');
 const jail = require('./jail');
+const UserData = require('../models/userData');
 
 module.exports = async (client) => {
 
@@ -23,10 +24,11 @@ module.exports = async (client) => {
             if (jailedMember.bot) return;
             
             const result = await Jail.findOne({userId: jailedMember.user.id});
+            const userData = await UserData.findOne({ userId: jailedMember.user.id });
 
             const now = new Date();
 
-            if (now.getTime() > result.timeToFree) {
+            if (now.getTime() > result.timeToFree && userData.money > 0) {
                 jailRelease(client, jailedMember);
             }
 

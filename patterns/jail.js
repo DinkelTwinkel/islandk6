@@ -80,7 +80,7 @@ module.exports = async (client, jailTarget, reason, jailer, time) => {
     // set time and set other stats.
 
     const formattedReleaseTime = Math.floor(releaseTime / 1000);
-    const embedDescription = "```" + `REASON : ${reason}\nShells Deducted: ${time * 5}` + "```" + `\n jailed by ${jailer}\n release <t:${formattedReleaseTime}:R>`
+    const embedDescription = "```" + `REASON : ${reason}\nShells Deducted: ${time * 5}` + "```" + `\n jailed by ${jailer}\n release <t:${formattedReleaseTime}:R> if you have seashells. If not, release when shells > 0. Do /id to see shells and post drawings in <#1202747652345962496> to get shells.`
 
     const embed = new EmbedBuilder()
         .setAuthor({
