@@ -23,7 +23,7 @@ module.exports = async (client, jailTarget) => {
         jailTarget.roles.add(degenerateRoleID);
     }
 
-    await jailTarget.setNickname(changeName(jailTracker.prename));
+    await jailTarget.setNickname(modifyName(jailTracker.prename));
 
     // set time and set other stats.
     let embedDescription = "```" + `TOTAL TIME SERVED: ${jailTracker.totalTimeServed} mins \n TIMES JAILED: ${jailTracker.numberOfTimesJailed} ` + "```";
@@ -49,20 +49,21 @@ module.exports = async (client, jailTarget) => {
 
 };
 
-function changeName(name) {
+function modifyName(name) {
     const vowels = ['a', 'e', 'i', 'o', 'u'];
-    let changedName = '';
+    let modifiedName = '';
     for (let i = 0; i < name.length; i++) {
-
-        if (Math.random() > 0.5){
-            if (vowels.includes(name[i].toLowerCase())) {
-                const randomVowel = vowels[Math.floor(Math.random() * vowels.length)];
-                changedName += randomVowel.toUpperCase(); // Change vowel to a random uppercase vowel
-            } else {
-                changedName += name[i];
-            }
-        }
+      const randomCase = Math.random() < 0.5 ? 'toUpperCase' : 'toLowerCase';
+      const char = name[i];
+      if (vowels.includes(char.toLowerCase())) {
+        // Replace vowel with another vowel randomly
+        const randomVowel = vowels[Math.floor(Math.random() * vowels.length)];
+        modifiedName += randomVowel[randomCase]();
+      } else {
+        // Remove non-vowel letter
+        modifiedName += '';
+      }
     }
-    return changedName;
+    return modifiedName;
   }
   
