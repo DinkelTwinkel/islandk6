@@ -723,7 +723,7 @@ client.on(Events.MessageCreate, async (message) => {
 
         if (member.roles.cache.has(therapyRole.id)) {
             member.roles.remove(therapyRole);
-            return message.reply ('character draw together ping role removed!');
+            return message.delete();
         }
         else {
             member.roles.add(therapyRole);
@@ -740,7 +740,7 @@ client.on(Events.MessageCreate, async (message) => {
 
         if (member.roles.cache.has(therapyRole.id)) {
             member.roles.remove(therapyRole);
-            return message.reply ('beginner channel/ping role removed!');
+            return message.delete();
         }
         else {
             member.roles.add(therapyRole);
