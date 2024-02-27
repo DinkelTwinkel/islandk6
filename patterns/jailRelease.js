@@ -61,7 +61,7 @@ function modifyName(name) {
         modifiedName += randomVowel[randomCase]();
       } else {
         // Remove non-vowel letter
-        modifiedName += '';
+        // modifiedName += '';
       }
     }
     return modifiedName;
