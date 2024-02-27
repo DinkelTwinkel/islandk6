@@ -12,6 +12,8 @@ module.exports = async (client) => {
 
     sendMessage('BEGINNING FORCE RECHECK', botLogChannel);
 
+    channelLock (client);
+
     // get next date and minute current cycle length.
 
     const tracker = await KimoTracker.findOne({ serverId: kimoServerID });
@@ -79,22 +81,9 @@ module.exports = async (client) => {
         }
     });
 
-    // const intervalId = setInterval(async () => {
-
-    //     console.log (count);
-
-    //     if (totalMembers <= count) {
-    //         sendMessage(`RECHECK COMPLETE✅`, botLogChannel);
-    //         clearInterval(intervalId);
-    //     }
-        
-    // }, 1000);
-    
-
-    // Get all members who are currently safe or in danger.
-    // for each member, scan through the filtered messages for their author id. If not found, set to danger, if found set to safe.
-
-    // 
+    setTimeout(() => {
+        channelUnLock (client);
+    }, 60 * 1000 * 3);
 
 };
 
@@ -103,4 +92,34 @@ async function sendMessage (message, channel) {
     .setColor('Blurple')
     .setDescription(message);
     await channel.send({embeds: [embed] });
+}
+
+async function channelLock (client) {
+    // lock channel, timeout for 10mins, post quote, unlock.
+    const KimoServer = await client.guilds.fetch(kimoServerID);
+    const postDailyChannel = KimoServer.channels.cache.get('1193665461699739738');
+
+    const PartARole = KimoServer.roles.cache.get('1202551817708507136');
+    const PartBRole = KimoServer.roles.cache.get('1202876101005803531');
+
+    postDailyChannel.permissionOverwrites.edit(PartARole, { SendMessages: false });
+    postDailyChannel.permissionOverwrites.edit(PartBRole, { SendMessages: false });
+    postDailyChannel.send ('# AUTO RESCANNING! CHANNEL LOCKED FOR 3MINS 🔒');
+
+}
+
+
+async function channelUnLock (client) {
+    // lock channel, timeout for 10mins, post quote, unlock.
+    const KimoServer = await client.guilds.fetch(kimoServerID);
+    const postDailyChannel = KimoServer.channels.cache.get('1193665461699739738');
+
+    const PartARole = KimoServer.roles.cache.get('1202551817708507136');
+    const PartBRole = KimoServer.roles.cache.get('1202876101005803531');
+
+    postDailyChannel.permissionOverwrites.edit(PartARole, { SendMessages: true });
+    postDailyChannel.permissionOverwrites.edit(PartBRole, { SendMessages: true });
+    postDailyChannel.send('# RECHECK COMPLETE');
+    postDailyChannel.send('** Channel Lock Released 🔓 Thank You for Patience. **');
+
 }
