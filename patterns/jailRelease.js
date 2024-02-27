@@ -53,17 +53,16 @@ function modifyName(name) {
     const vowels = ['a', 'e', 'i', 'o', 'u'];
     let modifiedName = '';
     for (let i = 0; i < name.length; i++) {
-      const randomCase = Math.random() < 0.5 ? 'toUpperCase' : 'toLowerCase';
       const char = name[i];
       if (vowels.includes(char.toLowerCase())) {
         // Replace vowel with another vowel randomly
         const randomVowel = vowels[Math.floor(Math.random() * vowels.length)];
+        const randomCase = Math.random() < 0.5 ? 'toUpperCase' : 'toLowerCase';
         modifiedName += randomVowel[randomCase]();
       } else {
-        // Remove non-vowel letter
-        // modifiedName += '';
+        // Keep non-vowel letter unchanged
+        modifiedName += char;
       }
     }
     return modifiedName;
   }
-  
