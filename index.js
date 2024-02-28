@@ -707,7 +707,7 @@ client.on(Events.MessageCreate, async (message) => {
         if (member.roles.cache.has(therapyRole.id)) {
             member.roles.remove(therapyRole);
 
-            const msg = message.reply ('figure draw together ping role removed!');
+            const msg = await message.reply ('figure draw together ping role removed!');
             setTimeout(() => {
               msg.delete();
               message.delete();
@@ -716,7 +716,7 @@ client.on(Events.MessageCreate, async (message) => {
         else {
             member.roles.add(therapyRole);
 
-            const msg = message.reply ('figure draw together ping role added!');
+            const msg = await message.reply ('figure draw together ping role added!');
             setTimeout(() => {
               msg.delete();
               message.delete();
@@ -733,7 +733,7 @@ client.on(Events.MessageCreate, async (message) => {
 
         if (member.roles.cache.has(therapyRole.id)) {
             member.roles.remove(therapyRole);
-            const msg = message.reply ('character draw together ping role removed!');
+            const msg = await message.reply ('character draw together ping role removed!');
             setTimeout(() => {
               msg.delete();
               message.delete();
@@ -741,7 +741,7 @@ client.on(Events.MessageCreate, async (message) => {
         }
         else {
             member.roles.add(therapyRole);
-            const msg = message.reply ('character draw together ping role added!');
+            const msg = await message.reply ('character draw together ping role added!');
             setTimeout(() => {
               msg.delete();
               message.delete();
@@ -759,7 +759,7 @@ client.on(Events.MessageCreate, async (message) => {
         if (member.roles.cache.has(therapyRole.id)) {
             member.roles.remove(therapyRole);
             
-            const msg = message.reply ('beginner artist channel/ping role added! A safe space for people newer to drawing!');
+            const msg = await message.reply ('beginner artist channel/ping role added! A safe space for people newer to drawing!');
             setTimeout(() => {
               msg.delete();
               message.delete();
@@ -767,7 +767,7 @@ client.on(Events.MessageCreate, async (message) => {
         }
         else {
             member.roles.add(therapyRole);
-            const msg = message.reply ('beginner artist channel/ping role added! A safe space for people newer to drawing!');
+            const msg = await message.reply ('beginner artist channel/ping role added! A safe space for people newer to drawing!');
             setTimeout(() => {
               msg.delete();
               message.delete();
