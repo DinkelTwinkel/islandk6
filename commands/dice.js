@@ -4,7 +4,7 @@ const kimoIDMaker = require('../patterns/kimoIDMaker');
 module.exports = {
     data: new SlashCommandBuilder()
     .setName('dice')
-    .setDescription('role a dice'),
+    .setDescription('roll a dice'),
 
     async execute(interaction, client) {
 

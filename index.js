@@ -708,18 +708,18 @@ client.on(Events.MessageCreate, async (message) => {
             member.roles.remove(therapyRole);
 
             const msg = await message.reply ('figure draw together ping role removed!');
+            message.delete();
             setTimeout(() => {
               msg.delete();
-              message.delete();
             }, 1000 * 10);
         }
         else {
             member.roles.add(therapyRole);
 
             const msg = await message.reply ('figure draw together ping role added!');
+            message.delete();
             setTimeout(() => {
               msg.delete();
-              message.delete();
             }, 1000 * 10);
         }
       }
@@ -734,17 +734,17 @@ client.on(Events.MessageCreate, async (message) => {
         if (member.roles.cache.has(therapyRole.id)) {
             member.roles.remove(therapyRole);
             const msg = await message.reply ('character draw together ping role removed!');
+            message.delete();
             setTimeout(() => {
               msg.delete();
-              message.delete();
             }, 1000 * 10);
         }
         else {
             member.roles.add(therapyRole);
             const msg = await message.reply ('character draw together ping role added!');
+            message.delete();
             setTimeout(() => {
               msg.delete();
-              message.delete();
             }, 1000 * 10);
         }
       }
@@ -760,17 +760,17 @@ client.on(Events.MessageCreate, async (message) => {
             member.roles.remove(therapyRole);
             
             const msg = await message.reply ('beginner artist channel/ping role added! A safe space for people newer to drawing!');
+            message.delete();
             setTimeout(() => {
               msg.delete();
-              message.delete();
             }, 1000 * 10);
         }
         else {
             member.roles.add(therapyRole);
             const msg = await message.reply ('beginner artist channel/ping role added! A safe space for people newer to drawing!');
+            message.delete();
             setTimeout(() => {
               msg.delete();
-              message.delete();
             }, 1000 * 10);
         }
       }

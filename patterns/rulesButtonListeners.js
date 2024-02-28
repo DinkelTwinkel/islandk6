@@ -101,13 +101,13 @@ module.exports = async (client) => {
             target.roles.add('1202551817708507136');
             target.roles.remove('1202876101005803531');
             //const announcementChannel = interaction.guild.channels.cache.get('1202622607250296832');
-            await announcementChannel.send(`${target} has arrived.`);
+            //await announcementChannel.send(`${target} has arrived.`);
         }
         else {
             target.roles.remove('1202551817708507136');
             target.roles.add('1202876101005803531');
             //const announcementChannel = interaction.guild.channels.cache.get('1202876942714544148');
-            await announcementChannel.send(`${target} has arrived.`);
+            //await announcementChannel.send(`${target} has arrived.`);
         }
 
         if (stateInfo.currentState === 'DANGER') {
