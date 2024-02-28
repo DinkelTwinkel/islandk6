@@ -83,7 +83,7 @@ module.exports = async (client) => {
 
     setTimeout(() => {
         channelUnLock (client);
-    }, 60 * 1000 * 3);
+    }, 60 * 1000 * 2);
 
 };
 
@@ -104,7 +104,7 @@ async function channelLock (client) {
 
     postDailyChannel.permissionOverwrites.edit(PartARole, { SendMessages: false });
     postDailyChannel.permissionOverwrites.edit(PartBRole, { SendMessages: false });
-    postDailyChannel.send ('# AUTO RESCANNING! CHANNEL LOCKED FOR 3MINS 🔒');
+    postDailyChannel.send ('# AUTO RESCANNING! CHANNEL LOCKED FOR 2MINS 🔒');
 
 }
 
