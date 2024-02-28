@@ -8,7 +8,9 @@ module.exports = {
 
     async execute(interaction, client) {
 
-      await interaction.deferReply({ephemeral: true});
+      if (!interaction.member.roles.cache.get('1203377553763475497')) return interaction.reply({ content: 'Only npcs can use this...', ephemeral: true });
+
+      await interaction.deferReply();
 
       const players = await UserData.find().sort({ money: -1 });
       const firstPlace = await client.guilds.cache.get('1193663232041304134').members.fetch(players[0].userID);
