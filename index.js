@@ -683,14 +683,14 @@ client.on(Events.MessageCreate, async (message) => {
       }
 
       if (command === 'dio.exe') {
-        const dialogueArray = ['Where is my pen', 'WHERE IS MY PEN', 'Where art thou pen', 'URF URF URF'];
+        const dialogueArray = ['Where is my pen', 'WHERE IS MY PEN', 'Where art thou pen', 'URF URF URF', 'SBI OPEN UP!'];
         const rIndex = Math.floor(Math.random() * dialogueArray.length);
         message.reply ({content: '``` dio: ' + dialogueArray[rIndex] + '```' });
       }
 
       if (command === 'andrew.exe') {
 
-        const dialogueArray = ['florida', 'go gators', 'wanna play the finals?'];
+        const dialogueArray = ['florida', 'go gators', 'wanna play the finals?', 'https://discord.gg/Mf9VZBbd'];
         const rIndex = Math.floor(Math.random() * dialogueArray.length);
 
         message.reply ({content: '``` andrew: ' + dialogueArray[rIndex] + '```' });
@@ -706,11 +706,21 @@ client.on(Events.MessageCreate, async (message) => {
 
         if (member.roles.cache.has(therapyRole.id)) {
             member.roles.remove(therapyRole);
-            return message.reply ('figure draw together ping role removed!');
+
+            const msg = message.reply ('figure draw together ping role removed!');
+            setTimeout(() => {
+              msg.delete();
+              message.delete();
+            }, 1000 * 10);
         }
         else {
             member.roles.add(therapyRole);
-            return message.reply ('figure draw together ping role added!');
+
+            const msg = message.reply ('figure draw together ping role added!');
+            setTimeout(() => {
+              msg.delete();
+              message.delete();
+            }, 1000 * 10);
         }
       }
 
@@ -723,11 +733,19 @@ client.on(Events.MessageCreate, async (message) => {
 
         if (member.roles.cache.has(therapyRole.id)) {
             member.roles.remove(therapyRole);
-            return message.delete();
+            const msg = message.reply ('character draw together ping role removed!');
+            setTimeout(() => {
+              msg.delete();
+              message.delete();
+            }, 1000 * 10);
         }
         else {
             member.roles.add(therapyRole);
-            return message.reply ('character draw together ping role added!');
+            const msg = message.reply ('character draw together ping role added!');
+            setTimeout(() => {
+              msg.delete();
+              message.delete();
+            }, 1000 * 10);
         }
       }
 
@@ -740,11 +758,20 @@ client.on(Events.MessageCreate, async (message) => {
 
         if (member.roles.cache.has(therapyRole.id)) {
             member.roles.remove(therapyRole);
-            return message.delete();
+            
+            const msg = message.reply ('beginner artist channel/ping role added! A safe space for people newer to drawing!');
+            setTimeout(() => {
+              msg.delete();
+              message.delete();
+            }, 1000 * 10);
         }
         else {
             member.roles.add(therapyRole);
-            return message.reply ('beginner channel/ping role added!');
+            const msg = message.reply ('beginner artist channel/ping role added! A safe space for people newer to drawing!');
+            setTimeout(() => {
+              msg.delete();
+              message.delete();
+            }, 1000 * 10);
         }
       }
 
