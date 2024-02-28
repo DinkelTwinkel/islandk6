@@ -44,7 +44,7 @@ module.exports = async (member) => {
             },
             {
               name: "VC TIME",
-              value: `${Math.floor(userStat.vcTime/1000)}mins`,
+              value: `${Math.floor(userStat.vcTime/1000/60)}mins`,
               inline: true
             },
             {
