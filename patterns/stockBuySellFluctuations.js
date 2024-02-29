@@ -44,36 +44,51 @@ module.exports = async (client) => {
 
   const allStocks = await Stock.find({});
 
-  allStocks.forEach(stock => {
+  allStocks.forEach(async stock => {
     
     const now = new Date().getTime();
     
     if (now > stock.nextUpdateTime) {
 
       shiftStock(client);
-      setTimeout(() => {
-        createStockMarket(client);
-      }, 1000);
-
       stock.nextUpdateTime = now + (60 * 1000 * 60 * 12);
-      stock.save();
+      await stock.save();
 
     }
 
-
   });
 
+  setTimeout(() => {
+    createStockMarket(client);
+  }, 1000 * 5);
 
-  // setInterval(async () => {
 
-  //   await shiftStock (client);
-  //   setTimeout(() => {
-  //     createStockMarket(client);
-  //   }, 1000);
-    
-  // }, 1000 * 60 * stockFluctuationTimer);
+  setInterval(async () => {
 
-  createStockMarket(client);
+    const allStocks = await Stock.find({});
+
+    allStocks.forEach(async stock => {
+      
+      const now = new Date().getTime();
+      
+      if (now > stock.nextUpdateTime) {
+  
+        shiftStock(client);
+        stock.nextUpdateTime = stock.nextUpdateTime + (60 * 1000 * 60 * 12);
+        await stock.save();
+        
+
+      }
+  
+    });
+
+    setTimeout(() => {
+      createStockMarket(client);
+    }, 1000 * 5);
+
+  }, 1000 * 60 );
+
+
 
   client.on(Events.InteractionCreate, async (interaction) => {
 
@@ -137,7 +152,7 @@ module.exports = async (client) => {
       }
       else if (interaction.customId === 'sell' + stock.stockName) {
 
-        if (Math.random() > 0.5) {
+        if (Math.random() > 0.4) {
           stock.currentValue -= 1;
         }
 
