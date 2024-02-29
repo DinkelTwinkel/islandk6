@@ -77,14 +77,15 @@ module.exports = async (client) => {
         stock.nextUpdateTime = stock.nextUpdateTime + (60 * 1000 * 60 * 12);
         await stock.save();
         
+        setTimeout(() => {
+          createStockMarket(client);
+        }, 1000 * 5);
 
       }
   
     });
 
-    setTimeout(() => {
-      createStockMarket(client);
-    }, 1000 * 5);
+
 
   }, 1000 * 60 );
 
