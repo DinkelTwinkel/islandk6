@@ -100,7 +100,7 @@ module.exports = async (client) => {
                 let joinTime = voiceTimes.get(oldMember.id);
 
                 if (!joinTime) {
-                    joinTime = new Date().getTime() - (1000 * 60 * 5);
+                    joinTime = new Date().getTime() - ((1000 * 60 * 10) + 1);
                 }
 
                 const timeSpent = leaveTime - joinTime;
