@@ -91,6 +91,10 @@ module.exports = async (client) => {
         //interaction.deferUpdate();
         // buy click deteced.
 
+        if (Math.random() > 0.5) {
+          stock.currentValue += 1;
+        }
+
         const cost = stock.currentValue;
         const checkPouch = await UserData.findOne ({userID: interaction.member.user.id});
         if (checkPouch.money < cost) return interaction.reply ({content: `You do not have enough shells! You need ${cost} shells to perform this action!`, ephemeral: true });
@@ -126,10 +130,16 @@ module.exports = async (client) => {
           interaction.reply({content: `You bought ${stock.stockName} stock for ${stock.currentValue}, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
         }
 
+        await stock.save();
+
         refChannel1.send (`${interaction.member.displayName} bought ${stock.stockName} stock for ${stock.currentValue} sea shells, they currently have ${checkExistingInventory.quantity} shares.`);
         createStockMarket(client);
       }
       else if (interaction.customId === 'sell' + stock.stockName) {
+
+        if (Math.random() > 0.5) {
+          stock.currentValue -= 1;
+        }
 
         let checkExistingInventory = await Inventory.findOne({
           ownerId: interaction.member.user.id,
@@ -153,6 +163,8 @@ module.exports = async (client) => {
         else {
           interaction.reply({content: `You sold ${stock.stockName} Stock for ${stock.currentValue} shells, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
         }
+
+        await stock.save();
 
         refChannel1.send (`${interaction.member.displayName} sold ${stock.stockName} Stock for ${stock.currentValue} sea shells, they currently have ${checkExistingInventory.quantity} shares.`);
         createStockMarket(client);
