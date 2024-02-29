@@ -58,7 +58,7 @@ module.exports = async (client) => {
       const now = new Date();
       console.log (now.getDay())
 
-      // if (now.getDay() <= 4) return interaction.reply({ content: `It's not yet the weekend.`, ephemeral: true });
+      if (now.getDay() <= 4) return interaction.reply({ content: `It's not yet the weekend.`, ephemeral: true });
       if (now.getTime() < result.passExpireTime ) return interaction.reply ({ content: 'Your pass has yet to expire.', ephemeral: true});
 
       if (interaction.customId === 'marketfareday') {

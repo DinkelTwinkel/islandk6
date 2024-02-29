@@ -812,7 +812,6 @@ client.on(Events.MessageCreate, async (message) => {
         if (member.roles.cache.has(therapyRole.id)) {
             member.roles.remove(therapyRole);
             deleteMessage(message);
-
         }
 
       }
