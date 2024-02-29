@@ -40,18 +40,18 @@ module.exports = async (client) => {
 
         if (message.guild.id != KimoServer.id) return;
         if (message.member.roles.cache.get('1202749571957006348')) return;
-        // if (message.channel.id === '1206930735315943444') return;
+        if (message.channel.id === '1206930735315943444') return;
         if (message.author.bot) return;
 
         const messageLowercase = message.content.toLowerCase();
 
-        const bannedWords = ["retard", "andrew's underwear", "premo", "boney", "zuckerberg", "shemale", "boku no pico", "league of legends", "faggot", "tranny", "fag", "lesbo", "dyke", "stocks", "stock market", "Ieague of Iegends", "penis"];
+        const bannedWords = ["retard", "andrew's underwear", "premo", "boney", "zuckerberg", "shemale", "boku no pico", "league of legends", "faggot", "tranny", "fag", "lesbo", "dyke", "stocks", "stock market", "ieague of iegends", "penis"];
         const replacementWord = ["sweetiepie", "JASON IS AWESOME", "i have found jesus", "honey darling", "my bum is itchy", "my love", "bby", "habibi", '[REDACTED]', '♥'];
 
         bannedWords.forEach( async element => {
 
             console.log ('testing banned word');
-            if (messageLowercase.includes(' ' + element) || messageLowercase.includes(element + ' ') || messageLowercase === element) {
+            if (messageLowercase.includes(' ' + element) || messageLowercase.includes(element + ' ') || messageLowercase === element || messageLowercase.includes(element)) {
 
                 console.log('banned word detected');
 
