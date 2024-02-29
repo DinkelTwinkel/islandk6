@@ -135,7 +135,7 @@ module.exports = async (client) => {
 
                         const member = KimoServer.members.cache.get(newMember.id);
 
-                        oldChannel.send (`<@${findFire.ownerId}> It seems like ${member.displayName} enjoyed your fire today. **You gained ${gain} shells.**`);
+                        oldChannel.send (`<@${findFire.ownerId}> It seems like ${member.displayName} enjoyed the warmth of your fire today. **You gained ${gain} shells.**`);
 
                         let creatorWallet = await UserData.findOne({ userID: findFire.ownerId });
                         if (!creatorWallet) {
