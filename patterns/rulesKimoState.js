@@ -8,6 +8,8 @@ const rulesButtons = require('./rulesButtons');
 
 module.exports = async (client, interaction, customID) => {
 
+  interaction.deferReply({ ephemeral: true });
+
   console.log (interaction.member.id + ' used Kimo State Command');
 
     let userFortune = await Fortune.findOne ({ userId: interaction.member.id });
@@ -113,7 +115,7 @@ module.exports = async (client, interaction, customID) => {
         //     return interaction.message.edit({ embeds: [embed], ephemeral: true, components: [await rulesButtons(customID)] });
         // }
 
-    interaction.reply({ embeds: [embed], ephemeral: true, components: [await rulesButtons(customID)] });
+    interaction.editReply({ embeds: [embed], ephemeral: true, components: [await rulesButtons(customID)] });
 
 };
 

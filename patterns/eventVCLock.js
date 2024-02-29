@@ -1,6 +1,9 @@
 const { Events, Collection } = require('discord.js');
 const { kimoChannelID, kimoServerID, botLogChannelID, kimoChannelDungeonID, deadRoleID } = require('../ids.json');
 const UserStats = require('../models/userStatistics');
+const Fire = require('../models/activeFires');
+const ReactionLimit = require('../models/reactionRewardTracker');
+const UserData = require('../models/userData');
 let hostCurrentInChannel = false;
 
 module.exports = async (client) => {
@@ -106,6 +109,52 @@ module.exports = async (client) => {
                     voiceTimes.delete(oldMember.id);
                 }
                 console.log(`${oldMember.member.displayName} spent ${timeSpent / 1000} seconds in voice chat.`);
+
+                // check if VC channel is a fire.
+                // reward creator of fire 1 shell per 10 mins spent. to a max of 5 shells per user per fire.
+
+                const findFire = await Fire.findOne({channelId: oldChannel.id});
+                if (findFire) {
+
+                    // check if time spent is greater then 10mins
+
+                    // check if already rewarded for this fire 
+
+                    const rewardLimitTracker = await ReactionLimit.findOne ({ messageId: findFire.channelId, reactorId: oldMember.id });
+
+                    if (rewardLimitTracker) return console.log('vc reward cancelled, already rewarded for this fire.');
+                    // self cancels reward if this user has already visited this particular fire.
+
+                    if (timeSpent > 1000 * 60 * 10) {
+
+                        let gain = Math.floor(timeSpent/( 1000 * 60 * 10 ));
+
+                        if (gain > 10) {
+                            gain = 10;
+                        }
+
+                        const member = KimoServer.members.cache.get(newMember.id);
+
+                        oldChannel.send (`<@${findFire.ownerId}> It seems like ${member.displayName} enjoyed your fire today. **You gained ${gain} shells.**`);
+
+                        let creatorWallet = await UserData.findOne({ userID: findFire.ownerId });
+                        if (!creatorWallet) {
+                            creatorWallet = new UserData ({ userID: oldMember.id });
+                        }
+
+                        creatorWallet.money += gain;
+
+                        const newLimitTracker = new ReactionLimit({
+                            messageId: findFire.channelId,
+                            reactorId: oldMember.id,
+                        })
+
+                        await creatorWallet.save();
+                        await newLimitTracker.save();
+
+                    }
+
+                }
 
                 const userId = newMember.member.user.id;
 

@@ -46,12 +46,12 @@ module.exports = async (client) => {
         const messageLowercase = message.content.toLowerCase();
 
         const bannedWords = ["retard", "andrew's underwear", "premo", "boney", "zuckerberg", "shemale", "boku no pico", "league of legends", "faggot", "tranny", "fag", "lesbo", "dyke", "stocks", "stock market", "ieague of iegends", "penis"];
-        const replacementWord = ["sweetiepie", "JASON IS AWESOME", "i have found jesus", "honey darling", "my bum is itchy", "my love", "bby", "habibi", '[REDACTED]', '♥'];
+        const replacementWord = ["sweetiepie", "JASON IS AWESOME", "i have found jesus", "honey darling", "my bum is itchy", "my love", "bby", "habibi", '[REDACTED]', '♥', "where is dio's pen"];
 
         bannedWords.forEach( async element => {
-
-            console.log ('testing banned word');
-            if (messageLowercase.includes(' ' + element) || messageLowercase.includes(element + ' ') || messageLowercase === element || messageLowercase.includes(element)) {
+            //  || messageLowercase.includes(' ' + element) || messageLowercase.includes(element + ' ')  messageLowercase === element || 
+            // console.log ('testing banned word');
+            if (messageLowercase.includes(element) && messageLowercase != '!' + element) {
 
                 console.log('banned word detected');
 

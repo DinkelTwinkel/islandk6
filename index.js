@@ -53,6 +53,8 @@ const adminReact = require('./patterns/adminReact');
 const Jail = require('./models/jailTracker');
 const campfireVCs = require('./patterns/campfireVCs');
 const Stock = require('./models/stock');
+const marketFair = require('./patterns/marketFair');
+const marketFairCreate = require('./patterns/marketFairCreate');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -83,6 +85,7 @@ client.once(Events.ClientReady, async c => {
   fleaMarketController(client);
   adminReact(client);
   campfireVCs(client);
+  marketFair(client);
 
   setInterval(() => {
     dailySLICE(client);
@@ -156,9 +159,9 @@ client.once(Events.ClientReady, async c => {
 
   }, 1000 * 60 * 10);
 
-// await Stock.updateMany({$set:
+// await UserData.updateMany({$set:
 //     {
-//       nextUpdateTime: 0,
+//       emojiReactAwardAmount: 0,
 //     }
 //  });
 
@@ -521,6 +524,30 @@ client.on(Events.MessageCreate, async (message) => {
     }
 })
 
+// life guard hidden commands
+
+client.on(Events.MessageCreate, async (message) => {
+
+  if (message.guild.id != '1193663232041304134') return;
+  if (!message.member.roles.cache.get('1202555128352346143')) return;
+
+  if (message.content.startsWith('!')) {
+      console.log('commandDetected');
+      // Extract the command and any arguments
+      const args = message.content.slice(1).trim().split(/ +/);
+      const command = args.shift().toLowerCase();
+  
+      // Check the command and respond
+
+      if (command === 'islandfair') {
+        // create button to give role power.
+        await marketFairCreate(client, message.channel.id);
+        await message.delete();
+      } 
+  }
+    
+})
+
 // regular hidden commands
 client.on(Events.MessageCreate, async (message) => {
 
@@ -543,11 +570,11 @@ client.on(Events.MessageCreate, async (message) => {
 
         if (member.roles.cache.has(therapyRole.id)) {
             member.roles.remove(therapyRole);
-            return message.delete();
+            return deleteMessage(message);
         }
         else {
             member.roles.add(therapyRole);
-            return message.delete();
+            return deleteMessage(message);
         }
       }
 
@@ -560,11 +587,11 @@ client.on(Events.MessageCreate, async (message) => {
 
         if (member.roles.cache.has(therapyRole.id)) {
             member.roles.remove(therapyRole);
-            return message.delete();
+            return deleteMessage(message);
         }
         else {
             member.roles.add(therapyRole);
-            return message.delete();
+            return deleteMessage(message);
         }
       }
 
@@ -577,11 +604,11 @@ client.on(Events.MessageCreate, async (message) => {
 
         if (member.roles.cache.has(therapyRole.id)) {
             member.roles.remove(therapyRole);
-            return message.delete();
+            return deleteMessage(message);
         }
         else {
             member.roles.add(therapyRole);
-            return message.delete();
+            return deleteMessage(message);
         }
       }
 
@@ -594,11 +621,11 @@ client.on(Events.MessageCreate, async (message) => {
 
         if (member.roles.cache.has(therapyRole.id)) {
             member.roles.remove(therapyRole);
-            return message.delete();
+            return deleteMessage(message);
         }
         else {
             member.roles.add(therapyRole);
-            return message.delete();
+            return deleteMessage(message);
         }
       }
 
@@ -611,11 +638,11 @@ client.on(Events.MessageCreate, async (message) => {
 
         if (member.roles.cache.has(therapyRole.id)) {
             member.roles.remove(therapyRole);
-            return message.delete();
+            return deleteMessage(message);
         }
         else {
             member.roles.add(therapyRole);
-            return message.delete();
+            return deleteMessage(message);
         }
       }
 
@@ -640,11 +667,11 @@ client.on(Events.MessageCreate, async (message) => {
 
         if (member.roles.cache.has(therapyRole.id)) {
             member.roles.remove(therapyRole);
-            return message.delete();
+            return deleteMessage(message);
         }
         else {
             member.roles.add(therapyRole);
-            return message.delete();
+            return deleteMessage(message);
         }
       }
 
@@ -657,11 +684,11 @@ client.on(Events.MessageCreate, async (message) => {
 
         if (member.roles.cache.has(therapyRole.id)) {
             member.roles.remove(therapyRole);
-            return message.delete();
+            return deleteMessage(message);
         }
         else {
             member.roles.add(therapyRole);
-            return message.delete();
+            return deleteMessage(message);
         }
       }
 
@@ -674,11 +701,11 @@ client.on(Events.MessageCreate, async (message) => {
 
         if (member.roles.cache.has(therapyRole.id)) {
             member.roles.remove(therapyRole);
-            return message.delete();
+            return deleteMessage(message);
         }
         else {
             member.roles.add(therapyRole);
-            return message.delete();
+            return deleteMessage(message);
         }
       }
 
@@ -708,18 +735,18 @@ client.on(Events.MessageCreate, async (message) => {
             member.roles.remove(therapyRole);
 
             const msg = await message.reply ('figure draw together ping role removed!');
-            message.delete();
+            deleteMessage(message);
             setTimeout(() => {
-              msg.delete();
+              deleteMessage(msg);
             }, 1000 * 10);
         }
         else {
             member.roles.add(therapyRole);
 
             const msg = await message.reply ('figure draw together ping role added!');
-            message.delete();
+            deleteMessage(message);
             setTimeout(() => {
-              msg.delete();
+              deleteMessage(msg);
             }, 1000 * 10);
         }
       }
@@ -734,17 +761,17 @@ client.on(Events.MessageCreate, async (message) => {
         if (member.roles.cache.has(therapyRole.id)) {
             member.roles.remove(therapyRole);
             const msg = await message.reply ('character draw together ping role removed!');
-            message.delete();
+            deleteMessage(message);
             setTimeout(() => {
-              msg.delete();
+              deleteMessage(msg);
             }, 1000 * 10);
         }
         else {
             member.roles.add(therapyRole);
             const msg = await message.reply ('character draw together ping role added!');
-            message.delete();
+            deleteMessage(message);
             setTimeout(() => {
-              msg.delete();
+              deleteMessage(msg);
             }, 1000 * 10);
         }
       }
@@ -759,24 +786,48 @@ client.on(Events.MessageCreate, async (message) => {
         if (member.roles.cache.has(therapyRole.id)) {
             member.roles.remove(therapyRole);
             
-            const msg = await message.reply ('beginner artist channel/ping role added! A safe space for people newer to drawing!');
-            message.delete();
+            const msg = await message.reply ('beginner artist channel/ping role removed!');
+            deleteMessage(message);
             setTimeout(() => {
-              msg.delete();
+              deleteMessage(msg);
             }, 1000 * 10);
         }
         else {
             member.roles.add(therapyRole);
             const msg = await message.reply ('beginner artist channel/ping role added! A safe space for people newer to drawing!');
-            message.delete();
+            deleteMessage(message);
             setTimeout(() => {
-              msg.delete();
+              deleteMessage(msg);
             }, 1000 * 10);
         }
       }
 
+      if (command === 'leavecubby') {
+
+        const kimoServer =  await client.guilds.fetch('1193663232041304134');
+        //await kimoServer.members.fetch();
+        const therapyRole = kimoServer.roles.cache.get('1211922777741860874');
+        const member = kimoServer.members.cache.get(message.member.user.id);
+
+        if (member.roles.cache.has(therapyRole.id)) {
+            member.roles.remove(therapyRole);
+            deleteMessage(message);
+
+        }
+
+      }
+
     }
 
+
+    function deleteMessage (message) {
+      try {
+        message.delete();
+      }
+      catch (err) {
+        console.log (err);
+      }
+    }
     
 })
 

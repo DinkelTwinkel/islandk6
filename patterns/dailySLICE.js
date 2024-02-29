@@ -7,6 +7,7 @@ const UserData = require('../models/userData');
 const EdgeKing = require('../models/edgeKing');
 const honourTheFallen = require('./honourTheFallen');
 const forceRecheck = require('./forceRecheck');
+const marketFairCreate = require('./marketFairCreate');
 module.exports = async (client) => {
 
     console.log ('not yet time');
@@ -262,7 +263,15 @@ async function channelLock (client) {
     const message = await postDailyChannel.send ({content: '', embeds: [dailyquote] });
     console.log(message);
 
-    dailyHighlight(client);
+    await dailyHighlight(client);
+
+    const now = new Date();
+
+    if (now.getDay() === 5) {
+        marketFairCreate(client, kimoChannelID);
+        marketFairCreate(client, '1207882126154932294');
+        marketFairCreate(client, '1209347683676852224');
+    }
 
     // setTimeout(async () => {
 

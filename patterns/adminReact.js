@@ -2,20 +2,18 @@ const KimoTracker = require('../models/kimoTracker');
 const { ActivityType, Events, EmbedBuilder } = require('discord.js');
 const { kimoChannelID, kimoServerID, botLogChannelID, kimoChannelDungeonID, deadRoleID, dangerRoleID, safeRoleID } = require('../ids.json');
 const UserState = require('../models/userState');
+const UserData = require('../models/userData');
+const jail = require('./jail');
+const Jail = require('../models/jailTracker');
 
 module.exports = async (client) => {
 
     client.on(Events.MessageReactionAdd, async (reaction, user) => {
 
-        if (reaction.message.channelId != '1193665461699739738') return;
-
-        if (reaction.emoji.name != '❌') return;
+        if (reaction.emoji.name != '❌' && reaction.emoji.name != '⭐') return;
 
         await reaction.message.guild.members.fetch();
     
-        const member = reaction.message.guild.members.cache.get(user.id);
-        //scissor squad check
-        if (!member.roles.cache.get('1202555128352346143')) return;
         // console.log(reaction.message);
         // console.log(reaction.emoji.name);
     
@@ -30,7 +28,11 @@ module.exports = async (client) => {
             }
         }
     
-        if (reaction.emoji.name === '❌') {
+        if (reaction.emoji.name === '❌' && reaction.message.channelId === '1193665461699739738') {
+
+            const member = reaction.message.guild.members.cache.get(user.id);
+            //scissor squad check
+            if (!member.roles.cache.get('1202555128352346143')) return;
     
             const KimoServer = await client.guilds.fetch(kimoServerID);
             //const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
@@ -66,6 +68,86 @@ module.exports = async (client) => {
             reaction.message.delete();
             
         }
+
+        if (reaction.emoji.name === '❌' && reaction.message.channelId != '1193665461699739738') {
+            const KimoServer = await client.guilds.fetch(kimoServerID);
+
+            const member = reaction.message.guild.members.cache.get(user.id);
+            //scissor squad check
+            if (!member.roles.cache.get('1202555128352346143')) return;
+    
+            // const KimoServer = await client.guilds.fetch(kimoServerID);
+            // const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
+    
+            console.log(' X emoji detected by scissorsquad, on text post.');
+    
+            const messageAuthor = reaction.message.author;
+
+            console.log(messageAuthor);
+            const messageAuthorMember = await reaction.message.guild.members.cache.get(messageAuthor.id); // the GuildMember object for the member who created the message
+
+            console.log(reaction.message);
+
+            //await reaction.message.channel.send('```' + `${messageAuthorMember.displayName}: [R E D A C T E D ]` + '```');
+
+            const jailTracker = await Jail.findOne({ userId: messageAuthorMember.id });
+
+            // if (!messageAuthorMember.roles.cache.get('1210274450679922748')) {
+            //     const jailTime = jailTracker.numberOfTimesJailed + 5;
+            //     jail(client, messageAuthorMember, `FLAGGED MESSAGE: ${reaction.message.content}`, `${member}`, jailTime);
+            // }
+            // else {
+            //     //messageAuthorMember.timeout(10 * 60 * 1000);
+            //     messageAuthorMember.roles.add ('1210393789043310672');
+            //     const notificationChannel = KimoServer.channels.cache.get('1210393681698496553');
+            //     await notificationChannel.send({content: `${messageAuthorMember} Hey an Kimo admin has flagged your message: ${reaction.message.content} because it does not follow our guidelines in /rules. If you think this was a mistake feel free to let us know here.`});
+            // }
+
+            messageAuthorMember.timeout(10 * 60 * 1000);
+            messageAuthorMember.roles.add ('1210393789043310672');
+            const notificationChannel = KimoServer.channels.cache.get('1210393681698496553');
+            await notificationChannel.send({content: `${messageAuthorMember} Hey an Kimo admin has flagged your message:` + '```' + reaction.message.content + '```' + `because it does not follow our guidelines in /rules, **a text chat time-out has been applied to you.** If you think this was a mistake feel free to let us know here.`});
+
+            reaction.message.delete();
+            
+        }
+
+        if (reaction.emoji.name === '⭐') {
+
+            const member = reaction.message.guild.members.cache.get(user.id);
+            //scissor squad check
+            if (!member.roles.cache.get('1203377553763475497')) return;
+    
+            const KimoServer = await client.guilds.fetch(kimoServerID);
+            //const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
+    
+            console.log('⭐ emoji detected by quest NPC');
+    
+            const messageAuthor = reaction.message.author;
+            console.log(messageAuthor);
+            const messageAuthorMember = await reaction.message.guild.members.cache.get(messageAuthor.id); // the GuildMember object for the member who created the message
+
+            const questNPCData = await UserData.findOne({ userID: member.id });
+
+            let userData = await UserData.findOne({ userID: messageAuthorMember.id });
+            
+            if (!userData) {
+                userData = new UserData ({
+                    userID: messageAuthorMember.id,
+                })
+            }
+
+            userData.money += questNPCData.emojiReactAwardAmount;
+
+            await userData.save();
+
+            const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
+            botLogChannel.send (`⭐React Award Detected by ${member}, ${messageAuthorMember} has been awarded ${questNPCData.emojiReactAwardAmount} shells ${reaction.message.url}`);
+
+        }
+
+
+
     });
     
 
