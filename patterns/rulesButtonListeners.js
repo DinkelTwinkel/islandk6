@@ -159,18 +159,6 @@ module.exports = async (client) => {
 
       }
 
-      if (interaction.customId === 'marketfareday') {
-        // add two days to the database.
-      }
-
-      if (interaction.customId === 'marketfareweekend') {
-        // add 2 days to the database.
-
-      }
-
-      if (interaction.customId === 'tipjar') {
-        // tip jian dao
-      }
 
       })
 };
