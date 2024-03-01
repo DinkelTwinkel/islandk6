@@ -130,20 +130,22 @@ module.exports = async (client) => {
 
                         let gain = Math.floor(timeSpent/( 1000 * 60 * 10 ));
 
-                        if (gain > 10) {
-                            gain = 10;
+                        if (gain > 20) {
+                            gain = 20;
                         }
+
+                        const shellRoll = Math.ceil(Math.random() * gain);
 
                         const member = KimoServer.members.cache.get(newMember.id);
 
-                        oldChannel.send (`<@${findFire.ownerId}> It seems like ${member.displayName} enjoyed the warmth of your fire today. **You gained ${gain} shells.**`);
+                        oldChannel.send (`<@${findFire.ownerId}> It seems like ${member.displayName} enjoyed the warmth of your fire today. **You gained ${shellRoll} shells.**`);
 
                         let creatorWallet = await UserData.findOne({ userID: findFire.ownerId });
                         if (!creatorWallet) {
                             creatorWallet = new UserData ({ userID: oldMember.id });
                         }
 
-                        creatorWallet.money += gain;
+                        creatorWallet.money += shellRoll;
 
                         const newLimitTracker = new ReactionLimit({
                             messageId: findFire.channelId,
