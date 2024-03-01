@@ -36,7 +36,7 @@ module.exports = async (client, channelId) => {
 
     const embed = new EmbedBuilder()
     .setTitle("🍣 ISLAND MARKET FAIR 🎏")
-    .setDescription("The weekend has arrived! Good job on collecting shells this week!\n**Visit the other island's flea market by purchasing a ticket below!**\n```Day Fare: 18 shells\nWeekend Pass: 30 shells```")
+    .setDescription("The weekend has arrived! Good job on collecting shells this week!\n**Visit the other island's flea market by purchasing a ticket below! 70% off!**\n```Day Fare: 3 shells\nWeekend Pass: 5 shells```")
     .setFooter({
       text: "tip jar donations goes directly to Jian Dao!",
     });      

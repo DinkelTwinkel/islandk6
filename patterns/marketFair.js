@@ -65,7 +65,7 @@ module.exports = async (client) => {
 
         // add two days to the database.
 
-        const cost = 18;
+        const cost = 3;
         const userWallet = await UserData.findOne({ userID: interaction.member.id });
         if (userWallet.money < cost) return interaction.reply({ content: `Insufficient shells, you need ${cost} shells to obtain this pass.`, ephemeral: true });
 
@@ -85,7 +85,7 @@ module.exports = async (client) => {
       if (interaction.customId === 'marketfareweekend') {
         // add 2 days to the database.
 
-        const cost = 30;
+        const cost = 5;
         const userWallet = await UserData.findOne({ userID: interaction.member.id });
         if (userWallet.money < cost) return interaction.reply({ content: `Insufficient shells, you need ${cost} shells to obtain this pass.`, ephemeral: true });
 
