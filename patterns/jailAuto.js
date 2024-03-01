@@ -45,7 +45,7 @@ module.exports = async (client) => {
 
         const messageLowercase = message.content.toLowerCase();
 
-        const bannedWords = ["retard", "andrew's underwear", "premo", "boney", "zuckerberg", "shemale", "boku no pico", "league of legends", "faggot", "tranny", "fag", "lesbo", "dyke", "stocks", "stock market", "ieague of iegends", "penis"];
+        const bannedWords = ["retard", "andrew's underwear", "premo", "boney", "zuckerberg", "shemale", "boku no pico", "league of legends", "faggot", "tranny", "fag", "lesbo", "dyke", "stocks", "stock market", "ieague of iegends", "penis", "league оf legends"];
         const replacementWord = ["sweetiepie", "JASON IS AWESOME", "i have found jesus", "honey darling", "my bum is itchy", "my love", "bby", "habibi", '[REDACTED]', '♥', "where is dio's pen"];
 
         bannedWords.forEach( async element => {
