@@ -61,7 +61,7 @@ module.exports = async (client) => {
       if (interaction.customId === 'marketfareday') {
 
         if (now.getDay() <= 4) return interaction.reply({ content: `It's not yet the weekend.`, ephemeral: true });
-        if (now.getTime() < result.passExpireTime ) return interaction.reply ({ content: 'Your pass has yet to expire.', ephemeral: true});
+        if (now.getTime() < result.passExpireTime && interaction.member.roles.cache.get('1212820829344374834')) return interaction.reply ({ content: 'Your pass has yet to expire.', ephemeral: true});
 
         // add two days to the database.
 
@@ -78,6 +78,10 @@ module.exports = async (client) => {
 
         interaction.reply({ content: `Pass Obtained! Expires <t:${Math.floor((new Date().getTime() + 1000 * 60 * 60 * 24)/1000)}:R>`, ephemeral: true });
 
+        const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
+        jianDaoWallet.money += cost;
+        await jianDaoWallet.save();
+        
         // add fare role and add to data base.
 
       }
@@ -85,7 +89,7 @@ module.exports = async (client) => {
       if (interaction.customId === 'marketfareweekend') {
 
         if (now.getDay() <= 4) return interaction.reply({ content: `It's not yet the weekend.`, ephemeral: true });
-        if (now.getTime() < result.passExpireTime ) return interaction.reply ({ content: 'Your pass has yet to expire.', ephemeral: true});
+        if (now.getTime() < result.passExpireTime && interaction.member.roles.cache.get('1212820829344374834')) return interaction.reply ({ content: 'Your pass has yet to expire.', ephemeral: true});
         // add 2 days to the database.
 
         const cost = 5;
@@ -101,6 +105,10 @@ module.exports = async (client) => {
 
         interaction.reply({ content: `Pass Obtained! Expires <t:${Math.floor((new Date().getTime() + 1000 * 60 * 60 * 48)/1000)}:R>`, ephemeral: true });
         // add fare role and add to data base.
+
+        const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
+        jianDaoWallet.money += cost;
+        await jianDaoWallet.save();
 
       }
 
