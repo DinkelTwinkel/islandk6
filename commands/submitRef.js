@@ -36,7 +36,7 @@ module.exports = {
           if (avatar.contentType.startsWith('image/')) {
 
 
-            interaction.editReply({ content: 'Submission Successful! You gained 3 shells!', ephemeral: true })
+            interaction.editReply({ content: 'Submission Successful! You gained 2 shells!', ephemeral: true })
 
             // send ref into ref channels.
             kimoServer = await client.guilds.fetch('1193663232041304134');
@@ -65,7 +65,7 @@ module.exports = {
             const target = interaction.member;
             const targetResult = await UserData.findOne({ userID: target.id });
     
-            targetResult.money += 3;
+            targetResult.money += 2;
             await targetResult.save();
 
             const guidelineEmbed = new EmbedBuilder()
