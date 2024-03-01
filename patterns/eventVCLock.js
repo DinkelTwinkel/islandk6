@@ -114,49 +114,124 @@ module.exports = async (client) => {
                 // reward creator of fire 1 shell per 10 mins spent. to a max of 5 shells per user per fire.
 
                 const findFire = await Fire.findOne({channelId: oldChannel.id});
-                if (findFire) {
-
-                    // check if time spent is greater then 10mins
-
-                    // check if already rewarded for this fire 
-
+    
+                if (findFire ) {
                     const rewardLimitTracker = await ReactionLimit.findOne ({ messageId: findFire.channelId, reactorId: oldMember.id });
 
-                    if (rewardLimitTracker) return console.log('vc reward cancelled, already rewarded for this fire.');
-                    if (oldMember.id === findFire.ownerId) return console.log('vc reward cancelled, owner does not get reward from themselves.');
-                    // self cancels reward if this user has already visited this particular fire.
+                    if (rewardLimitTracker) {
+                        // check if time spent is greater then 10mins
 
-                    if (timeSpent > 1000 * 60 * 10) {
+                        // check if already rewarded for this fire 
 
-                        let gain = Math.floor(timeSpent/( 1000 * 60 * 10 ));
+                        if (oldMember.id === findFire.ownerId) return console.log('vc reward cancelled, owner does not get reward from themselves.');
+                        // self cancels reward if this user has already visited this particular fire.
 
-                        if (gain > 20) {
-                            gain = 20;
+                        if (timeSpent > 1000 * 60 * 10) {
+
+                            let gain = Math.floor(timeSpent/( 1000 * 60 * 10 ));
+
+                            if (gain > 20) {
+                                gain = 20;
+                            }
+
+                            const shellRoll = Math.ceil(Math.random() * gain);
+
+                            const member = KimoServer.members.cache.get(newMember.id);
+
+                            oldChannel.send (`<@${findFire.ownerId}> It seems like ${member.displayName} enjoyed the warmth of your fire today. **You gained ${shellRoll} shells.**`);
+
+                            let creatorWallet = await UserData.findOne({ userID: findFire.ownerId });
+                            if (!creatorWallet) {
+                                creatorWallet = new UserData ({ userID: oldMember.id });
+                            }
+
+                            creatorWallet.money += shellRoll;
+
+                            const newLimitTracker = new ReactionLimit({
+                                messageId: findFire.channelId,
+                                reactorId: oldMember.id,
+                            })
+
+                            await creatorWallet.save();
+                            await newLimitTracker.save();
+
+                        }
+                    }
+                }
+
+                // reward for vcing with new member for the first time.
+                // get all members currently still in vc. AND upon user leave. Tell that user who they met and reward both etc.
+
+                //
+
+                const leftChannel = await oldMember.guild.channels.cache.get(oldChannel.id);
+                const currentMembers = await leftChannel.members;
+                
+                if (currentMembers) {
+    
+                    await currentMembers.forEach(async member => {
+
+                        let joinTimeRemainer = voiceTimes.get(member.id);
+
+                        if (!joinTimeRemainer) {
+                            joinTimeRemainer = new Date().getTime() - ((1000 * 60 * 10) + 1);
                         }
 
-                        const shellRoll = Math.ceil(Math.random() * gain);
+                        let timeSpentOfRemainer = leaveTime - joinTimeRemainer;
 
-                        const member = KimoServer.members.cache.get(newMember.id);
-
-                        oldChannel.send (`<@${findFire.ownerId}> It seems like ${member.displayName} enjoyed the warmth of your fire today. **You gained ${shellRoll} shells.**`);
-
-                        let creatorWallet = await UserData.findOne({ userID: findFire.ownerId });
-                        if (!creatorWallet) {
-                            creatorWallet = new UserData ({ userID: oldMember.id });
+                        if (timeSpent < timeSpentOfRemainer) {
+                            timeSpentOfRemainer = timeSpent;
                         }
 
-                        creatorWallet.money += shellRoll;
+                        console.log
+                        const result1 = await ReactionLimit.findOne ({ messageId: member.id, reactorId: oldMember.id });
+                        const result2 = await ReactionLimit.findOne ({ messageId: oldMember.id, reactorId: member.id });
+
+                        if (result1 || result2) return console.log('vc reward cancelled, already rewarded for this meeting');
+
+                        let newMeetReward = Math.ceil(timeSpentOfRemainer/( 1000 * 60 * 10 ));
+                        
+                        if (newMeetReward > 20) {
+                            newMeetReward = 20;
+                        }
+
+                        let newMeetGain = Math.ceil(Math.random() * newMeetReward);
+
+                        const memberLeave = KimoServer.members.cache.get(newMember.id);
+
+                        oldChannel.send (`It seems like ${memberLeave.displayName} & ${member.displayName} met for the first time. **They found ${newMeetGain} shells together.**`);
+
+                        const gainSplit = Math.ceil(newMeetGain/2);
+
+                        let walletLeaver = await UserData.findOne({ userID: memberLeave.id });
+                        if (!walletLeaver) {
+                            walletLeaver = new UserData ({ userID: memberLeave.id });
+                        }
+                        walletLeaver.money += gainSplit;
+
+                        let walletRemainer = await UserData.findOne({ userID: member.id });
+                        if (!walletRemainer) {
+                            walletLeaver = new UserData ({ userID: member.id });
+                        }
+                        walletRemainer.money += gainSplit;
 
                         const newLimitTracker = new ReactionLimit({
-                            messageId: findFire.channelId,
+                            messageId: member.id,
                             reactorId: oldMember.id,
                         })
 
-                        await creatorWallet.save();
+                        await walletLeaver.save();
+                        await walletRemainer.save();
                         await newLimitTracker.save();
 
-                    }
+                        // get the vc times of both users. 
+                        // use the shorter one.
+                        // check if either user can be found in the database.
+                        // if not then reward both and post in chat.
+                        // split the gain in 2.
 
+                    });
+    
                 }
 
                 const userId = newMember.member.user.id;
