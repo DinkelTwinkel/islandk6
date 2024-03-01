@@ -165,7 +165,7 @@ module.exports = async (client) => {
                 const leftChannel = await oldMember.guild.channels.cache.get(oldChannel.id);
                 const currentMembers = await leftChannel.members;
                 
-                if (currentMembers) {
+                if (currentMembers && currentMembers.size <= 10) {
     
                     await currentMembers.forEach(async member => {
 
