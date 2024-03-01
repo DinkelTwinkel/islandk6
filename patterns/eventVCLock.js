@@ -115,7 +115,7 @@ module.exports = async (client) => {
 
                 const findFire = await Fire.findOne({channelId: oldChannel.id});
     
-                if (findFire ) {
+                if (findFire) {
                     const rewardLimitTracker = await ReactionLimit.findOne ({ messageId: findFire.channelId, reactorId: oldMember.id });
 
                     if (!rewardLimitTracker && oldMember.id != findFire.ownerId) {
@@ -136,7 +136,7 @@ module.exports = async (client) => {
 
                             const member = KimoServer.members.cache.get(newMember.id);
 
-                            oldChannel.send (`<@${findFire.ownerId}> It seems like ${member.displayName} enjoyed the warmth of your fire today. **You gained ${shellRoll} shells.**`);
+                            botLogChannel.send (`<@${findFire.ownerId}> It seems like ${member.displayName} enjoyed the warmth of your fire today. **You gained ${shellRoll} shells.**`);
 
                             let creatorWallet = await UserData.findOne({ userID: findFire.ownerId });
                             if (!creatorWallet) {
@@ -200,7 +200,7 @@ module.exports = async (client) => {
 
                             const memberLeave = KimoServer.members.cache.get(newMember.id);
 
-                            oldChannel.send (`It seems like ${memberLeave.displayName} & ${member.displayName} met for the first time. **They found ${newMeetGain} shells together.**`);
+                            botLogChannel.send (`It seems like ${memberLeave} & ${member} met for the first time. **They found ${newMeetGain} shells together.**`);
 
                             const gainSplit = Math.ceil(newMeetGain/2);
 
