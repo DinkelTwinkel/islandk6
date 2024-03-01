@@ -103,7 +103,7 @@ module.exports = async (client) => {
                 // dailyHighlight (client);
                 setTimeout(() => {
                     channelUnLock (client);
-                }, 60 * 1000 * 5);
+                }, 60 * 1000 * 20);
 
             }
         }
@@ -255,7 +255,7 @@ async function channelLock (client) {
 
     const dailyquote = new EmbedBuilder()
     .setAuthor({
-        name: "LOADING NEW DAY",
+        name: "LOADING NEW DAY - etc 20mins",
         iconURL: "https://cdn.discordapp.com/attachments/1061965352755544084/1206958956275044352/93831206single-gear-cog-animation-1-2_1.gif?ex=65dde71f&is=65cb721f&hm=359511b92e9be2c9d730969f2eac22bf2bba081f97b4f2e6d8cfa2178e23bb05&",
     })
     .setDescription('```' + `${await getFortuneCookie(client)}` + '```');
