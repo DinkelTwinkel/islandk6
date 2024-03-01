@@ -123,6 +123,7 @@ module.exports = async (client) => {
                     const rewardLimitTracker = await ReactionLimit.findOne ({ messageId: findFire.channelId, reactorId: oldMember.id });
 
                     if (rewardLimitTracker) return console.log('vc reward cancelled, already rewarded for this fire.');
+                    if (oldMember.id === findFire.ownerId) return console.log('vc reward cancelled, owner does not get reward from themselves.');
                     // self cancels reward if this user has already visited this particular fire.
 
                     if (timeSpent > 1000 * 60 * 10) {
