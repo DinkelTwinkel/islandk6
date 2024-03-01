@@ -57,7 +57,7 @@ module.exports = async (client) => {
 
             newMember.setChannel(buildFire);
 
-            buildFire.send (`<@${newMember.id}> Hi Welcome to your fire! You can change the limit of your fire with **/vclimit** and the name with **/vcname!**`);
+            buildFire.send (`<@${newMember.id}> Hi Welcome to your fire! You can change the limit of your fire with **/vclimit** and the name with **/vcname!**.\n If other user's enjoy your vc, you may find extra seashells!`);
 
             // create database entry of VC chat.
 
