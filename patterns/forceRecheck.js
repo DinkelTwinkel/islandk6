@@ -16,79 +16,83 @@ module.exports = async (client) => {
 
     // get next date and minute current cycle length.
 
-    const tracker = await KimoTracker.findOne({ serverId: kimoServerID });
-    const nextDateUtcMil = tracker.nextDate;
-    const period = tracker.currentPeriodLength;
-    const previousDateUtcMil = nextDateUtcMil - period;
-
-    const messages = await getAllMessagesInChannel(postDailyChannel)
-    // Filter the messages by creation date
-    let filteredMessages = messages.filter(msg => msg.createdAt.getTime() > previousDateUtcMil);
-    filteredMessages = filteredMessages.filter(msg => !msg.author.bot);
-
-    // filter out all messages to just those from after the cycle.
-
-    const members = await KimoServer.members.fetch();
-
-    sendMessage(`MEMBERS FETCHED: ${members.size}`, botLogChannel);
-
-    let count = 0;
-    //const allDangerStates = await UserState.find({ currentState: 'DANGER' });
-    let totalMembers = members.size;
-    
-    members.forEach(async member => {
-
-        if (member.user.bot) return totalMembers -= 1;
-        if (member.user.id === member.guild.ownerId) return totalMembers -= 1;
-        if (member.roles.cache.get('1209326206151819336')) return totalMembers -= 1;
-
-        // await sendMessage(`CHECKING MEMBER: ${member}`, botLogChannel);
+    setTimeout(async () => {
         
-        const result = await UserState.findOne({ userID: member.user.id });
+        const tracker = await KimoTracker.findOne({ serverId: kimoServerID });
+        const nextDateUtcMil = tracker.nextDate;
+        const period = tracker.currentPeriodLength;
+        const previousDateUtcMil = nextDateUtcMil - period;
 
-        if (!result) return //  sendMessage(`NO STATE DATA FOR ${member} FOUND`, botLogChannel);
-        if (result.currentState != 'DEAD') {
+        const messages = await getAllMessagesInChannel(postDailyChannel)
+        // Filter the messages by creation date
+        let filteredMessages = messages.filter(msg => msg.createdAt.getTime() > previousDateUtcMil);
+        filteredMessages = filteredMessages.filter(msg => !msg.author.bot);
 
-            let postFound = false;
+        // filter out all messages to just those from after the cycle.
 
-            filteredMessages.forEach(message => {
-                if (message.author.id === member.user.id) {
-                    postFound = true;
+        const members = await KimoServer.members.fetch();
+
+        sendMessage(`MEMBERS FETCHED: ${members.size}`, botLogChannel);
+
+        let count = 0;
+        //const allDangerStates = await UserState.find({ currentState: 'DANGER' });
+        let totalMembers = members.size;
+        
+        members.forEach(async member => {
+
+            if (member.user.bot) return totalMembers -= 1;
+            if (member.user.id === member.guild.ownerId) return totalMembers -= 1;
+            if (member.roles.cache.get('1209326206151819336')) return totalMembers -= 1;
+
+            // await sendMessage(`CHECKING MEMBER: ${member}`, botLogChannel);
+            
+            const result = await UserState.findOne({ userID: member.user.id });
+
+            if (!result) return //  sendMessage(`NO STATE DATA FOR ${member} FOUND`, botLogChannel);
+            if (result.currentState != 'DEAD') {
+
+                let postFound = false;
+
+                filteredMessages.forEach(message => {
+                    if (message.author.id === member.user.id) {
+                        postFound = true;
+                    }
+                });
+
+                if (postFound === true) {
+                    //sendMessage(`✅POST FOUND FOR MEMBER: ${member}`, botLogChannel);
+                    // check if current state is SAFE, if not fix it.
+                    if (result.currentState === 'DANGER') {
+                        sendMessage(`STATE MISMATCH DETECTED, CHANGING TO SAFE FOR ${member}`, botLogChannel);
+                        result.currentState = 'SAFE';
+                        await result.save();
+                        botLogChannel.send(`!updatestate ${member.id}`);
+                    }
+
+                    if (member.roles.cache.get ('1202533924040081408')) {
+                        member.roles.add ('1202533882822397972');
+                        member.roles.remove ('1202533924040081408');
+                    }
                 }
-            });
-
-            if (postFound === true) {
-                //sendMessage(`✅POST FOUND FOR MEMBER: ${member}`, botLogChannel);
-                // check if current state is SAFE, if not fix it.
-                if (result.currentState === 'DANGER') {
-                    sendMessage(`STATE MISMATCH DETECTED, CHANGING TO SAFE FOR ${member}`, botLogChannel);
-                    result.currentState = 'SAFE';
-                    await result.save();
-                    botLogChannel.send(`!updatestate ${member.id}`);
+                else {
+                    //sendMessage(`❌POST NOT FOUND FOR MEMBER: ${member}`, botLogChannel);
+                    // check if current state is DANGER, if not fix it.
+                    if (result.currentState === 'SAFE') {
+                        sendMessage(`STATE MISMATCH DETECTED, CHANGING TO DANGER FOR ${member}`, botLogChannel);
+                        result.currentState = 'DANGER';
+                        await result.save();
+                        botLogChannel.send(`!updatestate ${member.id}`);
+                    }
                 }
-
-                if (member.roles.cache.get ('1202533924040081408')) {
-                    member.roles.add ('1202533882822397972');
-                    member.roles.remove ('1202533924040081408');
-                }
+                count += 1;
             }
-            else {
-                //sendMessage(`❌POST NOT FOUND FOR MEMBER: ${member}`, botLogChannel);
-                // check if current state is DANGER, if not fix it.
-                if (result.currentState === 'SAFE') {
-                    sendMessage(`STATE MISMATCH DETECTED, CHANGING TO DANGER FOR ${member}`, botLogChannel);
-                    result.currentState = 'DANGER';
-                    await result.save();
-                    botLogChannel.send(`!updatestate ${member.id}`);
-                }
-            }
-            count += 1;
-        }
-    });
+        });
 
-    setTimeout(() => {
-        channelUnLock (client);
-    }, 60 * 1000 * 2);
+        setTimeout(() => {
+            channelUnLock (client);
+        }, 60 * 1000 * 2);
+
+    }, 5000);
 
 };
 
