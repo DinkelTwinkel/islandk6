@@ -168,7 +168,7 @@ module.exports = async (client) => {
         await checkExistingInventory.save();
 
         const checkPouch = await UserData.findOne ({userID: interaction.member.id});
-        checkPouch.money += stock.currentValue;
+        checkPouch.money += stock.currentValue-1;
         await checkPouch.save();
 
 
@@ -177,10 +177,14 @@ module.exports = async (client) => {
           interaction.deferUpdate();
         }
         else {
-          interaction.reply({content: `You sold ${stock.stockName} Stock for ${stock.currentValue} shells, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
+          interaction.reply({content: `You sold ${stock.stockName} Stock for ${stock.currentValue} shells and paid 1 shell in transaction fee, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
         }
 
-        refChannel1.send (`${interaction.member.displayName} sold ${stock.stockName} Stock for ${stock.currentValue} sea shells, they currently have ${checkExistingInventory.quantity} shares.`);
+        const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
+        jianDaoWallet.money += 1;
+        await jianDaoWallet.save();
+
+        refChannel1.send (`${interaction.member.displayName} sold ${stock.stockName} Stock for ${stock.currentValue} sea shells and paid 1 shell in transaction fee, they currently have ${checkExistingInventory.quantity} shares.`);
 
         if (Math.random() > 0.4) {
           stock.currentValue -= 1;
@@ -367,7 +371,7 @@ async function createStockMarket(client) {
         });
 
         const embed = new EmbedBuilder()
-        .setDescription(`use /stocks to see your current portfolio. \n Prices shift every 12 hours.`
+        .setDescription(`use /stocks to see your current portfolio. \n Prices shift every 12 hours. Every sell trade costs 1 shell to facilitate.`
         );
   
         refChannel1.send ({ content: '**KIMO STOCK MARKET**', components: actionRowArray , ephemeral: false, embeds: [embed] })

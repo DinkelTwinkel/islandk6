@@ -81,7 +81,7 @@ module.exports = {
       let username = interaction.member.nickname;
       if (!interaction.member.nickname) username = interaction.member.user.globalName;
 
-      interaction.reply ({ content: 'Rule one of stock market: There is no stock market.', components: actionRowArray , ephemeral: true })
+      interaction.reply ({ content: 'Rule one of stock market: There is no stock market. Every sell trade costs 1 shell to facilitate.', components: actionRowArray , ephemeral: true })
 
     },
   };
