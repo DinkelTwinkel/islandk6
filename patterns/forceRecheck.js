@@ -66,6 +66,11 @@ module.exports = async (client) => {
                     await result.save();
                     botLogChannel.send(`!updatestate ${member.id}`);
                 }
+
+                if (member.roles.cache.get ('1202533924040081408')) {
+                    member.roles.add ('1202533882822397972');
+                    member.roles.remove ('1202533924040081408');
+                }
             }
             else {
                 //sendMessage(`❌POST NOT FOUND FOR MEMBER: ${member}`, botLogChannel);
