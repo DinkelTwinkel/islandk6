@@ -272,7 +272,7 @@ async function channelLock (client) {
         marketFairCreate(client, '1207882126154932294');
         marketFairCreate(client, '1209347683676852224');
         marketFairCreate(client, '1202622607250296832');
-        marketFairCreate(client, '1202622607250296832');
+        marketFairCreate(client, '1202876942714544148');
     }
 
     // setTimeout(async () => {
