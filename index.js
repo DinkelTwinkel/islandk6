@@ -636,7 +636,7 @@ client.on(Events.MessageCreate, async (message) => {
         }
       }
 
-      if (command === 'clockcheck') {
+      if (command === 'clockworks') {
 
         const kimoServer =  await client.guilds.fetch('1193663232041304134');
         //await kimoServer.members.fetch();
