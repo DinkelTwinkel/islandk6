@@ -101,8 +101,8 @@ module.exports = async (client) => {
 
                 // tell scissorchan to slice.
                 await channelLock (client);
-
                 adminWage(client);
+                
                 // dailyHighlight (client);
                 setTimeout(() => {
                     channelUnLock (client);
