@@ -19,6 +19,7 @@ module.exports = {
         console.log (interaction.member.voice.channel.members.get('865147754358767627'));
 
         if (!interaction.member.voice.channel) return interaction.reply ({ content: 'You are not in a voice channel...', ephemeral: true });
+        if (interaction.options.getInteger('userlimit') > 99) return interaction.reply({ content: 'only 0 - 99 valid. 0 is no cap.', ephemeral: true });
 
         const fire = await Fire.findOne({ channelId: interaction.member.voice.channel.id });
 

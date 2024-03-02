@@ -18,6 +18,8 @@ module.exports = {
         // HOST ROLE CHECK
         if (!interaction.member.roles.cache.get('1203384520976502824')) return interaction.reply({ content: 'Only hosts can use this...', ephemeral: true });
 
+        if (interaction.options.getInteger('userlimit') > 99) return interaction.reply({ content: 'only 0 - 99 valid. 0 is no cap.', ephemeral: true });
+
         const KimoServer = await client.guilds.fetch(kimoServerID);
         const eventChannel = KimoServer.channels.cache.get('1203390855722041354');
 

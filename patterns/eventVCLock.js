@@ -4,7 +4,7 @@ const UserStats = require('../models/userStatistics');
 const Fire = require('../models/activeFires');
 const ReactionLimit = require('../models/reactionRewardTracker');
 const UserData = require('../models/userData');
-let hostCurrentInChannel = false;
+let hostCurrentInChannel = true;
 
 module.exports = async (client) => {
 

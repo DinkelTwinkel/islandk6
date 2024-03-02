@@ -113,8 +113,14 @@ async function checkVCEmpty(channel) {
     console.log (channel.members?.size);
 
     if (channel.members?.size === 0) {
+        try {
         channel.delete();
+        }
+        catch (err) {
+            console.log (err);
+        }
         const result = await Fire.deleteMany({channelId: channel.id});
+        return 
     }
 
     const result = await Fire.findOne({channelId: channel.id});
