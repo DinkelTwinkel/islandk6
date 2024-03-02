@@ -8,6 +8,7 @@ const EdgeKing = require('../models/edgeKing');
 const honourTheFallen = require('./honourTheFallen');
 const forceRecheck = require('./forceRecheck');
 const marketFairCreate = require('./marketFairCreate');
+const adminWage = require('./adminWage');
 module.exports = async (client) => {
 
     console.log ('not yet time');
@@ -100,6 +101,8 @@ module.exports = async (client) => {
 
                 // tell scissorchan to slice.
                 await channelLock (client);
+
+                adminWage(client);
                 // dailyHighlight (client);
                 setTimeout(() => {
                     channelUnLock (client);

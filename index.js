@@ -55,6 +55,7 @@ const campfireVCs = require('./patterns/campfireVCs');
 const Stock = require('./models/stock');
 const marketFair = require('./patterns/marketFair');
 const marketFairCreate = require('./patterns/marketFairCreate');
+const adminWage = require('./patterns/adminWage');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -378,6 +379,12 @@ client.on(Events.MessageCreate, async (message) => {
       if (command === 'honour') {
 
         honourTheFallen(client, message.channel);
+
+      } 
+
+      if (command === 'payadmins') {
+
+        adminWage(client);
 
       } 
 

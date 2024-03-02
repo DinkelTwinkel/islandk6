@@ -12,8 +12,13 @@ module.exports = async (client) => {
     const allActiveFires = await Fire.find({});
     if (allActiveFires) {
         allActiveFires.forEach(async fire => {
+            try {
             let voiceChannel = await KimoServer.channels.fetch(fire.channelId, { force: true });
             checkVCEmpty(voiceChannel)
+        }
+        catch(err) {
+            console.log (err);
+        }
         });
     }
 
@@ -21,8 +26,8 @@ module.exports = async (client) => {
         const allActiveFires = await Fire.find({});
         if (allActiveFires) {
             allActiveFires.forEach(async fire => {
-                let voiceChannel = await KimoServer.channels.fetch(fire.channelId, { force: true });
                 try {
+                    let voiceChannel = await KimoServer.channels.fetch(fire.channelId, { force: true });
                     checkVCEmpty(voiceChannel);
                 }
                 catch(err) {
