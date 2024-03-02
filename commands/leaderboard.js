@@ -28,6 +28,7 @@ module.exports = {
       for (let index = 1; index < 25; index++) {
 
         // console.log(players[index])
+        try {
 
         const player = await client.guilds.cache.get('1193663232041304134').members.fetch(players[index].userID);
 
@@ -41,13 +42,16 @@ module.exports = {
             inline: true
           })
   
-
+        }
+        catch (err) {
+          console.log (err)
+        }
         // console.log(player)
         
       }
 
       
-    interaction.followUp({ embeds: [embed] });
+    await interaction.editReply({ embeds: [embed] });
     
 
     },
