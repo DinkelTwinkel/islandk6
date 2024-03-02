@@ -169,6 +169,8 @@ module.exports = async (client) => {
     
                     await currentMembers.forEach(async member => {
 
+                        if (member.user.bot) return;
+
 
                         const result1 = await ReactionLimit.findOne ({ messageId: member.id, reactorId: oldMember.id });
                         const result2 = await ReactionLimit.findOne ({ messageId: oldMember.id, reactorId: member.id });
