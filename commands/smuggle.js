@@ -5,7 +5,7 @@ const UserData = require('../models/userData');
 module.exports = {
     data: new SlashCommandBuilder()
     .setName('smuggle')
-    .setDescription('Smuggle to the other Island [200 seashells] This will end when you next post or when cut off happens!'),
+    .setDescription('Smuggle to the other Island [200 seashells] This will end when next post or when cut off happens!'),
 
     async execute(interaction, client) {
 
