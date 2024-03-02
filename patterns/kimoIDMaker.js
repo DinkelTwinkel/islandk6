@@ -1,6 +1,7 @@
 const { EmbedBuilder } = require('discord.js');
 const UserData = require('../models/userData');
 const { kimoChannelID, kimoServerID, botLogChannelID, kimoChannelDungeonID, deadRoleID, dangerRoleID } = require('../ids.json');
+const UserState = require('../models/userState');
 
 module.exports = async (userid, member, client) => {
 
@@ -17,6 +18,16 @@ module.exports = async (userid, member, client) => {
         return embed;
 
       }
+
+    let userState = await UserState.findOne({ userID: userid });
+    if (!userState) {
+        
+      userState = new UserState({
+        userID: userid,
+        currentState: 'N/A',
+      });
+
+    }
 
       const mayo = new EmbedBuilder()
         .setTitle(` ${findPouch.name}`)
@@ -42,7 +53,7 @@ module.exports = async (userid, member, client) => {
           },
           {
             name: '\n',
-            value: `**『 ${findPouch.money} 🐚 』**\n ▪ ${findPouch.pronouns}\n ${memberObject}`,
+            value: `**『 ${findPouch.money} 🐚 』**\n ▪ ${findPouch.pronouns}\n ${memberObject}\n►${userState.currentState}`,
             inline: true
           },
         )

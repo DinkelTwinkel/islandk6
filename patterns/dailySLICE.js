@@ -124,6 +124,14 @@ module.exports = async (client) => {
             lastWords.send('# Flushing Dead 🚽');
 
             members.forEach(async member => {
+                const kickedWallet = await UserData.findOne({userID: member.id});
+                if (kickedWallet) {
+                    const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216'});
+                    jianDaoWallet.money += kickedWallet.money;
+                    kickedWallet.money = 0;
+                    await kickedWallet.save();
+                    await jianDaoWallet.save();
+                }
                 member.kick();
                 botLogChannel.send(`kicking ${member}`);
                 lastWords.send(`flushing ${member}`);
