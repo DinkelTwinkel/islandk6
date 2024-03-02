@@ -15,10 +15,10 @@ module.exports = async (client) => {
             try {
             let voiceChannel = await KimoServer.channels.fetch(fire.channelId, { force: true });
             checkVCEmpty(voiceChannel)
-        }
-        catch(err) {
-            console.log (err);
-        }
+            }
+            catch(err) {
+                console.log (err);
+            }
         });
     }
 
@@ -85,24 +85,39 @@ module.exports = async (client) => {
                 // look for vc id on database
                 const result = await Fire.findOne({channelId: oldMember.channelId});
                 if (result) {
+                    try {
                     let voiceChannel = await KimoServer.channels.fetch(oldMember.channelId, { force: true });
                     checkVCEmpty(voiceChannel)
+                    }
+                    catch (err) {
+                        console.log (err);
+                    }
                 }
             }
             
             if (newMember.channelId === fire.channelId) {
                 const result = await Fire.findOne({channelId: newMember.channelId});
                 if (result) {
-                    let voiceChannel = await KimoServer.channels.fetch(newMember.channelId, { force: true });
-                    checkVCEmpty(voiceChannel);
+                    try {
+                        let voiceChannel = await KimoServer.channels.fetch(newMember.channelId, { force: true });
+                        checkVCEmpty(voiceChannel);
+                    }
+                    catch (err) {
+                        console.log (err);
+                    }
                 }
             }
 
             if (oldMember.channelId === fire.channelId) {
                 const result = await Fire.findOne({channelId: newMember.channelId});
                 if (result) {
-                    let voiceChannel = await KimoServer.channels.fetch(oldMember.channelId, { force: true });
-                    checkVCEmpty(voiceChannel);
+                    try {
+                        let voiceChannel = await KimoServer.channels.fetch(oldMember.channelId, { force: true });
+                        checkVCEmpty(voiceChannel);
+                    }
+                    catch (err) {
+                        console.log (err);
+                    }    
                 }
             }
 
