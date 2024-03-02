@@ -94,7 +94,7 @@ module.exports = async (client, interaction, customID) => {
             },
             {
               name: "\n",
-              value: "🍉",
+              value: "🌊",
               inline: true
             },
             {
