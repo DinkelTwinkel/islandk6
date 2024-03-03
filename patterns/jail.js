@@ -35,7 +35,9 @@ module.exports = async (client, jailTarget, reason, jailer, time) => {
         })
     }
 
-    userData.money -= (time * 1);
+    const deduction = Math.ceil(time / 100);
+
+    userData.money -= deduction;
     await userData.save();
 
     // give jiandao money
@@ -47,7 +49,7 @@ module.exports = async (client, jailTarget, reason, jailer, time) => {
             userID: '1202895682630066216',
         })
     }
-    userData.money += (Math.ceil(time / 100));
+    userData.money += deduction;
     await userData.save();
     //
 
@@ -80,7 +82,7 @@ module.exports = async (client, jailTarget, reason, jailer, time) => {
     // set time and set other stats.
 
     const formattedReleaseTime = Math.floor(releaseTime / 1000);
-    const embedDescription = "```" + `REASON : ${reason}\nShells Deducted: ${time * 1}` + "```" + `\n jailed by ${jailer}\n release <t:${formattedReleaseTime}:R> if you have seashells. If not, release when shells > 0. Do /id to see shells and post drawings in <#1202747652345962496> to get shells.`
+    const embedDescription = "```" + `REASON : ${reason}\nShells Deducted: ${deduction}` + "```" + `\n jailed by ${jailer}\n release <t:${formattedReleaseTime}:R> if you have seashells. If not, release when shells > 0. Do /id to see shells and post drawings in <#1202747652345962496> to get shells.`
 
     const embed = new EmbedBuilder()
         .setAuthor({
