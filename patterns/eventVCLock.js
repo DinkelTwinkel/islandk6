@@ -11,7 +11,7 @@ module.exports = async (client) => {
     const eventChannel = KimoServer.channels.cache.get('1203390855722041354');
 
     const currentMembersCheck = await eventChannel.members;
-    hostCurrentInChannel = false;
+    let hostCurrentInChannel = false;
     
     if (currentMembersCheck) {
 
