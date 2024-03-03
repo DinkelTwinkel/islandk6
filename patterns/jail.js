@@ -47,7 +47,7 @@ module.exports = async (client, jailTarget, reason, jailer, time) => {
             userID: '1202895682630066216',
         })
     }
-    userData.money += (time * 1);
+    userData.money += (Math.floor(time / 100));
     await userData.save();
     //
 
