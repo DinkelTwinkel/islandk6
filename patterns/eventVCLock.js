@@ -8,6 +8,8 @@ let hostCurrentInChannel = true;
 
 module.exports = async (client) => {
 
+    try {
+
     client.on(Events.VoiceStateUpdate, async function(oldMember, newMember) {
 
         const KimoServer = await client.guilds.fetch(kimoServerID);
@@ -301,5 +303,8 @@ module.exports = async (client) => {
     //         await userVoiceChat.save();
     //       }
     // });
-
+    }
+    catch (err) {
+        console.log(err);
+    }
 };
