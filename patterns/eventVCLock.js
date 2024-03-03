@@ -196,7 +196,7 @@ module.exports = async (client) => {
                             let joinTimeRemainer = voiceTimes.get(member.id);
 
                             if (!joinTimeRemainer) {
-                                joinTimeRemainer = new Date().getTime() - ((1000 * 60 * 10) + 1);
+                                joinTimeRemainer = new Date().getTime() - ((1000 * 60 * 10));
                             }
 
                             let timeSpentOfRemainer = leaveTime - joinTimeRemainer;
@@ -205,49 +205,54 @@ module.exports = async (client) => {
                                 timeSpentOfRemainer = timeSpent;
                             }
 
-                            console.log
+                            if (joinTimeRemainer > 1000 * 60 * 20) {
 
-
-                            let newMeetReward = Math.ceil(timeSpentOfRemainer/( 1000 * 60 * 10 ));
                             
-                            if (newMeetReward > 20) {
-                                newMeetReward = 20;
+
+                                console.log
+
+
+                                let newMeetReward = Math.ceil(timeSpentOfRemainer/( 1000 * 60 * 20 ));
+                                
+                                if (newMeetReward > 20) {
+                                    newMeetReward = 20;
+                                }
+
+                                let newMeetGain = Math.ceil(Math.random() * newMeetReward);
+
+                                const memberLeave = KimoServer.members.cache.get(newMember.id);
+
+                                botLogChannel.send (`It seems like ${memberLeave} & ${member} met for the first time. **They found ${newMeetGain} shells together.**`);
+
+                                const gainSplit = Math.ceil(newMeetGain/2);
+
+                                let walletLeaver = await UserData.findOne({ userID: memberLeave.id });
+                                if (!walletLeaver) {
+                                    walletLeaver = new UserData ({ userID: memberLeave.id });
+                                }
+                                walletLeaver.money += gainSplit;
+
+                                let walletRemainer = await UserData.findOne({ userID: member.id });
+                                if (!walletRemainer) {
+                                    walletLeaver = new UserData ({ userID: member.id });
+                                }
+                                walletRemainer.money += gainSplit;
+
+                                const newLimitTracker = new ReactionLimit({
+                                    messageId: member.id,
+                                    reactorId: oldMember.id,
+                                })
+
+                                await walletLeaver.save();
+                                await walletRemainer.save();
+                                await newLimitTracker.save();
+
+                                // get the vc times of both users. 
+                                // use the shorter one.
+                                // check if either user can be found in the database.
+                                // if not then reward both and post in chat.
+                                // split the gain in 2.
                             }
-
-                            let newMeetGain = Math.ceil(Math.random() * newMeetReward);
-
-                            const memberLeave = KimoServer.members.cache.get(newMember.id);
-
-                            botLogChannel.send (`It seems like ${memberLeave} & ${member} met for the first time. **They found ${newMeetGain} shells together.**`);
-
-                            const gainSplit = Math.ceil(newMeetGain/2);
-
-                            let walletLeaver = await UserData.findOne({ userID: memberLeave.id });
-                            if (!walletLeaver) {
-                                walletLeaver = new UserData ({ userID: memberLeave.id });
-                            }
-                            walletLeaver.money += gainSplit;
-
-                            let walletRemainer = await UserData.findOne({ userID: member.id });
-                            if (!walletRemainer) {
-                                walletLeaver = new UserData ({ userID: member.id });
-                            }
-                            walletRemainer.money += gainSplit;
-
-                            const newLimitTracker = new ReactionLimit({
-                                messageId: member.id,
-                                reactorId: oldMember.id,
-                            })
-
-                            await walletLeaver.save();
-                            await walletRemainer.save();
-                            await newLimitTracker.save();
-
-                            // get the vc times of both users. 
-                            // use the shorter one.
-                            // check if either user can be found in the database.
-                            // if not then reward both and post in chat.
-                            // split the gain in 2.
                         }
                     });
     
