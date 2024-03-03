@@ -8,11 +8,27 @@ let hostCurrentInChannel = true;
 
 module.exports = async (client) => {
 
+    const KimoServer = await client.guilds.fetch(kimoServerID);
+    const eventChannel = KimoServer.channels.cache.get('1203390855722041354');
+
+    const currentMembersCheck = await eventChannel.members;
+    hostCurrentInChannel = false;
+    
+    if (currentMembersCheck) {
+
+        await currentMembersCheck.forEach(member => {
+            if (member.roles.cache.get('1203384520976502824')) {
+                hostCurrentInChannel = true;
+            }
+        });
+
+    }
+
     try {
 
     client.on(Events.VoiceStateUpdate, async function(oldMember, newMember) {
 
-        const KimoServer = await client.guilds.fetch(kimoServerID);
+
         // const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
     
         const PartARole = KimoServer.roles.cache.get('1202551817708507136');
@@ -24,7 +40,7 @@ module.exports = async (client) => {
             console.log ('EventChanneLjoinDetected');
 
             const member = newMember.guild.members.cache.get(newMember.id);
-            const eventChannel = newMember.guild.channels.cache.get(newMember.channelId);
+
             // console.log (member);
 
             if (hostCurrentInChannel === false) {
@@ -50,7 +66,6 @@ module.exports = async (client) => {
             
             // user left event vc
             // get channel, check all current members inside channel. if no event host exists, lock channel. Send message to say it.
-            const eventChannel = await oldMember.guild.channels.cache.get(oldMember.channelId);
 
             // console.log (eventChannel);
             // console.log (eventChannel);
