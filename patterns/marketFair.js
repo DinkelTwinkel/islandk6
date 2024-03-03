@@ -60,7 +60,7 @@ module.exports = async (client) => {
 
       if (interaction.customId === 'marketfareday') {
 
-        if (now.getDay() <= 4) return interaction.reply({ content: `It's not yet the weekend.`, ephemeral: true });
+        if (now.getDay() <= 4 && now.getDay() != 0) return interaction.reply({ content: `It's not yet the weekend.`, ephemeral: true });
         if (now.getTime() < result.passExpireTime ) {
           interaction.member.roles.add('1212820829344374834');
           return interaction.reply ({ content: 'Your pass has yet to expire.', ephemeral: true});
@@ -92,7 +92,7 @@ module.exports = async (client) => {
 
       if (interaction.customId === 'marketfareweekend') {
 
-        if (now.getDay() <= 4) return interaction.reply({ content: `It's not yet the weekend.`, ephemeral: true });
+        if (now.getDay() <= 4 && now.getDay() != 0) return interaction.reply({ content: `It's not yet the weekend.`, ephemeral: true });
         if (now.getTime() < result.passExpireTime ) {
           interaction.member.roles.add('1212820829344374834');
           return interaction.reply ({ content: 'Your pass has yet to expire.', ephemeral: true});
