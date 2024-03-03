@@ -278,7 +278,7 @@ async function channelLock (client) {
 
     const now = new Date();
 
-    if (now.getDay() === 5) {
+    if (now.getDay() <= 4 && now.getDay() != 0) {
         marketFairCreate(client, kimoChannelID);
         marketFairCreate(client, '1207882126154932294');
         marketFairCreate(client, '1209347683676852224');
