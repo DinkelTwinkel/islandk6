@@ -56,6 +56,7 @@ const Stock = require('./models/stock');
 const marketFair = require('./patterns/marketFair');
 const marketFairCreate = require('./patterns/marketFairCreate');
 const adminWage = require('./patterns/adminWage');
+const clubController = require('./patterns/clubController');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -84,6 +85,7 @@ client.once(Events.ClientReady, async c => {
   stockBuySellFluctuations(client);
   eventVCLock(client);
   fleaMarketController(client);
+  clubController(client);
   adminReact(client);
   campfireVCs(client);
   marketFair(client);
