@@ -6,8 +6,8 @@ module.exports = async (client) => {
     client.on(Events.MessageCreate, async (message) => {
 
         if (message.member.user.bot) return;
-
-        if (message.channel.id === '1207882126154932294' || message.channel.id === '1209347683676852224') {
+        // last channel is clubs.
+        if (message.channel.id === '1207882126154932294' || message.channel.id === '1209347683676852224' || message.channel.id === '1214330284837961748') {
 
             if (attachmentTest(message) != null) {
                 // successful image post.
@@ -85,6 +85,8 @@ async function deleteMessageAndReply(message) {
         response.delete();
     }, messageDeletionTimer * 1000);
 
-    message.delete();
+    if (!message.member.roles.cache.get('1202555128352346143')) {
+        message.delete();
+    }
 
 }
