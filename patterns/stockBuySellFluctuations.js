@@ -86,7 +86,7 @@ module.exports = async (client) => {
     });
 
 
-  }, 1000 * 60 * 60 );
+  }, 1000 * 10 );
 
 
 
