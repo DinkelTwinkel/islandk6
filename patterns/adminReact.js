@@ -108,6 +108,10 @@ module.exports = async (client) => {
             const notificationChannel = KimoServer.channels.cache.get('1210393681698496553');
             await notificationChannel.send({content: `${messageAuthorMember} Hey an Kimo admin has flagged your message:` + '```' + reaction.message.content + '```' + `because it does not follow our guidelines in /rules, **a text chat time-out has been applied to you.** If you think this was a mistake feel free to let us know here.`});
 
+            const adminWallet = await UserData.findOne({ userID: member.id });
+            adminWallet.money += 1;
+            await adminWallet.save();
+
             reaction.message.delete();
             
         }
@@ -140,6 +144,10 @@ module.exports = async (client) => {
             userData.money += questNPCData.emojiReactAwardAmount;
 
             await userData.save();
+
+            const adminWallet = await UserData.findOne({ userID: member.id });
+            adminWallet.money += 1;
+            await adminWallet.save();
 
             const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
             botLogChannel.send (`⭐React Award Detected by ${member}, ${messageAuthorMember} has been awarded ${questNPCData.emojiReactAwardAmount} shells ${reaction.message.url}`);
