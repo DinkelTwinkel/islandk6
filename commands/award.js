@@ -36,6 +36,10 @@ module.exports = {
             })
         }
 
+        const adminWallet = await UserData.findOne({ userID: interaction.member.id });
+        adminWallet.money += 1;
+        await adminWallet.save();
+
         targetResult.money += transferAmount;
         await targetResult.save();
 
