@@ -205,7 +205,7 @@ module.exports = async (client) => {
                                 timeSpentOfRemainer = timeSpent;
                             }
 
-                            if (joinTimeRemainer > 1000 * 60 * 20) {
+                            if (timeSpentOfRemainer > 1000 * 60 * 20) {
 
                             
 
