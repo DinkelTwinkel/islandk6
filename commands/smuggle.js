@@ -1,17 +1,16 @@
 const { SlashCommandBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
 const kimoIDMaker = require('../patterns/kimoIDMaker');
 const UserData = require('../models/userData');
+const cost = 50;
 
 module.exports = {
     data: new SlashCommandBuilder()
     .setName('smuggle')
-    .setDescription('Smuggle to the other Island [200 seashells] This will end when next post or when cut off happens!'),
+    .setDescription(`Smuggle to the other Island [${cost} seashells] This will end when next post or when cut off happens!`),
 
     async execute(interaction, client) {
 
         // money check.
-
-        const cost = 200;
 
         const userWallet = await UserData.findOne({ userID: interaction.member.id });
         if (userWallet.money < cost) return interaction.reply({ content: `Insufficient shells, you need ${cost} shells to use this.`, ephemeral: true });
