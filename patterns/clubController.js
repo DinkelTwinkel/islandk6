@@ -7,7 +7,7 @@ module.exports = async (client) => {
 
         if (message.member.user.bot) return;
         // last channel is clubs.
-        if (message.channel.id === '1207882126154932294' || message.channel.id === '1209347683676852224') {
+        if (message.channel.id === '1214330284837961748') {
 
             if (attachmentTest(message) != null) {
                 // successful image post.
@@ -79,7 +79,7 @@ async function deleteMessageAndReply(message) {
     
     const utcEpochTimestamp = Math.floor(Date.now() / 1000) + messageDeletionTimer;
 
-    const response = await message.reply ({ content: 'Flea Market Submission failed. Be sure it is uploaded or sent as a `https://cdn.discordapp.com/attachments/` Link\n' + `Self deleteing in <t:${utcEpochTimestamp}:R>`, ephemeral: true });
+    const response = await message.reply ({ content: 'Club chat submission failed. Be sure it is uploaded or sent as a `https://cdn.discordapp.com/attachments/` Link\n' + `Self deleteing in <t:${utcEpochTimestamp}:R>`, ephemeral: true });
     setTimeout(() => {
 
         response.delete();
