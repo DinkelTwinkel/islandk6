@@ -227,12 +227,12 @@ async function shiftStock (client) {
 
     if (rising === true) {
       stock.currentValue += change;
-      await client.guilds.cache.get('1193663232041304134').channels.cache.get('1206930735315943444').send('**' + stock.stockName + `Increased from ${oldPrice} to ${stock.currentValue}**`);
+      await client.guilds.cache.get('1193663232041304134').channels.cache.get('1206930735315943444').send('**' + stock.stockName + ` Increased from ${oldPrice} to ${stock.currentValue}**`);
       if (stock.currentValue < 1) stock.currentValue = 1;
     }
     else {
       stock.currentValue -= change;
-      await client.guilds.cache.get('1193663232041304134').channels.cache.get('1206930735315943444').send('**' + stock.stockName + `Decreased from ${oldPrice} to ${stock.currentValue}**`);
+      await client.guilds.cache.get('1193663232041304134').channels.cache.get('1206930735315943444').send('**' + stock.stockName + ` Decreased from ${oldPrice} to ${stock.currentValue}**`);
       if (stock.currentValue < 1) {
         //stock death
         console.log (stock.stockName + ' has died, generating new stock');
