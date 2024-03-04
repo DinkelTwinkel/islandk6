@@ -62,7 +62,12 @@ module.exports = async (client) => {
 
         console.log(interaction.member.displayAvatarURL());
 
-        interaction.channel.send ({ embeds: [ await kimoIDMaker(interaction.message.content, interaction.member, client)], ephemeral: false });
+        const message = await interaction.channel.send ({ embeds: [ await kimoIDMaker(interaction.message.content, interaction.member, client)], ephemeral: false });
+
+        setTimeout(() => {
+          message.delete();
+        }, 20000);
+
         return interaction.deferUpdate();
       }
 
