@@ -375,7 +375,7 @@ async function createStockMarket(client) {
         });
 
         const embed = new EmbedBuilder()
-        .setDescription(`use /stocks to see your current portfolio. \n Prices shift every 12 hours. Every sell trade costs 1 shell to facilitate.`
+        .setDescription(`use /stocks to see your current portfolio. \n Prices shift randomly now cuz you guys asked for it. Every sell trade costs 1 shell to facilitate.`
         );
   
         refChannel1.send ({ content: '**KIMO STOCK MARKET**', components: actionRowArray , ephemeral: false, embeds: [embed] })
