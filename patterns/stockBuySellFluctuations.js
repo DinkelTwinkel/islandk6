@@ -51,7 +51,7 @@ module.exports = async (client) => {
     if (now > stock.nextUpdateTime) {
 
       shiftStock(client);
-      stock.nextUpdateTime = now + (60 * 1000 * 60 * 12);
+      stock.nextUpdateTime = now + (60 * 1000 * 60 * 12 * Math.random()) ;
       await stock.save();
 
     }
@@ -74,7 +74,7 @@ module.exports = async (client) => {
       if (now > stock.nextUpdateTime) {
   
         shiftStock(client);
-        stock.nextUpdateTime = stock.nextUpdateTime + (60 * 1000 * 60 * 12) * Math.random();
+        stock.nextUpdateTime = stock.nextUpdateTime + (60 * 1000 * 60 * 12 * Math.random());
         await stock.save();
         
         setTimeout(() => {
