@@ -11,30 +11,44 @@ module.exports = async (client) => {
 
         const kimoServer = message.guild;
 
-        // Island A
+        const radioChannels = ['1202876970426441768','1202775859635818508','1202784547822112879','1214633910802317362'];
 
-        if (message.channel.id == '1202775859635818508'){
+        radioChannels.forEach(channelID => {
 
-            relayMessage (kimoServer, '1202876970426441768', message);
-            relayMessage (kimoServer, '1202784547822112879', message);
+          if (message.channel.id == channelID) {
 
-        }
+            radioChannels.forEach(SENDTO => {
+              if (SENDTO === channelID) return;
+              relayMessage (kimoServer, SENDTO, message);
+            });
+          }
+          
+        });
 
-        // // Island B
+        // // Island A
 
-        if (message.channel.id == '1202876970426441768'){
+        // if (message.channel.id == '1202775859635818508'){
 
-            relayMessage (kimoServer, '1202775859635818508', message);
-            relayMessage (kimoServer, '1202784547822112879', message);
+        //     relayMessage (kimoServer, '1202876970426441768', message);
+        //     relayMessage (kimoServer, '1202784547822112879', message);
 
-        }
+        // }
 
-        if (message.channel.id == '1202784547822112879'){
+        // // // Island B
 
-            relayMessage (kimoServer, '1202876970426441768', message);
-            relayMessage (kimoServer, '1202775859635818508', message);
+        // if (message.channel.id == '1202876970426441768'){
 
-        }
+        //     relayMessage (kimoServer, '1202775859635818508', message);
+        //     relayMessage (kimoServer, '1202784547822112879', message);
+
+        // }
+
+        // if (message.channel.id == '1202784547822112879'){
+
+        //     relayMessage (kimoServer, '1202876970426441768', message);
+        //     relayMessage (kimoServer, '1202775859635818508', message);
+
+        // }
 
     }
     )
