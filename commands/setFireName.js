@@ -33,7 +33,7 @@ module.exports = {
         fire.defaultNaming = false;
         await fire.save();
 
-        interaction.member.voice.channel.setName(interaction.options.getString('name'));
+        interaction.member.voice.channel.setName('🔥 ' + interaction.options.getString('name'));
 
         await interaction.reply({ content: `Channel Name updated`, ephemeral: true });
 
