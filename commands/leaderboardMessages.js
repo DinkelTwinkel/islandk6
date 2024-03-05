@@ -2,6 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const UserData = require('../models/userData');
 const UserStats = require('../models/userStatistics');
 const { kimoServerID, announcementChannelID, jailedRoleID, dangerRoleID } = require('../ids.json');
+const UserState = require('../models/userState');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -25,6 +26,7 @@ module.exports = {
       const allUserStats = await UserStats.find({});
       let allUserStatsFiltered = [];
       const teamDatas = await UserData.find({});
+      const allUserStates = await UserState.find({})
 
       KimoServer.members.fetch();
 
@@ -53,15 +55,20 @@ module.exports = {
         allUserStatsFiltered.push(userStatArray[index]);
         console.log (totalMessages);
 
-        const teamData = teamDatas.filter(data => data.userID === userStatArray[index].userID );
-        console.log(teamData)
-        if (!teamData) continue;
+        // const teamData = teamDatas.filter(data => data.userID === userStatArray[index].userID );
+        // //console.log(teamData)
+        // if (!teamData) continue;
 
-        if (teamData[0].group === 0) {
+        // const userState = allUserStates.filter(data => data.userID === userStatArray[index].userID && data.currentState != 'DEAD' );
+        // //console.log (userState);
+        // if (!userState) continue;
+
+        if (member.roles.cache.get('1202551817708507136')) {
           islandACount += 1;
           islandATotal += userStatArray[index].totalMessages;
         }
-        else {
+        else 
+        if (member.roles.cache.get('1202876101005803531')) {
           islandBCount += 1;
           islandBTotal += userStatArray[index].totalMessages;
         }

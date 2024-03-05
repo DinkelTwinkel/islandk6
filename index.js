@@ -168,6 +168,20 @@ client.once(Events.ClientReady, async c => {
 //     }
 //  });
 
+// const result = await UserState.find({});
+
+// result.forEach(async state => {
+  
+//   const member = KimoServer.members.cache.get(state.userID);
+//   if (!member) {
+//     console.log (state.userID + ' NOT FOUND');
+//     //await UserState.deleteOne({userID: state.userID});
+//     state.currentState = 'DEAD';
+//     await state.save();
+//   }
+
+// });
+
 
 });
 
