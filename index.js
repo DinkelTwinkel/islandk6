@@ -168,6 +168,28 @@ client.once(Events.ClientReady, async c => {
 //     }
 //  });
 
+const allUserStats = await UserStats.find({});
+
+console.log (allUserStats.size);
+
+const userStatArray = Array.from(allUserStats);
+
+let totalMessages = 0;
+await kimoServer.members.fetch();
+
+for (let index = 0; index < userStatArray.length; index++) {
+
+  const member = KimoServer.members.cache.get(userStatArray[index].userID);
+  if (member) {
+    if (member.user.bot) return;
+    totalMessages += userStatArray[index].totalMessages;
+  }
+  
+}
+
+const averageMessage = totalMessages / userStatArray.length;
+console.log (`Average Message Per User = ${averageMessage}`);
+
 });
 
 // new user join auto role
