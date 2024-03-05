@@ -52,7 +52,6 @@ module.exports = {
         if (member.user.bot) continue;
         if (member.roles.cache.get('1202555128352346143')) continue;
         totalMessages += userStatArray[index].totalMessages;
-        allUserStatsFiltered.push(userStatArray[index]);
         console.log (totalMessages);
 
         // const teamData = teamDatas.filter(data => data.userID === userStatArray[index].userID );
@@ -68,6 +67,7 @@ module.exports = {
           totalCount += 1;
           islandACount += 1;
           islandATotal += userStatArray[index].totalMessages;
+          allUserStatsFiltered.push(userStatArray[index]);
         }
         else 
         if (member.roles.cache.get('1202876101005803531')) {
@@ -75,6 +75,7 @@ module.exports = {
           totalCount += 1;
           islandBCount += 1;
           islandBTotal += userStatArray[index].totalMessages;
+          allUserStatsFiltered.push(userStatArray[index]);
         }
         
 
