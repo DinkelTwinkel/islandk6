@@ -32,7 +32,7 @@ module.exports = async (client) => {
 
             const member = reaction.message.guild.members.cache.get(user.id);
             //scissor squad check
-            if (!member.roles.cache.get('1202555128352346143')) return;
+            if (!member.roles.cache.get('1202555128352346143') && !member.roles.cache.get('1214629711871741962')) return;
     
             const KimoServer = await client.guilds.fetch(kimoServerID);
             //const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
