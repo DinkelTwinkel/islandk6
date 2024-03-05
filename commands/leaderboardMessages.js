@@ -51,7 +51,7 @@ module.exports = {
         if (!member) continue;
         if (member.user.bot) continue;
         if (member.roles.cache.get('1202555128352346143')) continue;
-        totalMessages += userStatArray[index].totalMessages;
+        // totalMessages += userStatArray[index].totalMessages;
         console.log (totalMessages);
 
         // const teamData = teamDatas.filter(data => data.userID === userStatArray[index].userID );
