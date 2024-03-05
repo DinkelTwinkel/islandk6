@@ -36,7 +36,7 @@ module.exports = async (client, channelId) => {
 
     const embed = new EmbedBuilder()
     .setTitle("🍣 ISLAND MARKET FAIR 🎏")
-    .setDescription("The weekend has arrived! Good job on collecting shells this week!\n**Visit the other island's flea market by purchasing a ticket below! 70% off!**\n```Day Fare: 3 shells\nWeekend Pass: 5 shells```")
+    .setDescription("The weekend has arrived! Good job on collecting shells this week!\n**Visit the other island's flea market by purchasing a ticket below! 70% off!**\n```Day Fare: 8 shells\nWeekend Pass: 15 shells```")
     .setImage("https://cdn.discordapp.com/attachments/1200550297500659782/1213022597587935232/islandmarketstall.jpg?ex=65f3f654&is=65e18154&hm=808579ba2cc83213aa8c9d72703c11792545771622d00ba3f7c059f42836103c&")
     .setFooter({
       text: "tip jar donations goes directly to Jian Dao!",
