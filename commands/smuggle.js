@@ -37,6 +37,10 @@ module.exports = {
 
         interaction.reply({ content: `Smuggled! You may now see the other island. This will end when you next post or when cut off happens!`, ephemeral: true });
 
+        const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
+        jianDaoWallet.money += cost;
+        await jianDaoWallet.save();
+
     },
   };
 
