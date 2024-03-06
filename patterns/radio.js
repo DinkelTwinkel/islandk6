@@ -17,7 +17,18 @@ module.exports = async (client) => {
 
         }
 
-        
+        if (message.channel.id == '1202876942714544148') {
+
+          kimoServer.channels.cache.get('1202784547822112879').send('```' + `${message.member.displayName}: ${message.content} [PEACH]` + '```');
+
+        }
+
+        if (message.channel.id == '1202622607250296832') {
+
+          kimoServer.channels.cache.get('1202784547822112879').send('```' + `${message.member.displayName}: ${message.content} [MELON]` + '```');
+
+        }
+
         if (message.channel.id == '1202784547822112879') {
 
           kimoServer.channels.cache.get('1215040265761460304').send('```' + `${message.member.displayName}: ${message.content} [DUNGEON]` + '```');
