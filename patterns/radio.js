@@ -11,19 +11,33 @@ module.exports = async (client) => {
 
         const kimoServer = message.guild;
 
-        const radioChannels = ['1202876970426441768','1202775859635818508','1202784547822112879','1214633910802317362', '1215040265761460304'];
+        if (message.channel.id == '1215040265761460304') {
 
-        radioChannels.forEach(channelID => {
+          kimoServer.channels.cache.get('1202784547822112879').send('```' + `${message.member.displayName}: ${message.content} [SUPER RADIO]` + '```');
 
-          if (message.channel.id == channelID) {
+        }
 
-            radioChannels.forEach(SENDTO => {
-              if (SENDTO === channelID) return;
-              relayMessage (kimoServer, SENDTO, message);
-            });
-          }
+        
+        if (message.channel.id == '1202784547822112879') {
+
+          kimoServer.channels.cache.get('1215040265761460304').send('```' + `${message.member.displayName}: ${message.content} [DUNGEON]` + '```');
+
+        }
+
+
+        // const radioChannels = ['1202876970426441768','1202775859635818508','1202784547822112879','1214633910802317362', '1215040265761460304'];
+
+        // radioChannels.forEach(channelID => {
+
+        //   if (message.channel.id == channelID) {
+
+        //     radioChannels.forEach(SENDTO => {
+        //       if (SENDTO === channelID) return;
+        //       relayMessage (kimoServer, SENDTO, message);
+        //     });
+        //   }
           
-        });
+        // });
 
         // // Island A
 
