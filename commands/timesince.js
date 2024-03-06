@@ -7,7 +7,7 @@ const getAllMessagesInChannel = require('../patterns/getAllMessagesInChannel');
 
 module.exports = {
     data: new SlashCommandBuilder()
-    .setName('timesincedaily')
+    .setName('timesincemessage')
     .setDescription('time since a message was posted')
     .addStringOption(option =>
         option
@@ -28,7 +28,7 @@ module.exports = {
         const KimoServer = await client.guilds.fetch(kimoServerID);
         const messageLink = interaction.options.getString('messagelink');
 
-        if (!isDiscordMessageLink(str)) return interaction.reply ({content: `Unable to locate message data. Is the message ID correct?`, ephemeral: true });
+        if (!isDiscordMessageLink(messageLink)) return interaction.reply ({content: `Unable to locate message data. Is the message ID correct?`, ephemeral: true });
 
         const dailyChannel = KimoServer.channels.cache.get(extractChannelIdFromDiscordLink(messageLink));
 
