@@ -107,7 +107,7 @@ function applyFormatting(enterMessage, formatIndex) {
         
         console.log(timeString);
 
-        deliveryMessage = '```' + '[unknown] ' +  deliveryMessage + ` [${timeString}]` + '```' ;
+        deliveryMessage = '```' + '[DUNGEON] ' +  deliveryMessage + ` [${timeString}]` + '```' ;
     }
 
     return deliveryMessage;
