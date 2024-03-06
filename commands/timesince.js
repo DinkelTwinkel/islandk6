@@ -25,10 +25,10 @@ module.exports = {
 
         if (!interaction.member.roles.cache.get('1202555128352346143')) return interaction.reply({ content: `you cannot use this...`, ephemeral: true });
 
-        await interaction.deferReply();
-
         const KimoServer = await client.guilds.fetch(kimoServerID);
         const messageLink = interaction.options.getString('messagelink');
+
+        if (!isDiscordMessageLink(str)) return interaction.reply ({content: `Unable to locate message data. Is the message ID correct?`, ephemeral: true });
 
         const dailyChannel = KimoServer.channels.cache.get(extractChannelIdFromDiscordLink(messageLink));
 
@@ -55,21 +55,26 @@ module.exports = {
         }
 
         if (message) {
-            interaction.editReply({content: 'Message Data Retrieved', embeds: [embed]})
+            interaction.reply({content: 'Message Data Retrieved', embeds: [embed]})
         }
         else {
-            interaction.editReply({content: `Unable to locate message data. Is the message ID correct?`});
+            interaction.reply({content: `Unable to locate message data. Is the message ID correct?`, ephemeral: true});
         }
 
 
     },
   };
 
-  function extractChannelIdFromDiscordLink(link) {
+function extractChannelIdFromDiscordLink(link) {
     const regex = /channels\/(\d+)\/(\d+)\/(\d+)/;
     const match = link.match(regex);
     if (match && match.length >= 4) {
         return match[2]; // Second captured group is the channel ID
     }
     return null;
+}
+
+function isDiscordMessageLink(str) {
+    const regex = /^https:\/\/discord\.com\/channels\/\d+\/\d+\/\d+$/;
+    return regex.test(str);
 }
