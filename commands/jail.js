@@ -26,8 +26,7 @@ module.exports = {
 
     async execute(interaction, client) {
 
-        if (!interaction.member.roles.cache.get(adminRoleID)) 
-            return interaction.reply({ content: `you cannot use this...`, ephemeral: true });
+        if (!interaction.member.roles.cache.get(adminRoleID)) return interaction.reply({ content: `you cannot use this...`, ephemeral: true });
 
         const jailTarget = await interaction.options.getMember('target');
 
