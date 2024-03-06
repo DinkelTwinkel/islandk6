@@ -21,6 +21,8 @@ module.exports = async (client) => {
         if (message.channel.id == '1202784547822112879') {
 
           kimoServer.channels.cache.get('1215040265761460304').send('```' + `${message.member.displayName}: ${message.content} [DUNGEON]` + '```');
+          kimoServer.channels.cache.get('1202876942714544148').send('```' + `${message.member.displayName}: ${message.content} [DUNGEON]` + '```');
+          kimoServer.channels.cache.get('1202622607250296832').send('```' + `${message.member.displayName}: ${message.content} [DUNGEON]` + '```');
 
         }
 
