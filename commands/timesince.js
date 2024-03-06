@@ -41,8 +41,6 @@ module.exports = {
 
         // const latestMessage = filteredMessages.first();
 
-
-
         const messageID = messageLink.substring(69);
         console.log (messageID);
         const message = await dailyChannel.messages.fetch(messageID);
