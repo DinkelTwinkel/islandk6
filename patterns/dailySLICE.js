@@ -274,6 +274,7 @@ async function channelLock (client) {
     .setDescription('```' + `${await getFortuneCookie(client)}` + '```');
 
     const message = await postDailyChannel.send ({content: '', embeds: [dailyquote] });
+    await postDailyChannel.send ({ embeds: [await RandomRefOfTheDayEmbed(client)]});
     console.log(message);
 
    //  await dailyHighlight(client);

@@ -45,6 +45,8 @@ async function channelLock (client) {
     const message = await postDailyChannel.send ({content: '', embeds: [dailyquote] });
     console.log(message);
 
+    await postDailyChannel.send ({ embeds: [await RandomRefOfTheDayEmbed(client)]});
+
     // await dailyHighlight(client);
 
     const now = new Date();
