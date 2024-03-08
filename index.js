@@ -57,6 +57,7 @@ const marketFair = require('./patterns/marketFair');
 const marketFairCreate = require('./patterns/marketFairCreate');
 const adminWage = require('./patterns/adminWage');
 const clubController = require('./patterns/clubController');
+const dailyLockUnlock = require('./patterns/dailyLockUnlock');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -566,6 +567,12 @@ client.on(Events.MessageCreate, async (message) => {
       if (command === 'islandfair') {
         // create button to give role power.
         await marketFairCreate(client, message.channel.id);
+        await message.delete();
+      } 
+
+      if (command === 'dailyunlock') {
+        // create button to give role power.
+        await dailyLockUnlock(client);
         await message.delete();
       } 
   }
