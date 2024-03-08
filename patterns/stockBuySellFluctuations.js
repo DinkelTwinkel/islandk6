@@ -362,7 +362,7 @@ async function createStockMarket(client) {
   
   
           if (stock.rising === false) {
-            stockRisingButton.setLabel(`-${stock.currentShift}%↘`)
+            stockRisingButton.setLabel(`${stock.currentShift}%↘`)
             stockRisingButton.setStyle(ButtonStyle.Danger);
           }
           
