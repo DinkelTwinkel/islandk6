@@ -43,7 +43,7 @@ module.exports = async (client) => {
             const result = await Report.findOne({ postID: reaction.message.id, reporterID: member.id });
 
             const backRooms = client.guilds.cache.get('1063167135939039262');
-            const reportChannel = backRooms.channels.cache.get('1210437825804238948');
+            const reportChannel = backRooms.channels.cache.get('1216047138522402896');
 
             if (!result) {
                 const report = new Report ({
@@ -56,7 +56,7 @@ module.exports = async (client) => {
                 console.log (countReport);
 
                 if (countReport.length >= 2) {
-                    reportChannel.send ({ content: `# ${countReport.length} users have reported this post-> ${reaction.message.url}`});
+                    reportChannel.send ({ content: `${reaction.message.attachments.first().url}\n# ${countReport.length} users have reported this post-> ${reaction.message.url}`});
                 }
             }
 
