@@ -169,20 +169,12 @@ client.once(Events.ClientReady, async c => {
 //     }
 //  });
 
-// const result = await UserState.find({});
+const result = await UserData.find({});
 
-// result.forEach(async state => {
-  
-//   const member = KimoServer.members.cache.get(state.userID);
-//   if (!member) {
-//     console.log (state.userID + ' NOT FOUND');
-//     //await UserState.deleteOne({userID: state.userID});
-//     state.currentState = 'DEAD';
-//     await state.save();
-//   }
+result.forEach(async state => {
 
-// });
-
+  state.money += 5;
+  state.save();
 
 });
 
@@ -762,6 +754,23 @@ client.on(Events.MessageCreate, async (message) => {
         const kimoServer =  await client.guilds.fetch('1193663232041304134');
         //await kimoServer.members.fetch();
         const therapyRole = kimoServer.roles.cache.get('1209320167906087002');
+        const member = kimoServer.members.cache.get(message.member.user.id);
+
+        if (member.roles.cache.has(therapyRole.id)) {
+            member.roles.remove(therapyRole);
+            return deleteMessage(message);
+        }
+        else {
+            member.roles.add(therapyRole);
+            return deleteMessage(message);
+        }
+      }
+
+      if (command === 'eventnotes') {
+
+        const kimoServer =  await client.guilds.fetch('1193663232041304134');
+        //await kimoServer.members.fetch();
+        const therapyRole = kimoServer.roles.cache.get('1215829383047282819');
         const member = kimoServer.members.cache.get(message.member.user.id);
 
         if (member.roles.cache.has(therapyRole.id)) {
