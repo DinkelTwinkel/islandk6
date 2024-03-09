@@ -55,7 +55,7 @@ module.exports = async (client) => {
                 const countReport = await Report.find({postID: reaction.message.id});
                 console.log (countReport);
 
-                if (countReport.length >= 3) {
+                if (countReport.length >= 2) {
                     reportChannel.send ({ content: `# ${countReport.length} users have reported this post-> ${reaction.message.url}`});
                 }
             }
