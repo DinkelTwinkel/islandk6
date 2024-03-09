@@ -4,6 +4,8 @@ const getAllMessagesInChannel = require('./getAllMessagesInChannel');
 const { kimoChannelID, kimoServerID, botLogChannelID, kimoChannelDungeonID, deadRoleID, dangerRoleID } = require('../ids.json');
 const marketFairCreate = require('./marketFairCreate');
 const adminWage = require('./adminWage');
+const getAllMessagesInChannelLastTwoDays = require('./getAllMessagesInChannelLastTwoDays');
+const UserData = require('../models/userData');
 
 module.exports = async (client) => {
 
@@ -45,9 +47,9 @@ async function channelLock (client) {
     const message = await postDailyChannel.send ({content: '', embeds: [dailyquote] });
     console.log(message);
 
-    await postDailyChannel.send ({ embeds: [await RandomRefOfTheDayEmbed(client)]});
+    //await postDailyChannel.send ({ embeds: [await RandomRefOfTheDayEmbed(client)]});
 
-    // await dailyHighlight(client);
+    await dailyHighlight(client);
 
     const now = new Date();
 
@@ -155,7 +157,7 @@ async function getFortuneCookie(client) {
 
     console.log('Last cut off was: ' + previousDateUtcMil);
 
-    const messages = await getAllMessagesInChannel(postDailyChannel)
+    const messages = await getAllMessagesInChannelLastTwoDays(postDailyChannel)
         // Filter the messages by creation date
     let filteredMessages = messages.filter(msg => msg.createdAt.getTime() > previousDateUtcMil && msg.createdAt.getTime() < (nextDateUtcMil-(period * 1)));
     filteredMessages = filteredMessages.filter(msg => !msg.author.bot);

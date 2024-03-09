@@ -22,6 +22,8 @@ module.exports = async (client) => {
                   return;
               }
           }
+
+        if (reaction.emoji.name === '❌') return;
       
         const messageAuthor = reaction.message.author;
       

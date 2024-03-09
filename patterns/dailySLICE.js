@@ -9,6 +9,7 @@ const honourTheFallen = require('./honourTheFallen');
 const forceRecheck = require('./forceRecheck');
 const marketFairCreate = require('./marketFairCreate');
 const adminWage = require('./adminWage');
+const getAllMessagesInChannelLastTwoDays = require('./getAllMessagesInChannelLastTwoDays');
 module.exports = async (client) => {
 
     console.log ('not yet time');
@@ -274,10 +275,10 @@ async function channelLock (client) {
     .setDescription('```' + `${await getFortuneCookie(client)}` + '```');
 
     const message = await postDailyChannel.send ({content: '', embeds: [dailyquote] });
-    await postDailyChannel.send ({ embeds: [await RandomRefOfTheDayEmbed(client)]});
-    console.log(message);
+    //await postDailyChannel.send ({ embeds: [await RandomRefOfTheDayEmbed(client)]});
+    //console.log(message);
 
-   //  await dailyHighlight(client);
+    await dailyHighlight(client);
 
     const now = new Date();
 
@@ -357,7 +358,7 @@ async function getFortuneCookie(client) {
     const backRooms = client.guilds.cache.get('1063167135939039262');
     const cookieChannel = backRooms.channels.cache.get('1200757419454758953');
 
-    const messages = await getAllMessagesInChannel(cookieChannel);
+    const messages = await getAllMessagesInChannelLastTwoDays(cookieChannel);
 
     const randomIndex = Math.floor(Math.random() * messages.length);
 

@@ -30,6 +30,26 @@ module.exports = async (client) => {
         }
 
     });
+
+    const result = await Fare.find();
+
+    result.forEach(async element => {
+      const now = new Date();
+
+      const member = KimoServer.members.cache.get(element.userId);
+      if (member) {
+        if (now.getTime() < element.passExpireTime ) {
+        if (!member.roles.cache.get('1212820829344374834')) {
+          console.log (`ADDING PASS BACK FOR ${member.displayName}`);
+          member.roles.add('1212820829344374834');
+        }
+        else {
+          //console.log (`HAS PASS ${member.displayName}`);
+        }
+        }
+      }
+      
+    });
     
 }, 1000 * 5);
 

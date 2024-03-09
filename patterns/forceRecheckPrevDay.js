@@ -13,7 +13,7 @@ module.exports = async (client) => {
 
     sendMessage('BEGINNING FORCE RECHECK', botLogChannel);
 
-    channelLock (client);
+    //channelLock (client);
 
     // get next date and minute current cycle length.
 
@@ -22,9 +22,9 @@ module.exports = async (client) => {
         const tracker = await KimoTracker.findOne({ serverId: kimoServerID });
         const nextDateUtcMil = tracker.nextDate;
         const period = tracker.currentPeriodLength;
-        const previousDateUtcMil = nextDateUtcMil - period;
+        const previousDateUtcMil = nextDateUtcMil - (2 * period);
 
-        const messages = await getAllMessagesInChannelLastTwoDays(postDailyChannel)
+        const messages = await getAllMessagesInChannel(postDailyChannel)
         // Filter the messages by creation date
         let filteredMessages = messages.filter(msg => msg.createdAt.getTime() > previousDateUtcMil);
         filteredMessages = filteredMessages.filter(msg => !msg.author.bot);
@@ -34,8 +34,6 @@ module.exports = async (client) => {
         const members = await KimoServer.members.fetch();
 
         sendMessage(`MEMBERS FETCHED: ${members.size}`, botLogChannel);
-        sendMessage(`DAILIES FETCHED: ${filteredMessages.length}`, botLogChannel);
-
 
         let count = 0;
         //const allDangerStates = await UserState.find({ currentState: 'DANGER' });
@@ -80,31 +78,20 @@ module.exports = async (client) => {
                 else {
                     //sendMessage(`❌POST NOT FOUND FOR MEMBER: ${member}`, botLogChannel);
                     // check if current state is DANGER, if not fix it.
-                    if (result.currentState === 'SAFE') {
-                        //sendMessage(`STATE MISMATCH DETECTED, CHANGING TO DANGER FOR ${member}`, botLogChannel);
-                        result.currentState = 'DANGER';
+                        sendMessage(`POST NOT FOUND FROM PREVIOUS DAY, CHANGING TO DEAD FOR ${member}`, botLogChannel);
+                        result.currentState = 'DEAD';
                         await result.save();
                         botLogChannel.send(`!updatestate ${member.id}`);
-                    }
 
-                    if (member.roles.cache.get ('1202533882822397972')) {
-                        member.roles.remove ('1202533882822397972');
-                        botLogChannel.send(`REMOVING SAFE ROLE FROM ${member.displayName}`);
-                    }
-
-                    if (!member.roles.cache.get ('1202533924040081408')) {
-                        member.roles.add ('1202533924040081408');
-                        botLogChannel.send(`ADDING DANGER ROLE TO ${member.displayName}`);
-                    }
-
+                    
                 }
                 count += 1;
             }
         });
 
-        setTimeout(() => {
-            channelUnLock (client);
-        }, 60 * 1000 * 2);
+        // setTimeout(() => {
+        //     channelUnLock (client);
+        // }, 60 * 1000 * 2);
 
     }, 5000);
 

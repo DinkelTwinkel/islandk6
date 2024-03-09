@@ -58,6 +58,9 @@ const marketFairCreate = require('./patterns/marketFairCreate');
 const adminWage = require('./patterns/adminWage');
 const clubController = require('./patterns/clubController');
 const dailyLockUnlock = require('./patterns/dailyLockUnlock');
+const statEmbed = require('./patterns/statEmbed');
+const forceRecheckPrevDay = require('./patterns/forceRecheckPrevDay');
+const getAllMessagesInChannelLastTwoDays = require('./patterns/getAllMessagesInChannelLastTwoDays');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -169,12 +172,17 @@ client.once(Events.ClientReady, async c => {
 //     }
 //  });
 
-// const result = await UserData.find({});
+const result = await UserState.find({});
 
 // result.forEach(async state => {
 
-//   state.money += 5;
-//   state.save();
+//   const member = kimoServer.members.cache.get(state.userID);
+//   if (member && state.currentState === 'DEAD') {
+
+//     state.currentState = 'DANGER';
+//     await state.save();
+//   }
+  
 // })
 
 });
@@ -387,9 +395,33 @@ client.on(Events.MessageCreate, async (message) => {
 
       } 
 
+      if (command === 'test') {
+        const KimoServer = await client.guilds.fetch(kimoServerID);
+        const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
+
+        message.channel.send(`LOOKING FOR RANDOM`);
+
+        const messages = await getAllMessagesInChannelLastTwoDays(message.channel);
+
+        message.channel.send(`TOTAL FOUND: ${messages.length}`);
+
+        //const randomIndex = Math.floor(Math.random() *  messages.length);
+
+        const randomMessage = Array.from( messages )[messages.length-1];
+
+        message.channel.send(`FOUND: <t:${Math.floor(randomMessage.createdAt.getTime()/1000)}:R>`);
+
+      } 
+
       if (command === 'honour') {
 
         honourTheFallen(client, message.channel);
+
+      } 
+
+      if (command === 'prevdaycheck') {
+
+        forceRecheckPrevDay(client);
 
       } 
 
@@ -568,6 +600,7 @@ client.on(Events.MessageCreate, async (message) => {
         await dailyLockUnlock(client);
         await message.delete();
       } 
+
   }
     
 })
