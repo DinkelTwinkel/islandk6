@@ -7,7 +7,7 @@ module.exports = async (client) => {
 
         if (message.member.user.bot) return;
         // last channel is clubs.
-        if (message.channel.id === '1207882126154932294' || message.channel.id === '1209347683676852224' || message.channel.id === '1215997140807974992') {
+        if (message.channel.id === '1207882126154932294' || message.channel.id === '1209347683676852224' || message.channel.id === '1216049778358751342') {
 
             if (attachmentTest(message) != null) {
                 // successful image post.
