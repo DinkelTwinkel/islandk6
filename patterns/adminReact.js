@@ -51,14 +51,15 @@ module.exports = async (client) => {
                     reporterID: member.id,
                 })
                 await report.save();
+                
+                const countReport = await Report.find({postID: reaction.message.id});
+                console.log (countReport);
+
+                if (countReport.length >= 3) {
+                    reportChannel.send ({ content: `# ${countReport.length} users have reported this post-> ${reaction.message.url}`});
+                }
             }
 
-            const countReport = await Report.find({postID: reaction.message.id});
-            console.log (countReport);
-
-            if (countReport.length >= 3) {
-                reportChannel.send ({ content: `# ${countReport.length} users have reported this post-> ${reaction.message.url}`});
-            }
 
             const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
             botLogChannel.send('reportDetected.')
