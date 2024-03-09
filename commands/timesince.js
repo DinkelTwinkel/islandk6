@@ -47,8 +47,10 @@ module.exports = {
         const messageCreatedTime = message.createdAt.getTime();
         const utcSeconds = Math.floor(messageCreatedTime/1000);
 
+        const howLongAgo = Math.floor(((new Date().getTime() - messageCreatedTime)/(1000*60*60)) * 10)/10;
+
         const embed = new EmbedBuilder()
-        .setDescription(`This message was sent <t:${utcSeconds}:R> on:\n <t:${utcSeconds}:f>`);
+        .setDescription(`This message was sent <t:${utcSeconds}:R> on:\n <t:${utcSeconds}:f>\n Which is roughly ${howLongAgo} hours ago`);
 
         if (message.attachments.first().url) {
             embed.setImage(message.attachments.first().url);
