@@ -38,7 +38,7 @@ module.exports = async (client) => {
             if (!member.roles.cache.get('1202555128352346143') && !member.roles.cache.get('1214629711871741962')) {
     
             const KimoServer = await client.guilds.fetch(kimoServerID);
-            const messageAuthor = reaction.message.author;
+            //const messageAuthor = reaction.message.author;
 
             const result = await Report.findOne({ postID: reaction.message.id, reporterID: member.id });
 
@@ -62,7 +62,7 @@ module.exports = async (client) => {
 
 
             const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
-            botLogChannel.send('reportDetected.')
+            botLogChannel.send(`reportDetected by ${member}.`);
     
             console.log(' X emoji detected by non scissor squad ');
 
