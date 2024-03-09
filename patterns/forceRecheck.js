@@ -96,7 +96,6 @@ module.exports = async (client) => {
                         member.roles.add ('1202533924040081408');
                         botLogChannel.send(`ADDING DANGER ROLE TO ${member.displayName}`);
                     }
-
                 }
                 count += 1;
             }
