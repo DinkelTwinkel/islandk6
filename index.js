@@ -169,12 +169,13 @@ client.once(Events.ClientReady, async c => {
 //     }
 //  });
 
-const result = await UserData.find({});
+// const result = await UserData.find({});
 
-result.forEach(async state => {
+// result.forEach(async state => {
 
-  state.money += 5;
-  state.save();
+//   state.money += 5;
+//   state.save();
+// })
 
 });
 
