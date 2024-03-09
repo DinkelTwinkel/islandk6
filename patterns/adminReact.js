@@ -113,7 +113,11 @@ module.exports = async (client) => {
 
                 const userData = await UserData.findOne ({ userID: report.reporterID});
                 userData.money += 5;
-                userData.save();
+                await userData.save();
+
+                const invalidPosterData = await UserData.findOne ({ userID: messageAuthor.id});
+                invalidPosterData -= 5;
+                await invalidPosterData.save();
 
             });
 
