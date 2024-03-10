@@ -50,7 +50,7 @@ module.exports = {
           const itemCheck = playerInventory.find(playerInventory => playerInventory.itemName === stock.stockName)
           
           if (itemCheck) {
-            profit = itemCheck.totalSpent - (stock.currentValue * itemCheck.Inventory);
+            profit = itemCheck.totalSpent - (stock.currentValue * itemCheck.quantity);
             currentlyHave = itemCheck.quantity;
           }
         }
