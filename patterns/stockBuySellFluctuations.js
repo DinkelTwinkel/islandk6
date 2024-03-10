@@ -210,7 +210,7 @@ module.exports = async (client) => {
 
 
 
-        if (ShareHoldingFactor != 1) {
+        if (ShareHoldingFactor != 1 && ShareHoldingFactor != 0) {
           stock.currentValue -= Math.ceil(stock.passiveFluctuation * ShareHoldingFactor);
           refChannel1.send (`**${stock.stockName} decreased to ${stock.currentValue} seashells!**`);
         }
