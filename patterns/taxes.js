@@ -1,50 +1,52 @@
 const KimoTracker = require('../models/kimoTracker');
 const { ActivityType } = require('discord.js');
+const UserData = require('../models/userData');
+const { kimoChannelID, kimoServerID, botLogChannelID, kimoChannelDungeonID, deadRoleID, dangerRoleID } = require('../ids.json');
 
 module.exports = async (client) => {
 
-    // const result = await KimoTracker.findOne({ serverId: '1192955466872004669' });
+    const KimoServer = await client.guilds.fetch(kimoServerID);
+    const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
+
+    const taxBracket1 = 0.01;
+    const taxBracket2 = 0.03;
+    const taxBracket3 = 0.20;
+
+    const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
 
 
-    // // Target UTC timestamp in milliseconds (1709294400000 represents a specific date)
-    // var targetTimestamp = 1709294400000; // 1st march
+    const allUserData = await UserData.find({});
 
-    // // Current UTC timestamp in milliseconds
-    // var currentTimestamp = Date.now();
+    allUserData.forEach(async user => {
 
-    // // Calculate the difference in milliseconds
-    // var timeDifference = targetTimestamp - currentTimestamp;
+        const member = KimoServer.members.cache.get(user.userID);
+        if (!member) return;
+        
+        if (user.money > 10000) {
+            const tax = Math.ceil(user.money * taxBracket3);
+            user.money -= tax;
+            jianDaoWallet.money += tax;
+            botLogChannel.send(`<@${user.userID}> was taxed ${tax} shells`);
+        }
+        
+        else if (user.money > 5000) {
+            const tax = Math.ceil(user.money * taxBracket2);
+            user.money -= tax;
+            jianDaoWallet.money += tax;
+            botLogChannel.send(`<@${user.userID}> was taxed ${tax} shells`);
+        }
 
-    // // Convert milliseconds to days
-    // var daysUntilTarget = Math.floor (timeDifference / (1000 * 60 * 60 * 24));
+        else if (user.money > 1000) {
+            const tax = Math.ceil(user.money * taxBracket1);
+            user.money -= tax;
+            jianDaoWallet.money += tax;
+            botLogChannel.send(`<@${user.userID}> was taxed ${tax} shells`);
+        }
 
-    // console.log(`There are ${daysUntilTarget} days until the target timestamp.`);
-
-    //     client.user.setPresence({
-    //     activities: [{ name: `${daysUntilTarget} days until start.`, type: ActivityType.Watching }],
-    //     status: 'dnd',
-    //     });
-            const watchingArray = ['𝗦𝗨𝗡𝗡𝗬 𝗪𝗘𝗔𝗧𝗛𝗘𝗥 🌄', '𝗟𝗜𝗚𝗛𝗧 𝗗𝗥𝗜𝗭𝗭𝗟𝗘💦', '𝗛𝗜𝗚𝗛 𝗪𝗜𝗡𝗗𝗦💨', '𝗛𝗘𝗔𝗩𝗬 𝗥𝗔𝗜𝗡🌧', '𝗧𝗛𝗨𝗡𝗗𝗘𝗥 𝗦𝗧𝗢𝗥𝗠⛈', '𝗔 𝗖𝗛𝗔𝗡𝗖𝗘 𝗢𝗙 𝗠𝗘𝗔𝗧𝗕𝗔𝗟𝗟🧆', '𝗖𝗟𝗘𝗔𝗥 𝗦𝗞𝗜𝗘𝗦🌅', '𝗛𝗜𝗚𝗛 𝗧𝗜𝗗𝗘🌊', '𝗟𝗜𝗚𝗛𝗧 𝗙𝗢𝗚', '𝗛𝗘𝗔𝗩𝗬 𝗙𝗢𝗚', '𝗦𝗜𝗟𝗘𝗡𝗧 𝗛𝗜𝗟𝗟 𝗙𝗢𝗚', '𝗢𝗩𝗘𝗥𝗖𝗔𝗦𝗧']
+        await user.save();
+        await jianDaoWallet.save();
+        
+    });
     
-            let dice = Math.floor(Math.random() * watchingArray.length);
-
-            client.user.setPresence({
-            activities: [{ name: `${watchingArray[dice]}`, type: ActivityType.Watching }],
-            status: 'dnd',
-            });
-            client.user.setStatus('online');
-
-
-            setInterval(() => {
-
-                dice = Math.floor(Math.random() * watchingArray.length);
-
-                client.user.setPresence({
-                    activities: [{ name: `${watchingArray[dice]}`, type: ActivityType.Watching }],
-                    status: 'dnd',
-                    });
-                    client.user.setStatus('online');
-
-            }, 1000 * 60 * 60 * Math.random());
 
 };

@@ -156,10 +156,10 @@ module.exports = async (client) => {
 
         //refChannel1.send (`${interaction.member.displayName} bought ${stock.stockName} stock for ${stock.currentValue} sea shells, they currently have ${checkExistingInventory.quantity} shares.`);
         refChannel1.send (`Someone bought ${stock.stockName}!`);
-        
+
         if (Math.random() > 0.5) {
           stock.currentValue += 1;
-          refChannel1.send (`${stock.stockName} increased to ${stock.currentValue} seashells!`);
+          refChannel1.send (`**${stock.stockName} increased to ${stock.currentValue} seashells!**`);
         }
 
         await stock.save();
@@ -204,7 +204,7 @@ module.exports = async (client) => {
 
         if (Math.random() > 0.4) {
           stock.currentValue -= 1;
-          refChannel1.send (`${stock.stockName} decreased to ${stock.currentValue} seashells...`);
+          refChannel1.send (`**${stock.stockName} decreased to ${stock.currentValue} seashells...**`);
         }
         await stock.save();
 

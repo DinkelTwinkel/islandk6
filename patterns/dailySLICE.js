@@ -10,6 +10,7 @@ const forceRecheck = require('./forceRecheck');
 const marketFairCreate = require('./marketFairCreate');
 const adminWage = require('./adminWage');
 const getAllMessagesInChannelLastTwoDays = require('./getAllMessagesInChannelLastTwoDays');
+const taxes = require('./taxes');
 module.exports = async (client) => {
 
     console.log ('not yet time');
@@ -51,6 +52,7 @@ module.exports = async (client) => {
         alarmChannel.send(`3 HOURS LEFT <@&${dangerRole.id}>`);
         console.log ('recheck auto requested');
         forceRecheck(client);
+        taxes(client);
     }
 
     if (result.alarmThree === false && currentUTCHour >= 11 && currentUTCHour < 12) {
