@@ -154,10 +154,12 @@ module.exports = async (client) => {
           interaction.reply({content: `You bought ${stock.stockName} stock for ${stock.currentValue}, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
         }
 
-        refChannel1.send (`${interaction.member.displayName} bought ${stock.stockName} stock for ${stock.currentValue} sea shells, they currently have ${checkExistingInventory.quantity} shares.`);
+        //refChannel1.send (`${interaction.member.displayName} bought ${stock.stockName} stock for ${stock.currentValue} sea shells, they currently have ${checkExistingInventory.quantity} shares.`);
+        refChannel1.send (`Someone bought ${stock.stockName}!`);
         
         if (Math.random() > 0.5) {
           stock.currentValue += 1;
+          refChannel1.send (`${stock.stockName} increased to ${stock.currentValue} seashells!`);
         }
 
         await stock.save();
@@ -197,13 +199,14 @@ module.exports = async (client) => {
         jianDaoWallet.money += 1;
         await jianDaoWallet.save();
 
-        refChannel1.send (`${interaction.member.displayName} sold ${stock.stockName} Stock for ${stock.currentValue} sea shells and paid 1 shell in transaction fee, they currently have ${checkExistingInventory.quantity} shares.`);
+        //refChannel1.send (`${interaction.member.displayName} sold ${stock.stockName} Stock for ${stock.currentValue} sea shells and paid 1 shell in transaction fee, they currently have ${checkExistingInventory.quantity} shares.`);
+        refChannel1.send (`Someone sold ${stock.stockName}!`);
 
         if (Math.random() > 0.4) {
           stock.currentValue -= 1;
+          refChannel1.send (`${stock.stockName} decreased to ${stock.currentValue} seashells...`);
         }
         await stock.save();
-
 
         createStockMarket(client);
       }
