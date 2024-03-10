@@ -61,6 +61,7 @@ const dailyLockUnlock = require('./patterns/dailyLockUnlock');
 const statEmbed = require('./patterns/statEmbed');
 const forceRecheckPrevDay = require('./patterns/forceRecheckPrevDay');
 const getAllMessagesInChannelLastTwoDays = require('./patterns/getAllMessagesInChannelLastTwoDays');
+const Inventory = require('./models/inventory');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -173,6 +174,8 @@ client.once(Events.ClientReady, async c => {
 //  });
 
 const result = await UserState.find({});
+
+await Inventory.deleteMany({itemName: 'Mermay (MER)'});
 
 // result.forEach(async state => {
 

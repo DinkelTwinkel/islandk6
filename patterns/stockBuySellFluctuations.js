@@ -85,6 +85,19 @@ module.exports = async (client) => {
   
     });
 
+    const allInventories = await Inventory.find({});
+
+    allInventories.forEach(async checkStock => {
+
+      const findStock = await Stock.findOne({stockName: checkStock.itemName });
+      if (!findStock) {
+        console.log (checkStock.itemName + ' NOT FOUND');
+        checkStock.quantity = 0;
+        await checkStock.save();
+      }
+      
+    });
+
 
   }, 1000 * 10 );
 
@@ -216,9 +229,14 @@ async function shiftStock (client) {
     
     let change = stock.passiveFluctuation;
 
-    if (0.01 > Math.random() || (0.05 > Math.random() && rising === false)) {
+    if (0.01 > Math.random() || (0.1 > Math.random() && rising === false)) {
       change = stock.onePercentChanceFluctuation;
       if (stock.onePercentChanceFluctuation < 0) stock.rising = false;
+    }
+
+    if (rising === false) {
+      const stockKiller = Math.ceil(passiveFluctuation * Math.random());
+      change += stockKiller;
     }
 
     change = Math.ceil(change * Math.random());
@@ -237,7 +255,7 @@ async function shiftStock (client) {
         //stock death
         console.log (stock.stockName + ' has died, generating new stock');
 
-        Inventory.deleteMany({itemName: stock.name});
+        await Inventory.deleteMany({itemName: stock.name});
         await client.guilds.cache.get('1193663232041304134').channels.cache.get('1206930735315943444').send('# ' + stock.stockName + ' has gone bankrupt! new stock available.');
 
         // replace stock with new stock. 
