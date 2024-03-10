@@ -128,7 +128,7 @@ module.exports = async (client) => {
         stock.totalShares += 1;
         await checkExistingInventory.save();
 
-        const change = oldPrice - stock.currentValue;
+        const change = stock.currentValue - oldPrice;
         stock.currentShift = Math.round((change / oldPrice) * 100) / 100;
         stock.fakeRising = true;
         await stock.save();
@@ -183,7 +183,7 @@ module.exports = async (client) => {
           //'**' + stock.stockName + ` Increased from ${oldPrice} to ${stock.currentValue}**
         }
         
-        const change = oldPrice - stock.currentValue;
+        const change = stock.currentValue - oldPrice;
         stock.currentShift = Math.round((change / oldPrice) * 100) / 100;
         stock.fakeRising = false;
         await stock.save();
