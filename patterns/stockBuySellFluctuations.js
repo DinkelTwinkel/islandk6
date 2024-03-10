@@ -106,7 +106,8 @@ module.exports = async (client) => {
         }
 
         if (interaction.channel.id === '1206930735315943444') {
-          interaction.deferUpdate();
+          interaction.reply({content: `You bought ${stock.stockName} stock for ${stock.currentValue}, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
+          // interaction.deferUpdate();
         }
         else {
           interaction.reply({content: `You bought ${stock.stockName} stock for ${stock.currentValue}, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
