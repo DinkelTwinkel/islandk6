@@ -121,6 +121,9 @@ module.exports = async (client) => {
 
         if (ShareHoldingFactor != 1 && ShareHoldingFactor != 0) {
           stock.currentValue += Math.ceil(stock.passiveFluctuation * ShareHoldingFactor);
+          const change = stock.currentValue - oldPrice;
+          stock.currentShift = Math.round((change / oldPrice) * 1000) / 1000;
+          stock.fakeRising = true;
           refChannel1.send (`**${stock.stockName} Increased from to ${oldPrice} to ${stock.currentValue}**`);
         }
 
@@ -128,9 +131,6 @@ module.exports = async (client) => {
         stock.totalShares += 1;
         await checkExistingInventory.save();
 
-        const change = stock.currentValue - oldPrice;
-        stock.currentShift = Math.round((change / oldPrice) * 1000) / 1000;
-        stock.fakeRising = true;
         await stock.save();
 
         createStockMarket(client);
@@ -179,13 +179,13 @@ module.exports = async (client) => {
 
         if (ShareHoldingFactor != 1 && ShareHoldingFactor != 0) {
           stock.currentValue -= Math.ceil(stock.passiveFluctuation * ShareHoldingFactor);
+          const change = stock.currentValue - oldPrice;
+          stock.currentShift = Math.round((change / oldPrice) * 1000) / 1000;
+          stock.fakeRising = false;
           refChannel1.send (`**${stock.stockName} Decreased from to ${oldPrice} to ${stock.currentValue}**`);
           //'**' + stock.stockName + ` Increased from ${oldPrice} to ${stock.currentValue}**
         }
         
-        const change = stock.currentValue - oldPrice;
-        stock.currentShift = Math.round((change / oldPrice) * 1000) / 1000;
-        stock.fakeRising = false;
         await stock.save();
 
 
