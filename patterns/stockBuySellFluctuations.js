@@ -106,6 +106,7 @@ module.exports = async (client) => {
         }
         
         checkExistingInventory.quantity += 1;
+        checkExistingInventory.totalSpent += stock.currentValue;
 
         if (interaction.channel.id === '1206930735315943444') {
           interaction.reply({content: `You bought ${stock.stockName} stock for ${stock.currentValue}, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
@@ -156,6 +157,7 @@ module.exports = async (client) => {
         const tax = Math.ceil(stock.passiveFluctuation * ShareHoldingFactor);
 
         checkExistingInventory.quantity -= 1;
+        checkExistingInventory.totalSpent -= stock.currentValue;
         stock.totalShares -= 1;
         await checkExistingInventory.save();
 
