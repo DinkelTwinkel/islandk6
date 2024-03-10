@@ -11,6 +11,7 @@ const stockSchema = new Schema({
 	currentShift: { type: Number, required: true, default: 0 },
 	nextUpdateTime: { type: Number, required: true, default: 0 },
 	totalShares: { type: Number, required: true, default: 0 },
+	fakeRising: { type: Boolean, required: true, default: true },
 
 }, { timestamps: true });
 

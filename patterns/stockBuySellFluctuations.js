@@ -128,10 +128,12 @@ module.exports = async (client) => {
         stock.totalShares += 1;
         await checkExistingInventory.save();
 
+        const change = oldPrice - stock.currentValue;
+        stock.currentShift = Math.round((change / oldPrice) * 100) / 100;
+        stock.fakeRising = true;
         await stock.save();
 
-        const change = oldPrice - stock.currentValue;
-        createStockMarket(client, 1, Math.round((change / oldPrice) * 100) / 100);
+        createStockMarket(client);
       }
       else if (interaction.customId === 'sell' + stock.stockName) {
 
@@ -181,11 +183,13 @@ module.exports = async (client) => {
           //'**' + stock.stockName + ` Increased from ${oldPrice} to ${stock.currentValue}**
         }
         
-
+        const change = oldPrice - stock.currentValue;
+        stock.currentShift = Math.round((change / oldPrice) * 100) / 100;
+        stock.fakeRising = false;
         await stock.save();
 
-        const change = oldPrice - stock.currentValue;
-        createStockMarket(client, 0, Math.round((change / oldPrice) * 100) / 100);
+
+        createStockMarket(client);
       }
 
     })
@@ -228,11 +232,13 @@ async function shiftStock (client) {
     stock.currentShift = Math.round((change / stock.currentValue) * 100) / 100;
 
     if (rising === true) {
+      stock.fakeRising = true;
       stock.currentValue += change;
       await client.guilds.cache.get('1193663232041304134').channels.cache.get('1206930735315943444').send('**' + stock.stockName + ` Increased from ${oldPrice} to ${stock.currentValue}**`);
       if (stock.currentValue < 1) stock.currentValue = 1;
     }
     else {
+      stock.fakeRising = false;
       stock.currentValue -= change;
       await client.guilds.cache.get('1193663232041304134').channels.cache.get('1206930735315943444').send('**' + stock.stockName + ` Decreased from ${oldPrice} to ${stock.currentValue}**`);
       if (stock.currentValue < 1) {
@@ -267,6 +273,7 @@ async function shiftStock (client) {
         stock.onePercentChanceFluctuation = Math.ceil(Math.random() * 100);
         stock.currentShift = 0;
         stock.rising = false;
+        stock.fakeRising = true;
         stock.totalShares = 0;
 
         if (Math.random() < 0.2) stock.onePercentChanceFluctuation = stock.onePercentChanceFluctuation * -1;
@@ -303,7 +310,7 @@ async function getStockName(client) {
 
 }
 
-async function createStockMarket(client, buy, fakeShift) {
+async function createStockMarket(client) {
 
         kimoServer = await client.guilds.fetch('1193663232041304134');
 
@@ -372,22 +379,22 @@ async function createStockMarket(client, buy, fakeShift) {
             .setLabel(`+${stock.currentShift}%↗`);
   
   
-          if (stock.rising === false) {
+          if (stock.fakeRising === false) {
             stockRisingButton.setLabel(`${stock.currentShift}%↘`)
             stockRisingButton.setStyle(ButtonStyle.Danger);
           }
 
-          if (buy === 0) {
-            // fake shift down
-            stockRisingButton.setLabel(`${fakeShift}%↘`)
-            stockRisingButton.setStyle(ButtonStyle.Danger);
-          }
+          // if (buy === 0) {
+          //   // fake shift down
+          //   stockRisingButton.setLabel(`${fakeShift}%↘`)
+          //   stockRisingButton.setStyle(ButtonStyle.Danger);
+          // }
 
-          if (buy === 1) {
-            // fake shift up
-            stockRisingButton.setLabel(`${fakeShift}%↗`)
-            stockRisingButton.setStyle(ButtonStyle.Danger);
-          }
+          // if (buy === 1) {
+          //   // fake shift up
+          //   stockRisingButton.setLabel(`${fakeShift}%↗`)
+          //   stockRisingButton.setStyle(ButtonStyle.Danger);
+          // }
           
           const newActionRow = new ActionRowBuilder ()
           .addComponents( stockNameButton, stockValueButton, stockBuyButton, stockSellButton, stockRisingButton);

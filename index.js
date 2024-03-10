@@ -186,11 +186,11 @@ client.once(Events.ClientReady, async c => {
 
 // // });
 
-// await Stock.updateMany({$set:
-//     {
-//       totalShares: 0,
-//     }
-//  });
+await Stock.updateMany({$set:
+    {
+      fakeRising: true,
+    }
+ });
 
 //const result = await UserState.find({});
 
