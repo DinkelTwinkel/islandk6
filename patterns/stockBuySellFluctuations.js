@@ -151,13 +151,13 @@ module.exports = async (client) => {
         
         // user posesses stock
 
-        checkExistingInventory.quantity -= 1;
-        await checkExistingInventory.save();
-
-        stock.totalShares -= 1;
         const ShareHoldingFactor = checkExistingInventory.quantity/stock.totalShares;
 
         const tax = Math.ceil(stock.passiveFluctuation * ShareHoldingFactor);
+
+        checkExistingInventory.quantity -= 1;
+        stock.totalShares -= 1;
+        await checkExistingInventory.save();
 
         const checkPouch = await UserData.findOne ({userID: interaction.member.id});
         checkPouch.money += stock.currentValue-tax;
