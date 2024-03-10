@@ -132,6 +132,11 @@ async function checkVCEmpty(channel) {
     console.log ('checking VC current Size');
     console.log (channel.members?.size);
 
+    const KimoServer = await channel.guild;
+    const checkChannel = KimoServer.channels.cache.get(channel.id);
+
+    if (!checkChannel) return;
+
     if (channel.members?.size === 0) {
         try {
         channel.delete();

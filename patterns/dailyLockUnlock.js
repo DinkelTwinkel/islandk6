@@ -12,15 +12,17 @@ module.exports = async (client) => {
     const KimoServer = await client.guilds.fetch(kimoServerID);
     const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
 
-    await channelLock (client);
-    adminWage(client);
+    channelUnLock (client);
+
+    // await channelLock (client);
+    // adminWage(client);
     
-    // dailyHighlight (client);
-    setTimeout(() => {
-        channelUnLock (client);
-        const whyAmIDead = KimoServer.channels.cache.get('1205110914215575562');
-        whyAmIDead.send ({content: `YOU ARE DEAD <@&${deadRoleID}>, ASK US QUESTIONS HERE OR GO TO THE LAST WORDS CHANNEL TO SAY YOUR GOOD BYES. YOU CAN ALSO USE /GIVE TO PASS ON YOUR SEASHELLS TO YOUR LOVED ONES.`});
-    }, 60 * 1000 * 0.5);
+    // // dailyHighlight (client);
+    // setTimeout(() => {
+    //     channelUnLock (client);
+    //     const whyAmIDead = KimoServer.channels.cache.get('1205110914215575562');
+    //     whyAmIDead.send ({content: `YOU ARE DEAD <@&${deadRoleID}>, ASK US QUESTIONS HERE OR GO TO THE LAST WORDS CHANNEL TO SAY YOUR GOOD BYES. YOU CAN ALSO USE /GIVE TO PASS ON YOUR SEASHELLS TO YOUR LOVED ONES.`});
+    // }, 60 * 1000 * 0.5);
 
 };
 

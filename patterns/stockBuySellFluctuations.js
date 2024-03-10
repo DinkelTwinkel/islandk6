@@ -141,12 +141,6 @@ module.exports = async (client) => {
           })
         }
 
-        checkExistingInventory.quantity += 1;
-
-        // console.log (checkExistingInventory);
-
-        await checkExistingInventory.save();
-
         if (interaction.channel.id === '1206930735315943444') {
           interaction.deferUpdate();
         }
@@ -156,13 +150,20 @@ module.exports = async (client) => {
 
         //refChannel1.send (`${interaction.member.displayName} bought ${stock.stockName} stock for ${stock.currentValue} sea shells, they currently have ${checkExistingInventory.quantity} shares.`);
         refChannel1.send (`Someone bought ${stock.stockName}!`);
+        
 
-        if (Math.random() > 0.5) {
-          stock.currentValue += 1;
+        const ShareHoldingFactor = checkExistingInventory.quantity/stock.totalShares;
+
+
+        if (ShareHoldingFactor != 1 && ShareHoldingFactor != 0) {
+          stock.currentValue += Math.ceil(stock.passiveFluctuation * ShareHoldingFactor);
           refChannel1.send (`**${stock.stockName} increased to ${stock.currentValue} seashells!**`);
         }
 
+        checkExistingInventory.quantity += 1;
         stock.totalShares += 1;
+        await checkExistingInventory.save();
+
         await stock.save();
 
 
@@ -183,17 +184,21 @@ module.exports = async (client) => {
         checkExistingInventory.quantity -= 1;
         await checkExistingInventory.save();
 
+        stock.totalShares -= 1;
+        const ShareHoldingFactor = checkExistingInventory.quantity/stock.totalShares;
+
+        const tax = Math.ceil(stock.passiveFluctuation * ShareHoldingFactor);
+
         const checkPouch = await UserData.findOne ({userID: interaction.member.id});
-        checkPouch.money += stock.currentValue-1;
+        checkPouch.money += stock.currentValue-tax;
         await checkPouch.save();
 
-
-
         if (interaction.channel.id === '1206930735315943444') {
-          interaction.deferUpdate();
+          interaction.reply({content: `You sold ${stock.stockName} Stock for ${stock.currentValue} shells and paid ${tax} shell in transaction fee, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
+          //interaction.deferUpdate();
         }
         else {
-          interaction.reply({content: `You sold ${stock.stockName} Stock for ${stock.currentValue} shells and paid 1 shell in transaction fee, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
+          interaction.reply({content: `You sold ${stock.stockName} Stock for ${stock.currentValue} shells and paid ${tax} shell in transaction fee, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
         }
 
         const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
@@ -203,12 +208,14 @@ module.exports = async (client) => {
         //refChannel1.send (`${interaction.member.displayName} sold ${stock.stockName} Stock for ${stock.currentValue} sea shells and paid 1 shell in transaction fee, they currently have ${checkExistingInventory.quantity} shares.`);
         refChannel1.send (`Someone sold ${stock.stockName}!`);
 
-        if (Math.random() > 0.4) {
-          stock.currentValue -= 1;
-          refChannel1.send (`**${stock.stockName} decreased to ${stock.currentValue} seashells...**`);
-        }
 
-        stock.totalShares -= 1;
+
+        if (ShareHoldingFactor != 1) {
+          stock.currentValue -= Math.ceil(stock.passiveFluctuation * ShareHoldingFactor);
+          refChannel1.send (`**${stock.stockName} decreased to ${stock.currentValue} seashells!**`);
+        }
+        
+
         await stock.save();
 
         createStockMarket(client);

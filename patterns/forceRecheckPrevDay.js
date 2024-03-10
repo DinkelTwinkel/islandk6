@@ -24,7 +24,7 @@ module.exports = async (client) => {
         const period = tracker.currentPeriodLength;
         const previousDateUtcMil = nextDateUtcMil - (2 * period);
 
-        const messages = await getAllMessagesInChannel(postDailyChannel)
+        const messages = await getAllMessagesInChannelLastTwoDays(postDailyChannel)
         // Filter the messages by creation date
         let filteredMessages = messages.filter(msg => msg.createdAt.getTime() > previousDateUtcMil);
         filteredMessages = filteredMessages.filter(msg => !msg.author.bot);
@@ -63,17 +63,17 @@ module.exports = async (client) => {
                 if (postFound === true) {
                     //sendMessage(`✅POST FOUND FOR MEMBER: ${member}`, botLogChannel);
                     // check if current state is SAFE, if not fix it.
-                    if (result.currentState === 'DANGER') {
-                        sendMessage(`STATE MISMATCH DETECTED, CHANGING TO SAFE FOR ${member}`, botLogChannel);
-                        result.currentState = 'SAFE';
-                        await result.save();
-                        botLogChannel.send(`!updatestate ${member.id}`);
-                    }
+                    // if (result.currentState === 'DANGER') {
+                    //     sendMessage(`STATE MISMATCH DETECTED, CHANGING TO SAFE FOR ${member}`, botLogChannel);
+                    //     result.currentState = 'SAFE';
+                    //     await result.save();
+                    //     botLogChannel.send(`!updatestate ${member.id}`);
+                    // }
 
-                    if (member.roles.cache.get ('1202533924040081408')) {
-                        member.roles.add ('1202533882822397972');
-                        member.roles.remove ('1202533924040081408');
-                    }
+                    // if (member.roles.cache.get ('1202533924040081408')) {
+                    //     member.roles.add ('1202533882822397972');
+                    //     member.roles.remove ('1202533924040081408');
+                    // }
                 }
                 else {
                     //sendMessage(`❌POST NOT FOUND FOR MEMBER: ${member}`, botLogChannel);
@@ -86,6 +86,9 @@ module.exports = async (client) => {
                     
                 }
                 count += 1;
+            }
+            if (result.currentState === 'DEAD') {
+                botLogChannel.send(`!updatestate ${member.id}`);
             }
         });
 
