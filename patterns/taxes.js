@@ -8,8 +8,8 @@ module.exports = async (client) => {
     const KimoServer = await client.guilds.fetch(kimoServerID);
     const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
 
-    const taxBracket1 = 0.01;
-    const taxBracket2 = 0.03;
+    const taxBracket1 = 0.005;
+    const taxBracket2 = 0.01;
     const taxBracket3 = 0.20;
 
     const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
