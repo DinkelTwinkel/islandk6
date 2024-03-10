@@ -69,8 +69,8 @@ module.exports = {
           .setLabel(`PROFIT: ${profit}`);
 
 
-        if (stock.rising === false) {
-          stockRisingButton.setLabel(`-${stock.currentShift}%↘`)
+        if (profit < 0) {
+          //stockRisingButton.setLabel(`-${stock.currentShift}%↘`)
           stockRisingButton.setStyle(ButtonStyle.Danger);
         }
         
