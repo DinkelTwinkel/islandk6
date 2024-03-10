@@ -129,7 +129,7 @@ module.exports = async (client) => {
         await checkExistingInventory.save();
 
         const change = stock.currentValue - oldPrice;
-        stock.currentShift = Math.round((change / oldPrice) * 100) / 100;
+        stock.currentShift = Math.round((change / oldPrice) * 1000) / 1000;
         stock.fakeRising = true;
         await stock.save();
 
@@ -184,7 +184,7 @@ module.exports = async (client) => {
         }
         
         const change = stock.currentValue - oldPrice;
-        stock.currentShift = Math.round((change / oldPrice) * 100) / 100;
+        stock.currentShift = Math.round((change / oldPrice) * 1000) / 1000;
         stock.fakeRising = false;
         await stock.save();
 
@@ -229,7 +229,7 @@ async function shiftStock (client) {
 
     change = Math.ceil(change * Math.random());
 
-    stock.currentShift = Math.round((change / stock.currentValue) * 100) / 100;
+    stock.currentShift = Math.round((change / stock.currentValue) * 1000) / 1000;
 
     if (rising === true) {
       stock.fakeRising = true;
