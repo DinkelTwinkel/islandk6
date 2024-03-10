@@ -167,15 +167,32 @@ client.once(Events.ClientReady, async c => {
 
   }, 1000 * 60 * 10);
 
-// await UserData.updateMany({$set:
+
+// const stocks = await Stock.find();
+
+// // stocks.forEach(async stock => {
+  
+// //   const allInventory = await Inventory.find({itemName: stock.stockName});
+// //   const inventoryArray = Array.from(allInventory)
+// //   let total = 0;
+// //   for (let index = 0; index < inventoryArray.length; index++) {
+
+// //     total += inventoryArray[index].quantity;
+    
+// //   }
+
+// //   stock.totalShares = total;
+// //   await stock.save();
+
+// // });
+
+// await Stock.updateMany({$set:
 //     {
-//       emojiReactAwardAmount: 0,
+//       totalShares: 0,
 //     }
 //  });
 
-const result = await UserState.find({});
-
-await Inventory.deleteMany({itemName: 'Mermay (MER)'});
+//const result = await UserState.find({});
 
 // result.forEach(async state => {
 

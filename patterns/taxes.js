@@ -21,6 +21,7 @@ module.exports = async (client) => {
 
         const member = KimoServer.members.cache.get(user.userID);
         if (!member) return;
+        if (user.userID === '1202895682630066216') return;
         
         if (user.money > 10000) {
             const tax = Math.ceil(user.money * taxBracket3);

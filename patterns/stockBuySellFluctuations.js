@@ -162,6 +162,7 @@ module.exports = async (client) => {
           refChannel1.send (`**${stock.stockName} increased to ${stock.currentValue} seashells!**`);
         }
 
+        stock.totalShares += 1;
         await stock.save();
 
 
@@ -206,6 +207,8 @@ module.exports = async (client) => {
           stock.currentValue -= 1;
           refChannel1.send (`**${stock.stockName} decreased to ${stock.currentValue} seashells...**`);
         }
+
+        stock.totalShares -= 1;
         await stock.save();
 
         createStockMarket(client);
@@ -286,6 +289,7 @@ async function shiftStock (client) {
         stock.onePercentChanceFluctuation = Math.ceil(Math.random() * 100);
         stock.currentShift = 0;
         stock.rising = false;
+        stock.totalShares = 0;
 
         if (Math.random() < 0.2) stock.onePercentChanceFluctuation = stock.onePercentChanceFluctuation * -1;
 

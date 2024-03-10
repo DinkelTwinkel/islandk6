@@ -10,6 +10,7 @@ const stockSchema = new Schema({
 	rising: { type: Boolean, required: true, default: true },
 	currentShift: { type: Number, required: true, default: 0 },
 	nextUpdateTime: { type: Number, required: true, default: 0 },
+	totalShares: { type: Number, required: true, default: 0 },
 
 }, { timestamps: true });
 
