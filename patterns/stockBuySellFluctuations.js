@@ -130,8 +130,8 @@ module.exports = async (client) => {
 
         await stock.save();
 
-
-        createStockMarket(client);
+        const change = oldPrice - stock.currentValue;
+        createStockMarket(client, 1, Math.round((change / oldPrice) * 100) / 100);
       }
       else if (interaction.customId === 'sell' + stock.stockName) {
 
@@ -184,7 +184,8 @@ module.exports = async (client) => {
 
         await stock.save();
 
-        createStockMarket(client);
+        const change = oldPrice - stock.currentValue;
+        createStockMarket(client, 0, Math.round((change / oldPrice) * 100) / 100);
       }
 
     })
@@ -273,7 +274,7 @@ async function shiftStock (client) {
       }
     }
 
-    stock.nextUpdateTime = now + (60 * 1000 * 60 * 2 * Math.random()) ;
+    stock.nextUpdateTime = now + (60 * 1000 * 60 * 3 * Math.random()) ;
     await stock.save();
 
     setTimeout(() => {
@@ -302,7 +303,7 @@ async function getStockName(client) {
 
 }
 
-async function createStockMarket(client) {
+async function createStockMarket(client, buy, fakeShift) {
 
         kimoServer = await client.guilds.fetch('1193663232041304134');
 
@@ -373,6 +374,18 @@ async function createStockMarket(client) {
   
           if (stock.rising === false) {
             stockRisingButton.setLabel(`${stock.currentShift}%↘`)
+            stockRisingButton.setStyle(ButtonStyle.Danger);
+          }
+
+          if (buy === 0) {
+            // fake shift down
+            stockRisingButton.setLabel(`${fakeShift}%↘`)
+            stockRisingButton.setStyle(ButtonStyle.Danger);
+          }
+
+          if (buy === 1) {
+            // fake shift up
+            stockRisingButton.setLabel(`${fakeShift}%↗`)
             stockRisingButton.setStyle(ButtonStyle.Danger);
           }
           
