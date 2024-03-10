@@ -40,6 +40,10 @@ module.exports = {
         adminWallet.money += 1;
         await adminWallet.save();
 
+        const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
+        jianDaoWallet.money -= 1 + transferAmount;
+        await jianDaoWallet.save();
+
         targetResult.money += transferAmount;
         await targetResult.save();
 

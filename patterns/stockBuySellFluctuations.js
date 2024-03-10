@@ -241,7 +241,7 @@ async function shiftStock (client) {
     }
 
     if (rising === false) {
-      const stockKiller = Math.ceil(passiveFluctuation * Math.random());
+      const stockKiller = Math.ceil(stock.passiveFluctuation * Math.random());
       change += stockKiller;
     }
 

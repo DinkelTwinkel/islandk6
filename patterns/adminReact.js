@@ -209,6 +209,10 @@ module.exports = async (client) => {
             adminWallet.money += 1;
             await adminWallet.save();
 
+            const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
+            jianDaoWallet.money -= 1 + questNPCData.emojiReactAwardAmount;
+            await jianDaoWallet.save();
+
             const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
             botLogChannel.send (`⭐React Award Detected by ${member}, ${messageAuthorMember} has been awarded ${questNPCData.emojiReactAwardAmount} shells ${reaction.message.url}`);
 
