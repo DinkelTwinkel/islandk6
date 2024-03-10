@@ -44,13 +44,17 @@ module.exports = {
           .setLabel('BUY');
 
         let currentlyHave = 0;
+        let profit = 0;
 
         if (playerInventory) {
           const itemCheck = playerInventory.find(playerInventory => playerInventory.itemName === stock.stockName)
+          
           if (itemCheck) {
+            profit = itemCheck.totalSpent - (stock.currentValue * itemCheck.Inventory);
             currentlyHave = itemCheck.quantity;
           }
         }
+
 
         const stockSellButton = new ButtonBuilder ()
           .setCustomId('sell' + stock.stockName)
@@ -62,7 +66,7 @@ module.exports = {
           .setCustomId('Fake' + stock.stockName + 'Rising')
           .setDisabled(true)
           .setStyle(ButtonStyle.Success)
-          .setLabel(`+${stock.currentShift}%↗`);
+          .setLabel(`PROFIT: ${profit}`);
 
 
         if (stock.rising === false) {

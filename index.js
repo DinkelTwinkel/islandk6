@@ -181,16 +181,33 @@ client.once(Events.ClientReady, async c => {
     
 // //   }
 
+// const allInventories = await Inventory.find({});
+
+// allInventories.forEach(async Inventory => {
+
+//   const stocks = await Stock.find({});
+
+//   stocks.forEach(stock => {
+
+//     if (Inventory.itemName === stock.stockName) {
+//       Inventory.totalSpent = Inventory.quantity * stock.currentValue;
+//       Inventory.save();
+//     }
+    
+//   });
+  
+// });
+
 // //   stock.totalShares = total;
 // //   await stock.save();
 
 // // });
 
-await Stock.updateMany({$set:
-    {
-      fakeRising: true,
-    }
- });
+// await Inventory.updateMany({$set:
+//     {
+//       totalSpent: 0,
+//     }
+// });
 
 //const result = await UserState.find({});
 
