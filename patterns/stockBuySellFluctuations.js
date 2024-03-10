@@ -104,6 +104,8 @@ module.exports = async (client) => {
             quantity: 0,
           })
         }
+        
+        checkExistingInventory.quantity += 1;
 
         if (interaction.channel.id === '1206930735315943444') {
           interaction.reply({content: `You bought ${stock.stockName} stock for ${stock.currentValue}, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
@@ -130,7 +132,6 @@ module.exports = async (client) => {
           createStockMarket(client);
         }
 
-        checkExistingInventory.quantity += 1;
         await checkExistingInventory.save();
 
         stock.totalShares += 1;
