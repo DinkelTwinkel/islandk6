@@ -126,13 +126,15 @@ module.exports = async (client) => {
           stock.currentShift = Math.round((change / oldPrice) * 1000) / 1000;
           stock.fakeRising = true;
           refChannel1.send (`**${stock.stockName} Increased from to ${oldPrice} to ${stock.currentValue}**`);
-          stock.totalShares += 1;
           await stock.save();
           createStockMarket(client);
         }
 
         checkExistingInventory.quantity += 1;
         await checkExistingInventory.save();
+
+        stock.totalShares += 1;
+        await stock.save();
 
       }
       else if (interaction.customId === 'sell' + stock.stockName) {
