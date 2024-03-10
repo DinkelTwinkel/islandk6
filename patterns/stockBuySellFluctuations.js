@@ -42,49 +42,11 @@ module.exports = async (client) => {
 
   // shiftStock (client);
 
-  const allStocks = await Stock.find({});
-
-  allStocks.forEach(async stock => {
-    
-    const now = new Date().getTime();
-    
-    if (now > stock.nextUpdateTime) {
-
-      shiftStock(client);
-      stock.nextUpdateTime = now + (60 * 1000 * 60 * 12 * Math.random()) ;
-      await stock.save();
-
-    }
-
-  });
-
-  setTimeout(() => {
-    createStockMarket(client);
-  }, 1000 * 5);
-
+  shiftStock(client);
 
   setInterval(async () => {
 
-    const allStocks = await Stock.find({});
-
-    allStocks.forEach(async stock => {
-      
-      const now = new Date().getTime();
-      
-      if (now > stock.nextUpdateTime) {
-  
-        shiftStock(client);
-        stock.nextUpdateTime = now + (60 * 1000 * 60 * 12 * Math.random()) ;
-        await stock.save();
-        
-        setTimeout(() => {
-          createStockMarket(client);
-        }, 1000 * 5);
-
-      }
-  
-    });
-
+    shiftStock(client);
     const allInventories = await Inventory.find({});
 
     allInventories.forEach(async checkStock => {
@@ -115,6 +77,8 @@ module.exports = async (client) => {
     stocks.forEach ( async stock => {
 
       if (interaction.customId === 'buy' + stock.stockName) {
+
+        const oldPrice = stock.currentValue;
 
         //interaction.deferUpdate();
         // buy click deteced.
@@ -149,7 +113,7 @@ module.exports = async (client) => {
         }
 
         //refChannel1.send (`${interaction.member.displayName} bought ${stock.stockName} stock for ${stock.currentValue} sea shells, they currently have ${checkExistingInventory.quantity} shares.`);
-        refChannel1.send (`Someone bought ${stock.stockName}!`);
+        //refChannel1.send (`Someone bought ${stock.stockName}!`);
         
 
         const ShareHoldingFactor = checkExistingInventory.quantity/stock.totalShares;
@@ -157,7 +121,7 @@ module.exports = async (client) => {
 
         if (ShareHoldingFactor != 1 && ShareHoldingFactor != 0) {
           stock.currentValue += Math.ceil(stock.passiveFluctuation * ShareHoldingFactor);
-          refChannel1.send (`**${stock.stockName} increased to ${stock.currentValue} seashells!**`);
+          refChannel1.send (`**${stock.stockName} Increased from to ${oldPrice} to ${stock.currentValue}**`);
         }
 
         checkExistingInventory.quantity += 1;
@@ -171,6 +135,7 @@ module.exports = async (client) => {
       }
       else if (interaction.customId === 'sell' + stock.stockName) {
 
+        const oldPrice = stock.currentValue;
 
         let checkExistingInventory = await Inventory.findOne({
           ownerId: interaction.member.user.id,
@@ -206,13 +171,14 @@ module.exports = async (client) => {
         await jianDaoWallet.save();
 
         //refChannel1.send (`${interaction.member.displayName} sold ${stock.stockName} Stock for ${stock.currentValue} sea shells and paid 1 shell in transaction fee, they currently have ${checkExistingInventory.quantity} shares.`);
-        refChannel1.send (`Someone sold ${stock.stockName}!`);
+        //refChannel1.send (`Someone sold ${stock.stockName}!`);
 
 
 
         if (ShareHoldingFactor != 1 && ShareHoldingFactor != 0) {
           stock.currentValue -= Math.ceil(stock.passiveFluctuation * ShareHoldingFactor);
-          refChannel1.send (`**${stock.stockName} decreased to ${stock.currentValue} seashells!**`);
+          refChannel1.send (`**${stock.stockName} Decreased from to ${oldPrice} to ${stock.currentValue}**`);
+          //'**' + stock.stockName + ` Increased from ${oldPrice} to ${stock.currentValue}**
         }
         
 
@@ -231,6 +197,10 @@ async function shiftStock (client) {
 
   let stocks = await Stock.find();
   stocks.forEach (async stock => {
+
+    const now = new Date().getTime();
+
+    if (now > stock.nextUpdateTime) {
 
     const oldPrice = stock.currentValue;
 
@@ -303,8 +273,16 @@ async function shiftStock (client) {
       }
     }
 
+    stock.nextUpdateTime = now + (60 * 1000 * 60 * 2 * Math.random()) ;
     await stock.save();
+
+    setTimeout(() => {
+      createStockMarket(client);
+    }, 1000 * 5);
+
     return;
+
+  }
 
   })
 }
