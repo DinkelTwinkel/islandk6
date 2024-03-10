@@ -55,6 +55,7 @@ module.exports = async (client) => {
       if (!findStock) {
         console.log (checkStock.itemName + ' NOT FOUND');
         checkStock.quantity = 0;
+        checkStock.totalSpent = 0;
         await checkStock.save();
       }
       
