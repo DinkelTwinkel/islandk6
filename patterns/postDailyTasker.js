@@ -36,9 +36,11 @@ module.exports = async (client) => {
             if (!userStats) {
                 userStats = new UserStats ({
                     userID: message.member.user.id,
-                    totalKimoPost: 1,
+                    totalKimoPost: 0,
                 })
             }
+
+            totalKimoPost += 1;
             await userStats.save();
 
             // 
