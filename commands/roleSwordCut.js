@@ -6,7 +6,7 @@ const cost = 10;
 module.exports = {
     data: new SlashCommandBuilder()
     .setName('cut')
-    .setDescription('cut someone')
+    .setDescription('cut someone, costs 10 shells')
     .addUserOption(option =>
         option
             .setName('target')
