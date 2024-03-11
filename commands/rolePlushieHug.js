@@ -38,9 +38,9 @@ module.exports = {
 
         cooldowns.set(interaction.member.user.id, now);
 
-        const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
-        jianDaoWallet.money += cost;
-        await jianDaoWallet.save();
+        // const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
+        // jianDaoWallet.money += cost;
+        // await jianDaoWallet.save();
 
         const target = interaction.options.getMember('target');
 
