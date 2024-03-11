@@ -27,7 +27,7 @@ module.exports = {
 
         const oldName = target.displayName;
 
-        const targetName = randomlyCutInHalf(target.displayName);
+        const targetName = randomlyModifyString(target.displayName);
 
         target.setNickname = targetName;
 
@@ -40,7 +40,16 @@ module.exports = {
     },
   };
 
-function randomlyCutInHalf(str) {
+function randomlyModifyString(str) {
+    // Check if the string has multiple words
+    const words = str.split(" ");
+    if (words.length > 1) {
+      // If multiple words, randomly remove a word
+      const randomIndex = Math.floor(Math.random() * words.length);
+      words.splice(randomIndex, 1);
+      return words.join(" ");
+    } else {
+      // If only one word, randomly cut it in half
   // Generate a random index to split the string
   const splitIndex = Math.floor(Math.random() * str.length);
   
@@ -54,5 +63,5 @@ function randomlyCutInHalf(str) {
   else {
     return secondHalf;
   }
-
-}
+    }
+  }
