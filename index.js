@@ -209,15 +209,35 @@ client.once(Events.ClientReady, async c => {
 //     }
 // });
 
-//const result = await UserState.find({});
+const result = await UserState.find({});
+
+for (let index = 0; index < Array.from(result).length; index++) {
+
+  if (Array.from(result)[index].currentState === 'DEAD') {
+    const wallet = await UserData.findOne({userID: Array.from(result)[index].userID})
+    console.log (`DEAD WALLET: ${wallet.money}`);
+
+    const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
+    jianDaoWallet.money += wallet.money;
+    await jianDaoWallet.save();
+    console.log (`JIAN DAO WALLET: ${jianDaoWallet.money}`);
+  }
+  
+}
 
 // result.forEach(async state => {
 
-//   const member = kimoServer.members.cache.get(state.userID);
-//   if (member && state.currentState === 'DEAD') {
 
-//     state.currentState = 'DANGER';
-//     await state.save();
+
+//   const member = kimoServer.members.cache.get(state.userID);
+//   if (state.currentState === 'DEAD') {
+//     const wallet = await UserData.findOne({userID: state.userID})
+//     console.log (`DEAD WALLET: ${wallet.money}`);
+
+//     const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
+//     jianDaoWallet.money += wallet.money;
+//     await jianDaoWallet.save();
+//     console.log (`JIAN DAO WALLET: ${jianDaoWallet.money}`);
 //   }
   
 // })

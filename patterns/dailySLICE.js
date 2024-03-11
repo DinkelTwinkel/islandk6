@@ -131,22 +131,31 @@ module.exports = async (client) => {
             botLogChannel.send(`creating daily summary.`);
             lastWords.send('# Flushing Dead 🚽');
 
-            members.forEach(async member => {
-                const kickedWallet = await UserData.findOne({userID: member.id});
-                if (kickedWallet) {
-                    const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216'});
-                    jianDaoWallet.money += kickedWallet.money;
-                    kickedWallet.money = 0;
-                    await kickedWallet.save();
-                    await jianDaoWallet.save();
-                }
-                botLogChannel.send(`kicking ${member}`);
-                lastWords.send(`flushing ${member}`);
-                setTimeout(() => {
-                    member.kick();
-                }, 1000);
+            const membersArray = Array.from(members);
 
-            })
+            for (let index = 0; index < membersArray.length; index++) {
+                
+                lastWords.send(`flushing ${members[index]}`);
+                const wallet = await UserData.findOne({userID: membersArray[index].id})
+                console.log (`DEAD WALLET: ${wallet.money}`);
+
+                botLogChannel.send(`${wallet.money} shells transferred from ${members[index]} to <@1202895682630066216>.`);
+
+                const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
+                jianDaoWallet.money += wallet.money;
+                await jianDaoWallet.save();
+                console.log (`JIAN DAO WALLET: ${jianDaoWallet.money}`);
+
+                botLogChannel.send(`kicking ${members[index]}`);
+                members[index].kick();
+            
+            }
+
+            lastWords.send(`# Flush complete.`);
+
+            // members.forEach(async member => {
+
+            // })
 
             // create daily summary.
 
