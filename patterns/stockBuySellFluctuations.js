@@ -320,13 +320,13 @@ async function shiftStock (client) {
 
     if (0.01 > Math.random() || (0.05 > Math.random() && rising === false)) {
       change = stock.onePercentChanceFluctuation;
-      if (stock.onePercentChanceFluctuation < 0) stock.rising = false;
+      //if (stock.onePercentChanceFluctuation < 0) stock.rising = false;
     }
 
-    if (rising === false) {
-      const stockKiller = Math.ceil(stock.passiveFluctuation * Math.random());
-      change += stockKiller;
-    }
+    // if (rising === false) {
+    //   const stockKiller = Math.ceil(stock.passiveFluctuation * Math.random());
+    //   change += stockKiller;
+    // }
 
     change = Math.ceil(change * Math.random());
 
@@ -377,7 +377,7 @@ async function shiftStock (client) {
         stock.fakeRising = true;
         stock.totalShares = Math.floor (Math.random() * 100) + 5;
 
-        if (Math.random() < 0.2) stock.onePercentChanceFluctuation = stock.onePercentChanceFluctuation * -1;
+        //if (Math.random() < 0.2) stock.onePercentChanceFluctuation = stock.onePercentChanceFluctuation * -1;
 
       }
     }
