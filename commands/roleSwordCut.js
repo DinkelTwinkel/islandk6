@@ -46,7 +46,7 @@ module.exports = {
 
         const oldName = target.displayName;
 
-        if (Math.random() > 0.5) {
+        if (Math.random() > 0.99) {
 
           const targetName = randomlyModifyString(target.displayName);
 
