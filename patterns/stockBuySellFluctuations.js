@@ -331,9 +331,9 @@ async function shiftStock (client) {
     change = Math.ceil(change * Math.random());
 
     stock.currentShift = Math.round((change / stock.currentValue) * 1000) / 1000;
+    stock.fakeRising = true;
 
     if (rising === true) {
-      stock.fakeRising = true;
       stock.currentValue += change;
       await client.guilds.cache.get('1193663232041304134').channels.cache.get('1206930735315943444').send('**' + stock.stockName + ` Increased from ${oldPrice} to ${stock.currentValue}**`);
       if (stock.currentValue < 1) stock.currentValue = 1;

@@ -56,7 +56,7 @@ module.exports = async (client) => {
                 console.log (countReport);
 
                 if (countReport.length >= 1) {
-                    reportChannel.send ({ content: `${reaction.message.attachments.first().url}\n# ${countReport.length} users have reported this post-> ${reaction.message.url}`});
+                    reportChannel.send ({ content: `${reaction.message.attachments.first().url}\n# ${countReport.length} users have reported this post-> ${reaction.message.url} \n Latest report by ${member}`});
                 }
             }
 
