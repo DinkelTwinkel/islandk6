@@ -7,7 +7,7 @@ const roleID = '1216662066220367903'
 module.exports = {
     data: new SlashCommandBuilder()
     .setName('sword')
-    .setDescription(`Role: costs ${cost} shells. If you already have this, you can exchange it for ${cost} shells.`),
+    .setDescription(`Role: costs ${cost} shells. If you already have this, you can exchange it for ${Math.floor (cost * 0.75)} shells.`),
 
     async execute(interaction, client) {
 
@@ -26,7 +26,7 @@ module.exports = {
         else {
             // sell
             const userWallet = await UserData.findOne({ userID: interaction.member.id });
-            userWallet.money += cost;
+            userWallet.money += Math.floor (cost * 0.75);
             await userWallet.save();
 
             interaction.member.roles.remove(roleID);
