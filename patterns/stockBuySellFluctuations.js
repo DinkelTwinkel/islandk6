@@ -318,7 +318,7 @@ async function shiftStock (client) {
     
     let change = stock.passiveFluctuation;
 
-    if (0.01 > Math.random() || (0.1 > Math.random() && rising === false)) {
+    if (0.01 > Math.random() || (0.05 > Math.random() && rising === false)) {
       change = stock.onePercentChanceFluctuation;
       if (stock.onePercentChanceFluctuation < 0) stock.rising = false;
     }
