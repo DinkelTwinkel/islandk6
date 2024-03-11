@@ -36,6 +36,8 @@ module.exports = {
         userWallet.money -= cost;
         await userWallet.save();
 
+        cooldowns.set(interaction.member.user.id, now);
+
         const target = interaction.options.getMember('target');
 
         const oldName = target.displayName;
