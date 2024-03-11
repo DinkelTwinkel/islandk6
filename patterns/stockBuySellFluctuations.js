@@ -174,7 +174,7 @@ module.exports = async (client) => {
 
 
         if (ShareHoldingFactor != 1 && ShareHoldingFactor != 0) {
-          stock.currentValue += Math.ceil(stock.passiveFluctuation * ShareHoldingFactor);
+          stock.currentValue += Math.floor(stock.passiveFluctuation * ShareHoldingFactor);
           const change = stock.currentValue - oldPrice;
           stock.currentShift = Math.round((change / oldPrice) * 1000) / 1000;
           stock.fakeRising = true;
