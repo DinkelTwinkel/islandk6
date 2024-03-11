@@ -270,9 +270,9 @@ module.exports = async (client) => {
           interaction.reply({content: `You sold ${stock.stockName} Stock for ${stock.currentValue} shells and paid ${tax} shell in transaction fee, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
         }
 
-        const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
-        jianDaoWallet.money += 1;
-        await jianDaoWallet.save();
+        // const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
+        // jianDaoWallet.money += 1;
+        // await jianDaoWallet.save();
 
         //refChannel1.send (`${interaction.member.displayName} sold ${stock.stockName} Stock for ${stock.currentValue} sea shells and paid 1 shell in transaction fee, they currently have ${checkExistingInventory.quantity} shares.`);
         //refChannel1.send (`Someone sold ${stock.stockName}!`);
