@@ -46,14 +46,14 @@ module.exports = {
 
         const oldName = target.displayName;
 
-        if (Math.random() > 0.99) {
+        if (Math.random() > 0.7) {
 
           const targetName = randomlyModifyString(target.displayName);
 
           target.setNickname(targetName);
 
 
-          interaction.reply({ content: `${oldName} has been given a fresh trim! Their new name is ${targetName}`, ephemeral: false });
+          interaction.reply({ content: `${oldName} has been given a fresh trim! It went wrong and their new name is ${targetName}`, ephemeral: false });
 
         }
         else {
