@@ -32,10 +32,10 @@ module.exports = {
         target.setNickname(targetName);
 
         const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
-        jianDaoWallet.money += 10;
+        jianDaoWallet.money += cost;
         await jianDaoWallet.save();
 
-        interaction.reply({ content: `${oldName} has been cut! Their new name is ${targetName}`, ephemeral: false });
+        interaction.reply({ content: `${oldName} has been given a fresh trim! Their new name is ${targetName}`, ephemeral: false });
 
     },
   };

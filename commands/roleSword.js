@@ -18,6 +18,10 @@ module.exports = {
             userWallet.money -= cost;
             await userWallet.save();
 
+            const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
+            jianDaoWallet.money += cost;
+            await jianDaoWallet.save();
+
             interaction.member.roles.add(roleID);
 
             interaction.reply({ content: `Role Gained!`, ephemeral: true });
@@ -28,6 +32,10 @@ module.exports = {
             const userWallet = await UserData.findOne({ userID: interaction.member.id });
             userWallet.money += Math.floor (cost * 0.75);
             await userWallet.save();
+
+            const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
+            jianDaoWallet.money -= Math.floor (cost * 0.75);
+            await jianDaoWallet.save();
 
             interaction.member.roles.remove(roleID);
 
