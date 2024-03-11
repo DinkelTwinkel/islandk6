@@ -373,7 +373,7 @@ async function shiftStock (client) {
         stock.passiveFluctuation = Math.ceil(Math.random() * 30);
         stock.onePercentChanceFluctuation = Math.ceil(Math.random() * 100);
         stock.currentShift = 0;
-        stock.rising = false;
+        stock.rising = true;
         stock.fakeRising = true;
         stock.totalShares = Math.floor (Math.random() * 100) + 5;
 
