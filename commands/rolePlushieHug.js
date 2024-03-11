@@ -9,7 +9,7 @@ const cooldownAmount = 1000 * 60 * 20;
 module.exports = {
     data: new SlashCommandBuilder()
     .setName('hug')
-    .setDescription('hug someone!')
+    .setDescription('hug someone! (costs 10 shells)')
     .addUserOption(option =>
         option
             .setName('target')
