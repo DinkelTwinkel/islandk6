@@ -40,7 +40,7 @@ module.exports = async (client) => {
                 })
             }
 
-            totalKimoPost += 1;
+            userStats.totalKimoPost += 1;
             await userStats.save();
 
             // 
