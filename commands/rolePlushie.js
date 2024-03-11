@@ -27,7 +27,7 @@ module.exports = {
             interaction.reply({ content: `Role Gained!`, ephemeral: true });
 
         }
-        else {
+        else if (interaction.member.roles.cache.get(roleID)) {
             // sell
             const userWallet = await UserData.findOne({ userID: interaction.member.id });
             userWallet.money += Math.floor (cost * 0.75);
