@@ -259,7 +259,7 @@ module.exports = async (client) => {
 
         // stock profit tracker
         const userStat = await UserStats.findOne({userID: interaction.member.user.id});
-        userStat.stockProfit -= stock.currentValue-tax;
+        userStat.stockProfit += stock.currentValue-tax;
         await userStat.save();
 
         if (interaction.channel.id === '1206930735315943444') {
