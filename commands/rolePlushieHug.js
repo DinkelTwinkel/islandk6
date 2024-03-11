@@ -4,7 +4,7 @@ const UserData = require('../models/userData');
 const cost = 10;
 
 const cooldowns = new Map();
-const cooldownAmount = 5000;
+const cooldownAmount = 1000 * 60 * 20;
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -42,25 +42,26 @@ module.exports = {
 
         const target = interaction.options.getMember('target');
 
-        const oldName = target.displayName;
-
-        if (Math.random() > 0.4) {
+        if (Math.random() > 0.9) {
           const targetName = modifyString(target.displayName);
           target.setNickname(targetName);
           interaction.reply({ content: `**${target.displayName}** has been given a hug! They become loved?!`, ephemeral: false });
         }
-        else {
+        else if (Math.random() > 0.9) {
 
           const self = await UserData.findOne({ userID: interaction.member.id });
           self.money += cost;
           await self.save();
 
-          const target = await UserData.findOne({ userID: target.id });
-          target.money += cost;
-          await target.save();
+          const targetMoney = await UserData.findOne({ userID: target.id });
+          targetMoney.money += cost;
+          await targetMoney.save();
 
           interaction.reply({ content: `**${target.displayName}** has been given a hug! You guys found ${cost} together?`, ephemeral: false });
 
+        }
+        else {
+          interaction.reply({ content: `**${target.displayName}** has been given a hug!`, ephemeral: false });
         }
 
 

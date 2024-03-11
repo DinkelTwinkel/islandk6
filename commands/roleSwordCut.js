@@ -3,6 +3,9 @@ const kimoIDMaker = require('../patterns/kimoIDMaker');
 const UserData = require('../models/userData');
 const cost = 10;
 
+const cooldowns = new Map();
+const cooldownAmount = 1000 * 60 * 10;
+
 module.exports = {
     data: new SlashCommandBuilder()
     .setName('cut')
@@ -17,6 +20,16 @@ module.exports = {
 
         // QUEST NPC ROLE CHECK
         if (!interaction.member.roles.cache.get('1216662066220367903')) return interaction.reply({ content: 'You need a sword to use this.', ephemeral: true });
+
+        const now = Date.now();
+        if (cooldowns.has(interaction.member.user.id)) {
+            const expirationTime = cooldowns.get(interaction.member.user.id) + cooldownAmount;
+
+            if (now < expirationTime) {
+              const timeLeft = (expirationTime - now) / 1000 / 60;
+              return interaction.reply({ content: `Please wait ${timeLeft.toFixed(1)} more minutes before giving hugs again`, ephemeral: true});
+            }
+        }
 
         const userWallet = await UserData.findOne({ userID: interaction.member.id });
         if (userWallet.money < cost) return interaction.reply({ content: `Insufficient shells, you need ${cost} shells to use this.`, ephemeral: true });
