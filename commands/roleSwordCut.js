@@ -29,7 +29,7 @@ module.exports = {
 
         const targetName = randomlyModifyString(target.displayName);
 
-        target.setNickname = targetName;
+        target.setNickname(targetName);
 
         const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
         jianDaoWallet.money += 10;
