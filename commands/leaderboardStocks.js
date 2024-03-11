@@ -13,7 +13,7 @@ module.exports = {
 
       if (!interaction.channel.id === '1206930735315943444') return interaction.reply({ content: 'You can\'t use this in this channel.', ephemeral: true });
 
-      await interaction.deferReply();
+      await interaction.deferReply({ephemeral: true});
 
       const players = await UserStats.find().sort({ stockProfit: -1 });
       const firstPlace = await client.guilds.cache.get('1193663232041304134').members.fetch(players[0].userID);
