@@ -140,9 +140,12 @@ module.exports = async (client) => {
                     await kickedWallet.save();
                     await jianDaoWallet.save();
                 }
-                member.kick();
                 botLogChannel.send(`kicking ${member}`);
                 lastWords.send(`flushing ${member}`);
+                setTimeout(() => {
+                    member.kick();
+                }, 1000);
+
             })
 
             // create daily summary.
