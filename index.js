@@ -168,18 +168,15 @@ client.once(Events.ClientReady, async c => {
   }, 1000 * 60 * 10);
 
 
-// const stocks = await Stock.find();
+// const stocks = await UserStats.find();
 
-// // stocks.forEach(async stock => {
-  
-// //   const allInventory = await Inventory.find({itemName: stock.stockName});
-// //   const inventoryArray = Array.from(allInventory)
-// //   let total = 0;
-// //   for (let index = 0; index < inventoryArray.length; index++) {
-
-// //     total += inventoryArray[index].quantity;
-    
-// //   }
+// stocks.forEach(async stock => {
+//   const member = kimoServer.members.cache.get(stock.userID);
+//  if (member) {
+//   stock.totalKimoPost = 7;
+//   stock.save();
+//  }
+// });
 
 // const allInventories = await Inventory.find({});
 
@@ -211,23 +208,21 @@ client.once(Events.ClientReady, async c => {
 
 const result = await UserState.find({});
 
-for (let index = 0; index < Array.from(result).length; index++) {
+// for (let index = 0; index < Array.from(result).length; index++) {
 
-  if (Array.from(result)[index].currentState === 'DEAD') {
-    const wallet = await UserData.findOne({userID: Array.from(result)[index].userID})
-    console.log (`DEAD WALLET: ${wallet.money}`);
+//   if (Array.from(result)[index].currentState === 'DEAD') {
+//     const wallet = await UserData.findOne({userID: Array.from(result)[index].userID})
+//     console.log (`DEAD WALLET: ${wallet.money}`);
 
-    const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
-    jianDaoWallet.money += wallet.money;
-    await jianDaoWallet.save();
-    console.log (`JIAN DAO WALLET: ${jianDaoWallet.money}`);
-  }
+//     const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
+//     jianDaoWallet.money += wallet.money;
+//     await jianDaoWallet.save();
+//     console.log (`JIAN DAO WALLET: ${jianDaoWallet.money}`);
+//   }
   
-}
+// }
 
 // result.forEach(async state => {
-
-
 
 //   const member = kimoServer.members.cache.get(state.userID);
 //   if (state.currentState === 'DEAD') {
