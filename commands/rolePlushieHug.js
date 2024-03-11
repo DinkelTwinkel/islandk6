@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
 const kimoIDMaker = require('../patterns/kimoIDMaker');
 const UserData = require('../models/userData');
-const cost = 10;
+const cost = 1;
 
 const cooldowns = new Map();
 const cooldownAmount = 1000 * 60 * 20;
@@ -9,7 +9,7 @@ const cooldownAmount = 1000 * 60 * 20;
 module.exports = {
     data: new SlashCommandBuilder()
     .setName('hug')
-    .setDescription('hug someone! (costs 10 shells)')
+    .setDescription('give someone 1 shell and a hug.')
     .addUserOption(option =>
         option
             .setName('target')
@@ -47,7 +47,12 @@ module.exports = {
         if (Math.random() > 0.9) {
           const targetName = modifyString(target.displayName);
           target.setNickname(targetName);
-          interaction.reply({ content: `**${target.displayName}** has been given a hug! They become loved?!`, ephemeral: false });
+
+          const targetMoney = await UserData.findOne({ userID: target.id });
+          targetMoney.money += cost;
+          await targetMoney.save();
+
+          interaction.reply({ content: `**${target.displayName}** has been given a hug! They become loved?! `, ephemeral: false });
         }
         else if (Math.random() > 0.9) {
 
