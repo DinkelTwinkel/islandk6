@@ -3,6 +3,7 @@ const Stock = require("../models/stock");
 const Inventory = require("../models/inventory");
 const getAllMessagesInChannel = require("./getAllMessagesInChannel");
 const UserData = require("../models/userData");
+const UserStats = require("../models/userStatistics");
 
 const stockFluctuationTimer = 720;
 
@@ -77,9 +78,54 @@ module.exports = async (client) => {
 
     stocks.forEach ( async stock => {
 
+      const oldPrice = stock.currentValue;
+
       if (interaction.customId === 'buy' + stock.stockName) {
 
-        const oldPrice = stock.currentValue;
+        let checkExistingInventory = await Inventory.findOne({
+          ownerId: interaction.member.user.id,
+          itemName: stock.stockName,
+        })
+
+        // check quantity owned and if negative, use short buying logic. 
+
+        // if (checkExistingInventory.quantity < 0) {
+        //   // short buy.
+
+        //   const checkPouch = await UserData.findOne ({userID: interaction.member.user.id});
+        //   const cost = stock.currentValue;
+        //   checkPouch.money -= cost;
+        //   await checkPouch.save();
+
+        //   // stock profit tracker
+        //   const userStat = await UserStats.findOne({userID: interaction.member.user.id});
+        //   userStat.stockProfit -= cost;
+        //   await userStat.save();
+
+        //   checkExistingInventory.quantity += 1;
+        //   checkExistingInventory.totalSpent += cost;
+
+        //   interaction.reply({content: `You bought ${stock.stockName} stock for ${stock.currentValue}, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
+  
+        //   stock.totalShares -= 1;
+        //   const ShareHoldingFactor = checkExistingInventory.quantity/stock.totalShares;
+  
+        //   stock.currentValue += Math.ceil(-stock.passiveFluctuation * ShareHoldingFactor);
+        //   const change = stock.currentValue - oldPrice;
+        //   stock.currentShift = Math.round((change / oldPrice) * 1000) / 1000;
+        //   stock.fakeRising = true;
+        //   refChannel1.send (`**${stock.stockName} Increased from to ${oldPrice} to ${stock.currentValue}**`);
+        //   await stock.save();
+        //   createStockMarket(client);
+  
+        //   await checkExistingInventory.save();
+  
+        //   await stock.save();
+  
+        //   return;
+        // }
+
+
 
         //interaction.deferUpdate();
         // buy click deteced.
@@ -90,12 +136,15 @@ module.exports = async (client) => {
         checkPouch.money -= cost;
         await checkPouch.save();
 
+
+        // stock profit tracker
+        const userStat = await UserStats.findOne({userID: interaction.member.user.id});
+        userStat.stockProfit -= cost;
+        await userStat.save();
+
         // successfully bought.
 
-        let checkExistingInventory = await Inventory.findOne({
-          ownerId: interaction.member.user.id,
-          itemName: stock.stockName,
-        })
+
 
         if (!checkExistingInventory) {
           // no existing inventory item, creating new
@@ -142,12 +191,54 @@ module.exports = async (client) => {
       }
       else if (interaction.customId === 'sell' + stock.stockName) {
 
+                // check quantity owned and if negative, use short buying logic. 
+                
         const oldPrice = stock.currentValue;
 
         let checkExistingInventory = await Inventory.findOne({
           ownerId: interaction.member.user.id,
           itemName: stock.stockName,
         })
+
+        // if (checkExistingInventory.quantity <= 0) {
+        //   // short sell.
+
+        //   const checkPouch = await UserData.findOne ({userID: interaction.member.user.id});
+        //   const cost = stock.currentValue;
+        //   checkPouch.money += cost;
+        //   await checkPouch.save();
+
+        //   // stock profit tracker
+        //   const userStat = await UserStats.findOne({userID: interaction.member.user.id});
+        //   userStat.stockProfit += cost;
+        //   await userStat.save();
+
+        //   checkExistingInventory.quantity -= 1;
+        //   checkExistingInventory.totalSpent -= cost;
+        //   checkExistingInventory.shortChargeTimer = new Date.getTime() + (1000 * 60 * 60);
+
+        //   interaction.reply({content: `You sold ${stock.stockName} stock for ${stock.currentValue}, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
+  
+        //   const ShareHoldingFactor = checkExistingInventory.quantity/stock.totalShares;
+  
+        //   if (ShareHoldingFactor != 1 && ShareHoldingFactor != 0) {
+        //     stock.currentValue += Math.ceil(stock.passiveFluctuation * ShareHoldingFactor);
+        //     const change = stock.currentValue - oldPrice;
+        //     stock.currentShift = Math.round((change / oldPrice) * 1000) / 1000;
+        //     stock.fakeRising = false;
+        //     refChannel1.send (`**${stock.stockName} Decreased from to ${oldPrice} to ${stock.currentValue}**`);
+        //     await stock.save();
+        //     createStockMarket(client);
+        //   }
+  
+        //   await checkExistingInventory.save();
+  
+        //   stock.totalShares -= 1;
+        //   await stock.save();
+  
+        //   return;
+        // }
+
 
         if (!checkExistingInventory || checkExistingInventory.quantity === 0) return interaction.reply({content: 'You must buy the stock first!', ephemeral: true });
         
@@ -165,6 +256,11 @@ module.exports = async (client) => {
         const checkPouch = await UserData.findOne ({userID: interaction.member.id});
         checkPouch.money += stock.currentValue-tax;
         await checkPouch.save();
+
+        // stock profit tracker
+        const userStat = await UserStats.findOne({userID: interaction.member.user.id});
+        userStat.stockProfit -= stock.currentValue-tax;
+        await userStat.save();
 
         if (interaction.channel.id === '1206930735315943444') {
           interaction.reply({content: `You sold ${stock.stockName} Stock for ${stock.currentValue} shells and paid ${tax} shell in transaction fee, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});

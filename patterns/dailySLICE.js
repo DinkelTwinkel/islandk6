@@ -52,7 +52,7 @@ module.exports = async (client) => {
         alarmChannel.send(`3 HOURS LEFT <@&${dangerRole.id}>`);
         console.log ('recheck auto requested');
         forceRecheck(client);
-        // taxes(client);
+        taxes(client);
     }
 
     if (result.alarmThree === false && currentUTCHour >= 11 && currentUTCHour < 12) {

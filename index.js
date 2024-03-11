@@ -205,7 +205,7 @@ client.once(Events.ClientReady, async c => {
 
 // await Inventory.updateMany({$set:
 //     {
-//       totalSpent: 0,
+//       shortChargeTimer: 0,
 //     }
 // });
 

@@ -13,6 +13,7 @@ const userStatSchema = new Schema({
 	fishcaught: ({ type: Number, default: 0 }),
 	timesPostedFirst: ({ type: Number, default: 0 }),
 	timesEdgeLorded: ({ type: Number, default: 0 }),
+	stockProfit: ({ type: Number, default: 0 }),
 
 }, { timestamps: true });
 
