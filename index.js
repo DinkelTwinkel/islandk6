@@ -172,10 +172,8 @@ client.once(Events.ClientReady, async c => {
 
 // stocks.forEach(async stock => {
 //   const member = kimoServer.members.cache.get(stock.userID);
-//  if (stock.stockProfit < 0) {
-//   stock.stockProfit = stock.stockProfit * -1;
+//   stock.stockProfit = 0;
 //   stock.save();
-//  }
 // });
 
 // const allInventories = await Inventory.find({});

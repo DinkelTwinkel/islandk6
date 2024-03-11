@@ -6,12 +6,12 @@ const UserState = require('../models/userState');
 
 module.exports = {
     data: new SlashCommandBuilder()
-    .setName('leaderboardstocks')
-    .setDescription('who talks the most'),
+    .setName('stockleader')
+    .setDescription('who made the most profit'),
 
     async execute(interaction, client) {
 
-      if (!interaction.member.roles.cache.get('1203377553763475497')) return interaction.reply({ content: 'Only npcs can use this...', ephemeral: true });
+      if (!interaction.channel.id === '1206930735315943444') return interaction.reply({ content: 'You can\'t use this in this channel.', ephemeral: true });
 
       await interaction.deferReply();
 
@@ -92,10 +92,10 @@ module.exports = {
       .setTitle(' LEADERBOARD: TOP 25 STOCK TRADING ')
       .setDescription(`# 👑『 FIRST PLACE 』 ${firstPlaceName}\n  # ▬▶ ${players[0].stockProfit} shells\n ⟡ ⟡ ⟡ ⟡ ⟡ ⟡ ⟡ ⟡ ⟡ ⟡ ⟡ ⟡`)
       .setThumbnail(firstPlace.user.displayAvatarURL({ format: 'png', dynamic: true, size: 1024 }))
-      .setColor("#f5f3b8")
-      .setFooter({
-        text: `Global Stats (Not including bots, not including moderators, not including dead participants, not counting Dailies) \nAverage per user: ${Math.floor(averageMessage)} (${totalMessages}/${totalCount}) \nTotal Messages: ${totalMessages} \nAverage per 🍉: ${Math.floor(averageA)} (${islandATotal}/${islandACount})\nAverage per 🍑: ${Math.floor(averageB)} (${islandBTotal}/${islandBCount})\nTop 10% Average: ${findPercentileAverage(sortedArray, 0.1)}\nTop 5% Average: ${findPercentileAverage(sortedArray, 0.05)}\nTop 1% Average: ${findPercentileAverage(sortedArray, 0.01)}\nLower 60% Average: ${findLowerPercentileAverage(allUserStatsFiltered, 0.4)}\nLower 80% Average: ${findLowerPercentileAverage(allUserStatsFiltered, 0.2)}\nLower 90% Average: ${findLowerPercentileAverage(allUserStatsFiltered, 0.1)}\nLower 95% Average: ${findLowerPercentileAverage(allUserStatsFiltered, 0.05)}\nLower 99% Average: ${findLowerPercentileAverage(allUserStatsFiltered, 0.01)}`,
-      });
+      .setColor("#f5f3b8");
+      // .setFooter({
+      //   text: `Global Stats (Not including bots, not including moderators, not including dead participants, not counting Dailies) \nAverage per user: ${Math.floor(averageMessage)} (${totalMessages}/${totalCount}) \nTotal Messages: ${totalMessages} \nAverage per 🍉: ${Math.floor(averageA)} (${islandATotal}/${islandACount})\nAverage per 🍑: ${Math.floor(averageB)} (${islandBTotal}/${islandBCount})\nTop 10% Average: ${findPercentileAverage(sortedArray, 0.1)}\nTop 5% Average: ${findPercentileAverage(sortedArray, 0.05)}\nTop 1% Average: ${findPercentileAverage(sortedArray, 0.01)}\nLower 60% Average: ${findLowerPercentileAverage(allUserStatsFiltered, 0.4)}\nLower 80% Average: ${findLowerPercentileAverage(allUserStatsFiltered, 0.2)}\nLower 90% Average: ${findLowerPercentileAverage(allUserStatsFiltered, 0.1)}\nLower 95% Average: ${findLowerPercentileAverage(allUserStatsFiltered, 0.05)}\nLower 99% Average: ${findLowerPercentileAverage(allUserStatsFiltered, 0.01)}`,
+      // });
 
       for (let index = 1; index < 25; index++) {
 
