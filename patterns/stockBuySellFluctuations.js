@@ -173,8 +173,8 @@ module.exports = async (client) => {
         const ShareHoldingFactor = checkExistingInventory.quantity/stock.totalShares;
 
 
-        if (Math.floor(stock.passiveFluctuation * ShareHoldingFactor) > 0) {
-          stock.currentValue += Math.floor(stock.passiveFluctuation * ShareHoldingFactor);
+        if (Math.ceil(stock.passiveFluctuation * ShareHoldingFactor) > 0) {
+          stock.currentValue += Math.ceil(stock.passiveFluctuation * ShareHoldingFactor);
           const change = stock.currentValue - oldPrice;
           stock.currentShift = Math.round((change / oldPrice) * 1000) / 1000;
           stock.fakeRising = true;
@@ -279,8 +279,8 @@ module.exports = async (client) => {
 
 
 
-        if (Math.floor(stock.passiveFluctuation * ShareHoldingFactor) > 0) {
-          stock.currentValue -= Math.floor(stock.passiveFluctuation * ShareHoldingFactor);
+        if (Math.ceil(stock.passiveFluctuation * ShareHoldingFactor) > 0) {
+          stock.currentValue -= Math.ceil(stock.passiveFluctuation * ShareHoldingFactor);
           const change = stock.currentValue - oldPrice;
           stock.currentShift = Math.round((change / oldPrice) * 1000) / 1000;
           stock.fakeRising = false;
