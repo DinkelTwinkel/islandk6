@@ -42,7 +42,7 @@ module.exports = async (client) => {
   const botLogChannel = kimoServer.channels.cache.get(botLogChannelID);
   const DangerRole = kimoServer.roles.cache.get('1202533924040081408');
 
-  botLogChannel.send({ content: `${DangerRole} set to ${roleColour}`});
+  botLogChannel.send({ content: `<@865147754358767627> DANGER ROLE set to ${roleColour}`});
 
   DangerRole.setColor(roleColour);
 
