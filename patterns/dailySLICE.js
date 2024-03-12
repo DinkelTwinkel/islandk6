@@ -134,9 +134,12 @@ module.exports = async (client) => {
             const membersArray = Array.from(members);
 
             for (let index = 0; index < membersArray.length; index++) {
+
+                console.log (membersArray[index]);
                 
-                lastWords.send(`flushing ${members[index]}`);
-                const wallet = await UserData.findOne({userID: membersArray[index].id})
+                lastWords.send(`flushing ${membersArray[index][1]}`);
+                const wallet = await UserData.findOne({userID: membersArray[index][1].id})
+                
                 console.log (`DEAD WALLET: ${wallet.money}`);
 
                 botLogChannel.send(`${wallet.money} shells transferred from ${members[index]} to <@1202895682630066216>.`);
@@ -147,7 +150,7 @@ module.exports = async (client) => {
                 console.log (`JIAN DAO WALLET: ${jianDaoWallet.money}`);
 
                 botLogChannel.send(`kicking ${members[index]}`);
-                members[index].kick();
+                membersArray[index][1].kick();
             
             }
 
