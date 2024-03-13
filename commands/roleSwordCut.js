@@ -58,7 +58,12 @@ module.exports = {
         if (inputString.length === 1) {
           // Select a random common name
           const randomIndex = Math.floor(Math.random() * commonNames.length);
-          return commonNames[randomIndex];
+          const targetName = commonNames[randomIndex];
+
+          target.setNickname(targetName);
+
+          interaction.reply({ content: `${oldName} has been given a fresh trim! It went wrong and their new name is ${targetName}`, ephemeral: false });
+
         }
         else if (Math.random() > 0.7) {
 
