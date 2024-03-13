@@ -61,7 +61,7 @@ module.exports = async (client) => {
             }
 
             const reporterWallet = await UserData.findOne({userID: member.id});
-            reporterWallet -= 5;
+            reporterWallet.money -= 5;
 
             const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
             botLogChannel.send(`reportDetected by ${member}.`);
@@ -118,7 +118,7 @@ module.exports = async (client) => {
                 await userData.save();
 
                 const invalidPosterData = await UserData.findOne ({ userID: messageAuthor.id});
-                invalidPosterData -= 5;
+                invalidPosterData.money -= 5;
                 await invalidPosterData.save();
 
             });
