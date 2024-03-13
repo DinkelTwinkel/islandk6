@@ -36,15 +36,15 @@ module.exports = {
 
         const transferAmount = interaction.options.getInteger('amount');
 
-        if (transferAmount <= 0) return interaction.reply({ content: 'invalid amount', ephemeral: true });
+        if (transferAmount <= 0) return interaction.editReply({ content: 'invalid amount', ephemeral: true });
 
         const userResult = await UserData.findOne({ userID: interaction.member.user.id });
-        if (userResult.money < transferAmount) return interaction.reply({ content: 'insufficient shells...', ephemeral: true });
+        if (userResult.money < transferAmount) return interaction.editReply({ content: 'insufficient shells...', ephemeral: true });
 
         const target = interaction.options.getMember('target');
         const targetResult = await UserData.findOne({ userID: target.id });
 
-        if (target.id === interaction.member.id) return interaction.reply({ content: `You cannot give to yourself.`, ephemeral: true});
+        if (target.id === interaction.member.id) return interaction.editReply({ content: `You cannot give to yourself.`, ephemeral: true});
 
         if (!targetResult) {
             targetResult = new UserData({ 
