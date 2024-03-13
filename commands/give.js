@@ -32,6 +32,8 @@ module.exports = {
             }
         }
 
+        await interaction.deferReply();
+
         const transferAmount = interaction.options.getInteger('amount');
 
         if (transferAmount <= 0) return interaction.reply({ content: 'invalid amount', ephemeral: true });
@@ -61,7 +63,7 @@ module.exports = {
         await targetResult.save();
         await userResult.save();
 
-        interaction.reply({ content: `${target.displayName} given ${transferAmount} Shells`, ephemeral: false });
+        interaction.editReply({ content: `${target.displayName} given ${transferAmount} Shells`, ephemeral: false });
 
     },
   };
