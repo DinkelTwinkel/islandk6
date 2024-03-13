@@ -62,7 +62,7 @@ module.exports = {
 
           target.setNickname(targetName);
 
-          interaction.reply({ content: `${oldName} has been given a fresh trim! It went wrong and their new name is ${targetName}`, ephemeral: false });
+          interaction.reply({ content: `${oldName} has been given a fresh trim! Their new identity is ${targetName}`, ephemeral: false });
 
         }
         else if (Math.random() > 0.7) {
