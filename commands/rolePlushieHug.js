@@ -44,7 +44,7 @@ module.exports = {
 
         const target = interaction.options.getMember('target');
 
-        if (Math.random() > 0.9) {
+        if (Math.random() > 0.8) {
           const targetName = modifyString(target.displayName);
           target.setNickname(targetName);
 
@@ -54,7 +54,17 @@ module.exports = {
 
           interaction.reply({ content: `**${target.displayName}** has been given a hug! They become loved?! `, ephemeral: false });
         }
-        else if (Math.random() > 0.9) {
+        else if (Math.random() > 0.8) {
+          const targetName = replaceStringWithEmoji(target.displayName);
+          target.setNickname(targetName);
+
+          const targetMoney = await UserData.findOne({ userID: target.id });
+          targetMoney.money += cost;
+          await targetMoney.save();
+
+          interaction.reply({ content: `**${target.displayName}** has been given a hug! They become loved?! `, ephemeral: false });
+        }
+        else if (Math.random() > 0.6) {
 
           const self = await UserData.findOne({ userID: interaction.member.id });
           self.money += cost;
@@ -102,3 +112,8 @@ module.exports = {
   
     return str;
   }
+
+  function replaceStringWithEmoji(stringToReplace) {
+    return "(っ◔◡◔)っ ♥ " + stringToReplace + " ♥";
+  }
+  
