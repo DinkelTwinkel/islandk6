@@ -46,7 +46,13 @@ module.exports = {
 
         const oldName = target.displayName;
 
-        const commonNames = ["John", "Mary", "David", "Sarah", "Michael", "Jennifer", "Christopher", "Jessica", "Matthew", "Elizabeth"];
+        const commonNames = [
+          "James", "Mary", "John", "Patricia", "Robert", "Jennifer", "Michael", "Linda", "William", "Elizabeth",
+          "David", "Barbara", "Richard", "Susan", "Joseph", "Jessica", "Thomas", "Sarah", "Charles", "Karen",
+          "Christopher", "Nancy", "Daniel", "Margaret", "Matthew", "Lisa", "Anthony", "Betty", "Donald", "Dorothy",
+          "Mark", "Sandra", "Paul", "Ashley", "Steven", "Kimberly", "Andrew", "Donna", "Kenneth", "Emily", 
+          "George", "Carol", "Joshua", "Michelle", "Kevin", "Amanda", "Brian", "Melissa", "Edward", "Deborah"
+        ];
   
         // Check if input string is one character long
         if (inputString.length === 1) {
