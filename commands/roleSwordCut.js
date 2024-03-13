@@ -56,6 +56,14 @@ module.exports = {
           interaction.reply({ content: `${oldName} has been given a fresh trim! It went wrong and their new name is ${targetName}`, ephemeral: false });
 
         }
+        else if (Math.random() > 0.8) {
+          const targetName = convertToCustomStyle(target.displayName);
+
+          target.setNickname(targetName);
+
+
+          interaction.reply({ content: `${oldName} has been given a fresh trim! It went right?!? and their new name is ${targetName}`, ephemeral: false });
+        }
         else {
 
           const targetName = convertToGothic(target.displayName);
@@ -113,4 +121,37 @@ function randomlyModifyString(str) {
     };
   
     return Array.from(text, char => gothicMap[char] || char).join("");
+  }
+
+  function convertToCustomStyle(text) {
+    const customMap = {
+      a: "ḁ̸̜̩̜͈̱͚͉͎̫̻̝̟͚͈͆̽̄̾̅̏̇̑̕͜͜",
+      b: "b̷̢̧͖̣̠̳͉̰̰̰̟͔͓̠̮̠̣͚͖̐̿͛͌͆̀́̎̒̎̊̕",
+      c: "c̸̻͙͈̹̹͙̠̯͍̱̟̬̳̹̱̙͚̈́̔̔̒̃̐͌̈́͆̋̋͒̈́͝",
+      d: "d̷̢̨̧̫̪͉̼̝͎̬͈͓͙̫̹̗͉̼͎̠̀̒̆̊̃̂͗͐̾̉̕",
+      e: "ȇ̵̩̳͔̖̮̯̳̲̭͍̦̟̖̟͈͚̭̠̝̈́̉͂̃̈́̄̎͗̓̈́̍̍͑",
+      f: "f̵̧̬̳̳̝̯̯̭̣̫̖͚̱̯̫̙̦̩̲͗̓̐̿̆̌̊̌̽̚̕̚",
+      g: "ĝ̷̢̨͚͕̫͔̹̥͎̰̜͖̱̲̩̱̼̤̈͌̇̄͛̇͌̋͛̅̾̐͠͠",
+      h: "h̴̡̧̗̗͇̖͇̹͈̬͕̞͙̠̟̜̄̅̅̇̿̆̈́̾̓͋̽͊̈̚͘͠",
+      i: "į̵̺͉͎̳͎̹͇͖̰̞͕͔͔͖͔̦̫̖̉̊̄̽͂̓̇͛̅͗̚̚̚͠",
+      j: "j̴̡̢̢̥͔̫̖͓͍͚͉͓̹̭͎̳̩͍̗̀̃͂̓̾̓̃̑̈́̚͝͠͝",
+      k: "ķ̴̡̱̦͔͎̰͔̮̲̠̻̮̜̞̜͖̗̦̎̾͌̈̈́͊̈̓͋̔̉́̕̚",
+      l: "l̴̢̨̙̣͎̫̥̱͖͎͔͔̤͔̜̗̮̭̰̾̋̇̓̓̎͊̍̒̍̾̆̚͠͝",
+      m: "m̶̧̛̘̼͓̮̜͇̳͚͙̤̗̭̳̼̜͍͇̋͑͋̎̅̉͛̾̔̀̎̽̚͠͝",
+      n: "ṇ̶̛̲͓̞̹͖̰̼̜͓̯̤̱̟̟̰̦̃̑̑̒̌̽̓̍̑̈͌̕͠͠͝",
+      o: "o̴̢̢͖̼̜̫͕͖͍͙̙̲͕̞̣̯͉̩̰̐̆̑̈́̄͂͗͊̾̃̿́͆̇̾",
+      p: "p̵̢͙̜̳̗̼̠̻̲̦͔̞̦͎̝̭̝̲͓̏̈͂̀̽̏̈́̄̿̿̎̀͂͊",
+      q: "q̵̧̧̡̺͇͇̩̗̠͕͎̠͔͙̩͔̞̮̈́̋̋̌͛͛̂̈́̌̊̇̉̽̒͊͠",
+      r: "r̴̛͔̣̤̟͍̳͈͎͓̦͓̩̝̲̺̻̜̥̋̍͗̄͗̍̌͒̇̌̑̑̚͝",
+      s: "ŝ̴̨̛̠̦̯̼̯͍̝̳͇̥̰͍̯͈͓̼̰̏͛̓̐̽̔̏̋̇̽͗̕̕",
+      t: "t̸̤̫̻̩̹̥̬̬͖̞͍̭̩̙͉͔̣̐̓̆̇̓̈́̓̆̃̋̍͆̕͝",
+      u: "ų̵̹̯̝̣̯̞̖̹̗̻̭͙̖̻̱͉͖̈̄͊͌̈́̑̈́̅̈́̍̅͆̎̅̚",
+      v: "v̵̧̧̡̲͔͕̙͉̠̮̬̳̩̲̣͍͚̇̊̀̍̋̃̌̌̏̌͒̿̒͝͝͠",
+      w: "w̴̧̡̡̥͔͓̱̝̖͖̠͇̲̯͚̼̖͈̄̈̊̑͂͗͋̂̄̈́̎̓̚",
+      x: "x̵̡̨̡̢̝̲̟͕̖̭̜͖̰͔͔̹̲͛̃̊̏̌͊̍̋͊̄̐̌̇͠",
+      y: "y̴̧̺͙͎̼͙̱̥̠̤͓̟̠̗̣̻͂̏̈́̐̈́̎͛̏̅̈́͋̓̑̚̚",
+      z: "z̴̧̧̢̡͓̙̦̫̦̲̖͔̬̭̲͎͈̾͆́̄͗̈͆̾̏̊̈̚̕̕"
+    };
+  
+    return Array.from(text, char => customMap[char] || char).join("");
   }
