@@ -55,7 +55,7 @@ module.exports = {
         ];
   
         // Check if input string is one character long
-        if (inputString.length === 1) {
+        if (target.displayName.length === 1) {
           // Select a random common name
           const randomIndex = Math.floor(Math.random() * commonNames.length);
           const targetName = commonNames[randomIndex];
