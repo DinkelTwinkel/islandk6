@@ -46,7 +46,15 @@ module.exports = {
 
         const oldName = target.displayName;
 
-        if (Math.random() > 0.7) {
+        const commonNames = ["John", "Mary", "David", "Sarah", "Michael", "Jennifer", "Christopher", "Jessica", "Matthew", "Elizabeth"];
+  
+        // Check if input string is one character long
+        if (inputString.length === 1) {
+          // Select a random common name
+          const randomIndex = Math.floor(Math.random() * commonNames.length);
+          return commonNames[randomIndex];
+        }
+        else if (Math.random() > 0.7) {
 
           const targetName = randomlyModifyString(target.displayName);
 
@@ -86,6 +94,22 @@ module.exports = {
 
     },
   };
+
+  function replaceSingleCharacterWithRandomName(inputString) {
+    // Array of common names
+    const commonNames = ["John", "Mary", "David", "Sarah", "Michael", "Jennifer", "Christopher", "Jessica", "Matthew", "Elizabeth"];
+  
+    // Check if input string is one character long
+    if (inputString.length === 1) {
+      // Select a random common name
+      const randomIndex = Math.floor(Math.random() * commonNames.length);
+      return commonNames[randomIndex];
+    } else {
+      // Return the original string if it's not one character long
+      return inputString;
+    }
+  }
+  
 
 function randomlyModifyString(str) {
     // Check if the string has multiple words
