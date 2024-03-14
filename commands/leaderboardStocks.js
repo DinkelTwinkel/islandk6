@@ -16,7 +16,7 @@ module.exports = {
       await interaction.deferReply({ephemeral: true});
 
       let players = await UserStats.find().sort({ stockProfit: -1 });
-      players = players.filter(player => player.money != 0 );
+      players = players.filter(player => player.stockProfit != 0 );
       const firstPlace = await client.guilds.cache.get('1193663232041304134').members.fetch(players[0].userID);
       const KimoServer = await client.guilds.fetch (kimoServerID);
 
