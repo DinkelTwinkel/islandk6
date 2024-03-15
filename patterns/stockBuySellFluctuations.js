@@ -301,7 +301,7 @@ module.exports = async (client) => {
 
 function colourBlock (content, code) {
   if (code === 0) {
-    const newString =  '```' + 'fix\n' + content + '```';
+    const newString =  '```' + `ansi\n[1;2m[1;35m${content}[0m[0m\n` + '```';
     return newString;
   }
   else if (code === 1) {
