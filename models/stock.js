@@ -12,6 +12,7 @@ const stockSchema = new Schema({
 	nextUpdateTime: { type: Number, required: true, default: 0 },
 	totalShares: { type: Number, required: true, default: 0 },
 	fakeRising: { type: Boolean, required: true, default: true },
+	colourCode: { type: Number, required: true, default: 0 },
 
 }, { timestamps: true });
 

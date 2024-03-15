@@ -198,11 +198,11 @@ client.once(Events.ClientReady, async c => {
 
 // // });
 
-// await Inventory.updateMany({$set:
-//     {
-//       shortChargeTimer: 0,
-//     }
-// });
+await Stock.updateMany({$set:
+    {
+      colourCode: 0,
+    }
+});
 
 const result = await UserState.find({});
 
