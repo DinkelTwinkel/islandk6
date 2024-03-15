@@ -317,7 +317,7 @@ function colourBlock (content, code) {
     return newString;
   }
   else if (code === 4) {
-    const newString =  '```' + `[2;33m[1;33m${content}[0m[2;33m[0m\n` + '```';
+    const newString =  '```' + `ansi\n[2;33m[1;33m${content}[0m[2;33m[0m\n` + '```';
     return newString;
   }
 }
