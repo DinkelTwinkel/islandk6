@@ -178,7 +178,7 @@ module.exports = async (client) => {
           const change = stock.currentValue - oldPrice;
           stock.currentShift = Math.round((change / oldPrice) * 1000) / 1000;
           stock.fakeRising = true;
-          refChannel1.send (colourBlock (`**${stock.stockName} Increased from to ${oldPrice} to ${stock.currentValue}**`,stock.colourCode));
+          refChannel1.send (colourBlock (`${stock.stockName} Increased from to ${oldPrice} to ${stock.currentValue}`,stock.colourCode));
           await stock.save();
           createStockMarket(client);
         }
@@ -284,7 +284,7 @@ module.exports = async (client) => {
           const change = stock.currentValue - oldPrice;
           stock.currentShift = Math.round((change / oldPrice) * 1000) / 1000;
           stock.fakeRising = false;
-          refChannel1.send (colourBlock (`**${stock.stockName} Decreased from to ${oldPrice} to ${stock.currentValue}**`, stock.colourCode));
+          refChannel1.send (colourBlock (`${stock.stockName} Decreased from to ${oldPrice} to ${stock.currentValue}`, stock.colourCode));
           //'**' + stock.stockName + ` Increased from ${oldPrice} to ${stock.currentValue}**
           await stock.save();
           createStockMarket(client);
@@ -358,13 +358,13 @@ async function shiftStock (client) {
 
     if (rising === true) {
       stock.currentValue += change;
-      await client.guilds.cache.get('1193663232041304134').channels.cache.get('1206930735315943444').send(colourBlock ('**' + stock.stockName + ` Increased from ${oldPrice} to ${stock.currentValue}**`, stock.colourCode));
+      await client.guilds.cache.get('1193663232041304134').channels.cache.get('1206930735315943444').send(colourBlock ('' + stock.stockName + ` Increased from ${oldPrice} to ${stock.currentValue}`, stock.colourCode));
       if (stock.currentValue < 1) stock.currentValue = 1;
     }
     else {
       stock.fakeRising = false;
       stock.currentValue -= change;
-      await client.guilds.cache.get('1193663232041304134').channels.cache.get('1206930735315943444').send(colourBlock ('**' + stock.stockName + ` Decreased from ${oldPrice} to ${stock.currentValue}**`, stock.colourCode));
+      await client.guilds.cache.get('1193663232041304134').channels.cache.get('1206930735315943444').send(colourBlock ('' + stock.stockName + ` Decreased from ${oldPrice} to ${stock.currentValue}`, stock.colourCode));
       if (stock.currentValue < 1) {
         //stock death
         console.log (stock.stockName + ' has died, generating new stock');
