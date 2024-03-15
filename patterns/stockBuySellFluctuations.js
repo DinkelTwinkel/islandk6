@@ -305,19 +305,19 @@ function colourBlock (content, code) {
     return newString;
   }
   else if (code === 1) {
-    const newString =  '```' + 'fix\n' + content + '```';
+    const newString =  '```' + 'md\n> ' + content + '```';
     return newString;
   }
   else if (code === 2) {
-    const newString =  '```' + 'fix\n' + content + '```';
+    const newString =  '```' + 'yaml\n' + content + '```';
     return newString;
   }
   else if (code === 2) {
-    const newString =  '```' + 'fix\n' + content + '```';
+    const newString =  '```' + 'asciidoc\n.' + content + '```';
     return newString;
   }
   else if (code === 4) {
-    const newString =  '```' + 'fix\n' + content + '```';
+    const newString =  '```' + 'ini\n# ' + content + '```';
     return newString;
   }
 }
