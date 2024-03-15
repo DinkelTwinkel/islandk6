@@ -312,7 +312,7 @@ function colourBlock (content, code) {
     const newString =  '```' + 'yaml\n' + content + '```';
     return newString;
   }
-  else if (code === 2) {
+  else if (code === 3) {
     const newString =  '```' + 'asciidoc\n.' + content + '```';
     return newString;
   }
