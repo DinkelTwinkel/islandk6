@@ -12,7 +12,7 @@ module.exports = async (client) => {
     const KimoServer = await client.guilds.fetch(kimoServerID);
     const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
 
-    //dailyHighlight (client);
+    dailyHighlight (client);
 
     setTimeout(() => {
         channelUnLock (client);
