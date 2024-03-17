@@ -164,10 +164,10 @@ module.exports = async (client) => {
             //     await notificationChannel.send({content: `${messageAuthorMember} Hey an Kimo admin has flagged your message: ${reaction.message.content} because it does not follow our guidelines in /rules. If you think this was a mistake feel free to let us know here.`});
             // }
 
-            messageAuthorMember.timeout(10 * 60 * 1000);
+            //messageAuthorMember.timeout(10 * 60 * 1000);
             messageAuthorMember.roles.add ('1210393789043310672');
             const notificationChannel = KimoServer.channels.cache.get('1210393681698496553');
-            await notificationChannel.send({content: `${messageAuthorMember} Hey an Kimo admin has flagged your message:` + '```' + reaction.message.content + '```' + `because it does not follow our guidelines in /rules, **a text chat time-out has been applied to you.** If you think this was a mistake feel free to let us know here.`});
+            await notificationChannel.send({content: `${messageAuthorMember} Hey your message has been flagged:` + '```' + reaction.message.content + '```' + `because it does not follow our guidelines in /rules, If you think this was a mistake feel free to let us know here.`});
 
             const adminWallet = await UserData.findOne({ userID: member.id });
             adminWallet.money += 1;
