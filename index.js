@@ -62,6 +62,7 @@ const statEmbed = require('./patterns/statEmbed');
 const forceRecheckPrevDay = require('./patterns/forceRecheckPrevDay');
 const getAllMessagesInChannelLastTwoDays = require('./patterns/getAllMessagesInChannelLastTwoDays');
 const Inventory = require('./models/inventory');
+const gravetalking = require('./patterns/gravetalking');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -94,6 +95,7 @@ client.once(Events.ClientReady, async c => {
   adminReact(client);
   campfireVCs(client);
   marketFair(client);
+  gravetalking(client);
 
   setInterval(() => {
     dailySLICE(client);
