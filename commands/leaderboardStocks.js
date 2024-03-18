@@ -13,7 +13,7 @@ module.exports = {
 
       if (!interaction.channel.id === '1206930735315943444') return interaction.reply({ content: 'You can\'t use this in this channel.', ephemeral: true });
 
-      await interaction.deferReply({ephemeral: true});
+      await interaction.deferReply({ephemeral: false});
 
       let players = await UserStats.find().sort({ stockProfit: -1 });
       players = players.filter(player => player.stockProfit != 0 );
@@ -35,59 +35,59 @@ module.exports = {
   
       const userStatArray = Array.from(allUserStats);
   
-      let totalMessages = 0;
-      let islandACount = 0;
-      let islandATotal = 0;
-      let islandBCount = 0;
-      let islandBTotal = 0;
-      let totalCount = 0;
+      // let totalMessages = 0;
+      // let islandACount = 0;
+      // let islandATotal = 0;
+      // let islandBCount = 0;
+      // let islandBTotal = 0;
+      // let totalCount = 0;
 
-      // Sorting the collection by the 'totalMessages' property into a new array
+      // // Sorting the collection by the 'totalMessages' property into a new array
 
   
-      for (let index = 0; index < userStatArray.length; index++) {
+      // for (let index = 0; index < userStatArray.length; index++) {
 
-        const member = KimoServer.members.cache.get(userStatArray[index].userID);
+      //   const member = KimoServer.members.cache.get(userStatArray[index].userID);
 
-        if (!member) continue;
-        if (member.user.bot) continue;
-        if (member.roles.cache.get('1202555128352346143')) continue;
-        // totalMessages += userStatArray[index].stockProfit;
-        console.log (totalMessages);
+      //   if (!member) continue;
+      //   if (member.user.bot) continue;
+      //   if (member.roles.cache.get('1202555128352346143')) continue;
+      //   // totalMessages += userStatArray[index].stockProfit;
+      //   console.log (totalMessages);
 
-        // const teamData = teamDatas.filter(data => data.userID === userStatArray[index].userID );
-        // //console.log(teamData)
-        // if (!teamData) continue;
+      //   // const teamData = teamDatas.filter(data => data.userID === userStatArray[index].userID );
+      //   // //console.log(teamData)
+      //   // if (!teamData) continue;
 
-        // const userState = allUserStates.filter(data => data.userID === userStatArray[index].userID && data.currentState != 'DEAD' );
-        // //console.log (userState);
-        // if (!userState) continue;
+      //   // const userState = allUserStates.filter(data => data.userID === userStatArray[index].userID && data.currentState != 'DEAD' );
+      //   // //console.log (userState);
+      //   // if (!userState) continue;
 
-        if (member.roles.cache.get('1202551817708507136')) {
-          totalMessages += userStatArray[index].stockProfit;
-          totalCount += 1;
-          islandACount += 1;
-          islandATotal += userStatArray[index].stockProfit;
-          allUserStatsFiltered.push(userStatArray[index]);
-        }
-        else 
-        if (member.roles.cache.get('1202876101005803531')) {
-          totalMessages += userStatArray[index].stockProfit;
-          totalCount += 1;
-          islandBCount += 1;
-          islandBTotal += userStatArray[index].stockProfit;
-          allUserStatsFiltered.push(userStatArray[index]);
-        }
+      //   if (member.roles.cache.get('1202551817708507136')) {
+      //     totalMessages += userStatArray[index].stockProfit;
+      //     totalCount += 1;
+      //     islandACount += 1;
+      //     islandATotal += userStatArray[index].stockProfit;
+      //     allUserStatsFiltered.push(userStatArray[index]);
+      //   }
+      //   else 
+      //   if (member.roles.cache.get('1202876101005803531')) {
+      //     totalMessages += userStatArray[index].stockProfit;
+      //     totalCount += 1;
+      //     islandBCount += 1;
+      //     islandBTotal += userStatArray[index].stockProfit;
+      //     allUserStatsFiltered.push(userStatArray[index]);
+      //   }
         
 
-      }
+      // }
 
-      const sortedArray = sortByTotalMessages(allUserStatsFiltered);
+      // const sortedArray = sortByTotalMessages(allUserStatsFiltered);
   
-      const averageMessage = totalMessages / totalCount;
-      const averageA = islandATotal / islandACount;
-      const averageB = islandBTotal / islandBCount;
-      console.log (`Average Message Per User = ${Math.floor(averageMessage)}`);
+      // const averageMessage = totalMessages / totalCount;
+      // const averageA = islandATotal / islandACount;
+      // const averageB = islandBTotal / islandBCount;
+      // console.log (`Average Message Per User = ${Math.floor(averageMessage)}`);
 
       const embed = new EmbedBuilder()
       .setTitle(' LEADERBOARD: TOP 25 STOCK TRADING ')
