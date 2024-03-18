@@ -142,7 +142,7 @@ module.exports = async (client) => {
                 
                 console.log (`DEAD WALLET: ${wallet.money}`);
 
-                botLogChannel.send(`${wallet.money} shells transferred from ${members[index][1]} to <@1202895682630066216>.`);
+                botLogChannel.send(`${wallet.money} shells transferred from ${members[index]} to <@1202895682630066216>.`);
 
                 const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
                 jianDaoWallet.money += wallet.money;
