@@ -19,7 +19,7 @@ module.exports = {
       
           botLogChannel.send(`!puppet 1 ${interaction.channel.id} # nice try bozo :P`)
           
-          return interaction.reply({ content: `You can't smuggle outta jail. Jian Dao is watching.`, ephemeral: true });
+          return interaction.reply({ content: `You can't smuggle outta jail. Jian Dao is watching.`, ephemeral: false });
         }
 
         const userWallet = await UserData.findOne({ userID: interaction.member.id });
