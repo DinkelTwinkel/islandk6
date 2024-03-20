@@ -18,14 +18,14 @@ module.exports = {
         userWallet.money -= cost;
         await userWallet.save();
 
-        if (userWallet.group === 0) {
+        if (interaction.member.roles.cache.get('1202551817708507136')) {
             //group a
             interaction.member.roles.remove ('1202551817708507136');
             interaction.member.roles.add ('1202876101005803531');
             announcementChannel = interaction.guild.channels.cache.get('1202876942714544148');
             await announcementChannel.send(`${interaction.member} has been smuggled over...`);
           }
-          else if (userWallet.group === 1) {
+          else if (interaction.member.roles.cache.get('1202876101005803531')) {
             //group b
             interaction.member.roles.remove ('1202876101005803531');
             interaction.member.roles.add ('1202551817708507136');
