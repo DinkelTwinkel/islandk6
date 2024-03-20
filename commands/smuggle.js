@@ -18,6 +18,8 @@ module.exports = {
         userWallet.money -= cost;
         await userWallet.save();
 
+        if (interaction.member.roles.cache.get('1202749571957006348')) return interaction.reply({ content: `You can't smuggle outta jail. Jian Dao is watching.`, ephemeral: true });
+
         if (interaction.member.roles.cache.get('1202551817708507136')) {
             //group a
             interaction.member.roles.remove ('1202551817708507136');
