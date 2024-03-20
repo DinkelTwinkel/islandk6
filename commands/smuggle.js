@@ -2,6 +2,7 @@ const { SlashCommandBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = re
 const kimoIDMaker = require('../patterns/kimoIDMaker');
 const UserData = require('../models/userData');
 const cost = 50;
+const { kimoChannelID, kimoServerID, botLogChannelID, kimoChannelDungeonID, deadRoleID, dangerRoleID } = require('../ids.json');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -11,7 +12,15 @@ module.exports = {
     async execute(interaction, client) {
 
         // money check.
-        if (interaction.member.roles.cache.get('1202749571957006348')) return interaction.reply({ content: `You can't smuggle outta jail. Jian Dao is watching.`, ephemeral: true });
+        if (interaction.member.roles.cache.get('1202749571957006348')) {
+          
+          const KimoServer = await client.guilds.fetch(kimoServerID);
+          const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
+      
+          botLogChannel.send(`!puppet 1 ${interaction.channel.id} # nice try bozo :P`)
+          
+          return interaction.reply({ content: `You can't smuggle outta jail. Jian Dao is watching.`, ephemeral: true });
+        }
 
         const userWallet = await UserData.findOne({ userID: interaction.member.id });
         if (userWallet.money < cost) return interaction.reply({ content: `Insufficient shells, you need ${cost} shells to use this.`, ephemeral: true });
