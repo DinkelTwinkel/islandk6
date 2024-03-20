@@ -11,14 +11,13 @@ module.exports = {
     async execute(interaction, client) {
 
         // money check.
+        if (interaction.member.roles.cache.get('1202749571957006348')) return interaction.reply({ content: `You can't smuggle outta jail. Jian Dao is watching.`, ephemeral: true });
 
         const userWallet = await UserData.findOne({ userID: interaction.member.id });
         if (userWallet.money < cost) return interaction.reply({ content: `Insufficient shells, you need ${cost} shells to use this.`, ephemeral: true });
 
         userWallet.money -= cost;
         await userWallet.save();
-
-        if (interaction.member.roles.cache.get('1202749571957006348')) return interaction.reply({ content: `You can't smuggle outta jail. Jian Dao is watching.`, ephemeral: true });
 
         if (interaction.member.roles.cache.get('1202551817708507136')) {
             //group a
