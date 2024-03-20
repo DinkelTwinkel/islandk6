@@ -32,6 +32,11 @@ module.exports = {
             announcementChannel = interaction.guild.channels.cache.get('1202876942714544148');
             await announcementChannel.send(`${interaction.member} has been smuggled over...`);
           }
+          else if (interaction.member.roles.cache.get('1202749571957006348')) {
+
+            interaction.member.roles.add ('1202551817708507136');
+
+          }
 
         // add role.
 
