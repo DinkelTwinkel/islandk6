@@ -11,8 +11,8 @@ module.exports = {
 
     async execute(interaction, client) {
 
-        if(!interaction.member.permissionsIn(interaction.channel).has(PermissionsBitField.Flags.Administrator) && !interaction.member.roles.cache.get('1202555128352346143')){
-            await interaction.reply({content: "You must be an administrator or lifeguard to perform this action.", ephemeral: true});
+        if(!interaction.member.roles.cache.get('1202533941727203368')){
+            await interaction.reply({content: "You must be dead to use this.", ephemeral: true});
             return;
         }
 
