@@ -18,8 +18,10 @@ module.exports = {
 
     async execute(interaction, client) {
 
+        await interaction.deferReply();
+
         // QUEST NPC ROLE CHECK
-        if (!interaction.member.roles.cache.get('1221051301996007465')) return interaction.reply({ content: 'You need to be a sumo to use this.', ephemeral: true });
+        if (!interaction.member.roles.cache.get('1221051301996007465')) return interaction.editReply({ content: 'You need to be a sumo to use this.', ephemeral: true });
 
         const now = Date.now();
         if (cooldowns.has(interaction.member.user.id)) {
@@ -27,12 +29,12 @@ module.exports = {
 
             if (now < expirationTime) {
               const timeLeft = (expirationTime - now) / 1000 / 60;
-              return interaction.reply({ content: `Please wait ${timeLeft.toFixed(1)} more minutes before flipping again`, ephemeral: true});
+              return interaction.editReply({ content: `Please wait ${timeLeft.toFixed(1)} more minutes before flipping again`, ephemeral: true});
             }
         }
 
         const userWallet = await UserData.findOne({ userID: interaction.member.id });
-        if (userWallet.money < cost) return interaction.reply({ content: `Insufficient shells, you need ${cost} shells to use this.`, ephemeral: true });
+        if (userWallet.money < cost) return interaction.editReply({ content: `Insufficient shells, you need ${cost} shells to use this.`, ephemeral: true });
         userWallet.money -= cost;
         await userWallet.save();
 
@@ -56,7 +58,7 @@ module.exports = {
             response.delete();
         }, 10 * 1000);
 
-        interaction.reply({ content: `${oldName} has been flipped! Their new name is ${targetName}`, ephemeral: false });
+        interaction.editReply({ content: `${oldName} has been flipped! Their new name is ${targetName}`, ephemeral: false });
 
     },
   };
