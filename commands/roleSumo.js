@@ -11,10 +11,12 @@ module.exports = {
 
     async execute(interaction, client) {
 
+        await interaction.deferReply({ephemeral: true});
+
         if (!interaction.member.roles.cache.get(roleID)) {
             // buy
             const userWallet = await UserData.findOne({ userID: interaction.member.id });
-            if (userWallet.money < cost) return interaction.reply({ content: `Insufficient shells, you need ${cost} shells to use this.`, ephemeral: true });
+            if (userWallet.money < cost) return interaction.editReply({ content: `Insufficient shells, you need ${cost} shells to use this.`, ephemeral: true });
             userWallet.money -= cost;
             await userWallet.save();
 
@@ -24,7 +26,7 @@ module.exports = {
 
             interaction.member.roles.add(roleID);
 
-            interaction.reply({ content: `Role Gained!`, ephemeral: true });
+            interaction.editReply({ content: `Role Gained!`, ephemeral: true });
 
         }
         else if (interaction.member.roles.cache.get(roleID)) {
@@ -39,7 +41,7 @@ module.exports = {
 
             interaction.member.roles.remove(roleID);
 
-            interaction.reply({ content: `Role exchanged for shells!`, ephemeral: true });
+            interaction.editReply({ content: `Role exchanged for shells!`, ephemeral: true });
 
         }
 
