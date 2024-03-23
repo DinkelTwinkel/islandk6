@@ -179,6 +179,9 @@ module.exports = async (client) => {
           stock.currentShift = Math.round((change / oldPrice) * 1000) / 1000;
           stock.fakeRising = true;
           refChannel1.send (colourBlock (`${stock.stockName} Increased from to ${oldPrice} to ${stock.currentValue}`,stock.colourCode));
+          if (Math.random() > 0.1) {
+            stock.rising = true;
+          }
           await stock.save();
           createStockMarket(client);
         }
@@ -283,11 +286,15 @@ module.exports = async (client) => {
           stock.currentValue -= Math.ceil(stock.passiveFluctuation * ShareHoldingFactor);
           const change = stock.currentValue - oldPrice;
           stock.currentShift = Math.round((change / oldPrice) * 1000) / 1000;
+          if (Math.random() > 0.3) {
+            stock.rising = false;
+          }
           stock.fakeRising = false;
           refChannel1.send (colourBlock (`${stock.stockName} Decreased from to ${oldPrice} to ${stock.currentValue}`, stock.colourCode));
           //'**' + stock.stockName + ` Increased from ${oldPrice} to ${stock.currentValue}**
           await stock.save();
           createStockMarket(client);
+
         }
         
 

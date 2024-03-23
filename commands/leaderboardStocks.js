@@ -11,7 +11,7 @@ module.exports = {
 
     async execute(interaction, client) {
 
-      if (!interaction.channel.id === '1206930735315943444') return interaction.reply({ content: 'You can\'t use this in this channel.', ephemeral: true });
+      if (interaction.channel.id != '1206930735315943444') return interaction.reply({ content: 'You can\'t use this in this channel.', ephemeral: true });
 
       await interaction.deferReply({ephemeral: false});
 

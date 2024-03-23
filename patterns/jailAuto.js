@@ -40,6 +40,7 @@ module.exports = async (client) => {
 
         if (message.guild.id != KimoServer.id) return;
         if (message.member.roles.cache.get('1202749571957006348')) return;
+        if (message.member.roles.cache.get('1202533941727203368')) return;
         if (message.channel.id === '1206930735315943444') return;
         if (message.author.bot) return;
 
