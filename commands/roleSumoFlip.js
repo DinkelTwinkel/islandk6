@@ -50,7 +50,12 @@ module.exports = {
 
         target.setNickname(targetName);
 
-        interaction.channel.send ('https://tenor.com/view/akua-terutsuyoshi-kakenage-sumo-gif-25170050');
+        
+        const response = await interaction.channel.send ('https://tenor.com/view/akua-terutsuyoshi-kakenage-sumo-gif-25170050');
+        setTimeout(() => {
+            response.delete();
+        }, 10 * 1000);
+
         interaction.reply({ content: `${oldName} has been flipped! Their new name is ${targetName}`, ephemeral: false });
 
     },
