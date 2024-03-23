@@ -127,7 +127,7 @@ async function postFortune(message, fortune) {
     })
     .setColor("#f9ffcc");
 
-    const response = await message.reply({content: ``, embeds: [embed] })
+    const response = await message.channel.send({content: ``, embeds: [embed] })
     setTimeout(() => {
         response.delete();
     }, 30 * 1000);
