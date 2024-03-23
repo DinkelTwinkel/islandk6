@@ -139,11 +139,10 @@ module.exports = {
         '>': '<',
         '∴': '∵'
     };
-    
-    const chars = text.split('');
-    let upsideDownText = '';
-    for (let char of chars) {
-        upsideDownText += upsideDownChars[char] || char;
+
+    let flippedText = '';
+    for (let char of text) {
+        flippedText += upsideDownChars[char] || char;
     }
-    return upsideDownText.split('').reverse().join('');
+    return flippedText;
 }
