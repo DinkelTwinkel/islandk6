@@ -19,7 +19,7 @@ module.exports = {
     async execute(interaction, client) {
 
         // QUEST NPC ROLE CHECK
-        if (!interaction.member.roles.cache.get('1216662066220367903')) return interaction.reply({ content: 'You need to be a sumo to use this.', ephemeral: true });
+        if (!interaction.member.roles.cache.get('1221051301996007465')) return interaction.reply({ content: 'You need to be a sumo to use this.', ephemeral: true });
 
         const now = Date.now();
         if (cooldowns.has(interaction.member.user.id)) {
