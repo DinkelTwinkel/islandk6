@@ -20,14 +20,15 @@ module.exports = {
 
     const row = new ActionRowBuilder ()
     .addComponents(showIDButton);
+    
+    await interaction.deferReply();
 
     if (interaction.options.getMember('target')) {
-
         const targetID =  interaction.options.getMember('target').id;
-        interaction.reply ({ embeds: [ await kimoIDMaker(targetID, interaction.options.getMember('target'), client)], ephemeral: true });
+        interaction.editReply ({ embeds: [ await kimoIDMaker(targetID, interaction.options.getMember('target'), client)], ephemeral: true });
     }
     else {
-        interaction.reply ({ content: interaction.member.id, embeds: [ await kimoIDMaker(interaction.member.id, interaction.member, client)], ephemeral: true, components: [row] });
+        interaction.editReply ({ content: interaction.member.id, embeds: [ await kimoIDMaker(interaction.member.id, interaction.member, client)], ephemeral: true, components: [row] });
     }
 
     },
