@@ -21,7 +21,7 @@ module.exports = {
     const row = new ActionRowBuilder ()
     .addComponents(showIDButton);
     
-    await interaction.deferReply();
+    await interaction.deferReply({ephemeral: true});
 
     if (interaction.options.getMember('target')) {
         const targetID =  interaction.options.getMember('target').id;
