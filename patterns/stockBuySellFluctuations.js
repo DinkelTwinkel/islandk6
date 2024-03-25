@@ -126,7 +126,6 @@ module.exports = async (client) => {
         // }
 
 
-
         //interaction.deferUpdate();
         // buy click deteced.
 

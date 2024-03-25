@@ -63,6 +63,7 @@ const forceRecheckPrevDay = require('./patterns/forceRecheckPrevDay');
 const getAllMessagesInChannelLastTwoDays = require('./patterns/getAllMessagesInChannelLastTwoDays');
 const Inventory = require('./models/inventory');
 const gravetalking = require('./patterns/gravetalking');
+const kimoScore = require('./patterns/kimoScore');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -96,6 +97,7 @@ client.once(Events.ClientReady, async c => {
   campfireVCs(client);
   marketFair(client);
   gravetalking(client);
+  kimoScore(client);
 
   setInterval(() => {
     dailySLICE(client);
@@ -200,11 +202,11 @@ client.once(Events.ClientReady, async c => {
 
 // // });
 
-// await Stock.updateMany({$set:
-//     {
-//       colourCode: 0,
-//     }
-// });
+await UserData.updateMany({$set:
+    {
+      KimoScore: 0,
+    }
+});
 
 const result = await UserState.find({});
 

@@ -15,6 +15,7 @@ const userDataSchema = new Schema({
     profileColour: ({ type: String, default: '#9e5b08' }),
 	group: ({ type: Number, default: 0 }),
 	emojiReactAwardAmount: ({ type: Number, default: 0 }),
+	kimoScore: ({ type: Number, default: 0 }),
 
 }, { timestamps: true });
 
