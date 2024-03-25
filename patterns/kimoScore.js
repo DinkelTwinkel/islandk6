@@ -16,7 +16,7 @@ module.exports = async (client) => {
         const userData = await UserData.findOne({userID: member.id });
         const userStats = await UserStats.findOne({userID: member.id });
 
-        const money = Math.floor(userData.money/100);
+        const money = Math.floor(userData.money);
         const vcTime = Math.floor(userStats.vcTime/1000/60);
         const messagesSent = userStats.totalMessages;
         const refsShared = userStats.refsShared;
