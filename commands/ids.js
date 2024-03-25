@@ -28,7 +28,7 @@ module.exports = {
         interaction.editReply ({ embeds: [ await kimoIDMaker(targetID, interaction.options.getMember('target'), client)], ephemeral: true });
     }
     else {
-        interaction.editReply ({ content: interaction.member.id, embeds: [ await kimoIDMaker(interaction.member.id, interaction.member, client)], ephemeral: true, components: [row] });
+        interaction.editReply ({ content: interaction.member.id, embeds: [ await kimoIDMaker(interaction.member.id, interaction.member, client)], ephemeral: true, components: [] });
     }
 
     },
