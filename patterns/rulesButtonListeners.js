@@ -71,6 +71,35 @@ module.exports = async (client) => {
         return interaction.deferUpdate();
       }
 
+      if (interaction.customId === 'hellinvite') {
+
+        await interaction.deferUpdate({ephemeral: true});
+
+        const cost = 100;
+        const userWallet = await UserData.findOne({ userID: interaction.member.id });
+        if (userWallet.money < cost) return interaction.followUp({ content: `Insufficient shells, you need ${cost} shells to buy this`, ephemeral: true });
+
+        userWallet.money -= cost;
+        await userWallet.save();
+
+        // add tip to jian dao.
+
+        const jianDaoWallet = await UserData.findOne({ userID: '865147754358767627' });
+        jianDaoWallet.money += cost;
+        await jianDaoWallet.save();
+
+        const hellMartServer = await client.guilds.fetch('1221772148385910835');
+        const inviteChannel = hellMartServer.channels.cache.get('1221772148914262051');
+
+        let invite = await inviteChannel.createInvite({
+          maxAge: 10 * 60 * 1000,
+          maxUses: 1,
+        });
+
+        interaction.followUp({content: `MAP OBTAINED: https://discord.gg/${invite.code} (SINGLE USE, EXPIRES in one WEEk)`, ephemeral: true});
+
+      }
+
       if (interaction.customId === 'skiptutorial') {
 
         const target = interaction.member;

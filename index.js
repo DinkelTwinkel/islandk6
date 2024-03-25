@@ -64,6 +64,7 @@ const getAllMessagesInChannelLastTwoDays = require('./patterns/getAllMessagesInC
 const Inventory = require('./models/inventory');
 const gravetalking = require('./patterns/gravetalking');
 const kimoScore = require('./patterns/kimoScore');
+const lifeRaftController = require('./patterns/lifeRaftController');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -98,6 +99,7 @@ client.once(Events.ClientReady, async c => {
   marketFair(client);
   gravetalking(client);
   kimoScore(client);
+  lifeRaftController(client);
 
   setInterval(() => {
     dailySLICE(client);
@@ -622,6 +624,29 @@ client.on(Events.MessageCreate, async (message) => {
         });
 
         message.channel.send ({content: 'HELP:', embeds: [embed], components: [powerRow]});
+
+      } 
+
+      if (command === 'hell') {
+        // create button to give role power.
+        console.log('createKimoDetected');
+
+        const powerButton = new ButtonBuilder ()
+        .setCustomId('hellinvite')
+        .setLabel('buy map')
+        .setStyle(ButtonStyle.Danger);
+
+        const powerRow = new ActionRowBuilder ()
+        .addComponents(powerButton)
+
+        const embed = new EmbedBuilder()
+        .setTitle("HELL MART ???")
+        .setDescription("mysterious map to a mysterious place, costs 100 shells.")
+        .setFooter({
+          text: "delivery of map can take up to a minute...",
+        });
+
+        message.channel.send ({embeds: [embed], components: [powerRow]});
 
       } 
 

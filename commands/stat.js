@@ -9,6 +9,8 @@ module.exports = {
 
     async execute(interaction, client) {
 
+        await interaction.deferReply({ephemeral: true})
+
         let averagePostMinute = 0;
         let averagePostUtcSeconds = 0;
 
@@ -27,7 +29,7 @@ module.exports = {
             //
 
         }
-        interaction.reply({ content: `Average Post Time: <t:${Math.floor(averagePostUtcSeconds)}:T>`, embeds: [await statEmbed(interaction.member)], ephemeral: true })
+        interaction.editReply({ content: `Average Post Time: <t:${Math.floor(averagePostUtcSeconds)}:T>`, embeds: [await statEmbed(interaction.member)], ephemeral: true })
 
     },
   };

@@ -29,8 +29,36 @@ module.exports = async (userid, member, client) => {
 
     }
 
+    let kimoGrade = 'FFF';
+
+    if (findPouch.kimoScore > 1000) {
+      kimoGrade = 'EEE'
+    }
+    if (findPouch.kimoScore > 3000) {
+      kimoGrade = 'DDD'
+    }
+    if (findPouch.kimoScore > 5000) {
+      kimoGrade = 'CCC'
+    }
+    if (findPouch.kimoScore > 7000) {
+      kimoGrade = 'BBB'
+    }
+    if (findPouch.kimoScore > 10000) {
+      kimoGrade = 'AAA'
+    }
+    if (findPouch.kimoScore > 15000) {
+      kimoGrade = 'SSS'
+    }
+    if (findPouch.kimoScore > 20000) {
+      kimoGrade = 'SSSSS'
+    }
+    if (findPouch.kimoScore > 30000) {
+      kimoGrade = 'EXXXXXX'
+    }
+
+
       const mayo = new EmbedBuilder()
-        .setTitle(` ${findPouch.name} [${findPouch.kimoScore}]`)
+        .setTitle(` ${findPouch.name} [GRADE: ${kimoGrade}+]`)
         // .setAuthor({
         //   name: '',
         //   //iconURL: "https://cdn.discordapp.com/attachments/1061965352755544084/1171981787065487401/ezgif.com-resize_5.gif?ex=655ea818&is=654c3318&hm=375bef5772a6af3381e23e1b635172e16a57eb658cbc54ee9b5387056b9ccd90&",
@@ -53,7 +81,7 @@ module.exports = async (userid, member, client) => {
           },
           {
             name: '\n',
-            value: `**『 ${findPouch.money} 🐚 』**\n ▪ ${findPouch.pronouns}\n ${memberObject}\n►${userState.currentState}`,
+            value: `**『 ${findPouch.money} 🐚 』**\n ▪ ${findPouch.pronouns}\n ${memberObject}\n►${userState.currentState}\n XP: ${findPouch.kimoScore}`,
             inline: true
           },
         )
