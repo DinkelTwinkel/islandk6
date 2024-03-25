@@ -220,6 +220,26 @@ module.exports = async (client) => {
 
         }
 
+        if (reaction.emoji.name === '✂') {
+
+            const member = reaction.message.guild.members.cache.get(user.id);
+            //scissor squad check
+            if (!member.roles.cache.get('1203377553763475497')) return;
+    
+            const KimoServer = await client.guilds.fetch(kimoServerID);
+            //const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
+    
+            console.log('⭐ emoji detected by quest NPC');
+    
+            const messageAuthor = reaction.message.author;
+            console.log(messageAuthor);
+            const messageAuthorMember = await reaction.message.guild.members.cache.get(messageAuthor.id); // the GuildMember object for the member who created the message
+
+            const botLogChannel = KimoServer.channels.cache.get('1221957962474455090');
+            botLogChannel.send (`${messageAuthorMember} Hi this is an automated message. We're going to be promoting Scissorchan DTIYS entries on social media. If you'd like to give your consent for us to share the following image, respond with a YES and you social media link. Thank you. ${reaction.message.attachments.first().url}]}`);
+
+        }
+
 
 
     });
