@@ -98,7 +98,7 @@ client.once(Events.ClientReady, async c => {
   campfireVCs(client);
   marketFair(client);
   gravetalking(client);
-  kimoScore(client);
+  //kimoScore(client);
   lifeRaftController(client);
 
   setInterval(() => {
