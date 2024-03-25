@@ -96,7 +96,7 @@ module.exports = async (client) => {
           maxUses: 1,
         });
 
-        interaction.followUp({content: `MAP OBTAINED: https://discord.gg/${invite.code} (SINGLE USE, EXPIRES in one WEEk)`, ephemeral: true});
+        interaction.followUp({content: `MAP OBTAINED: https://discord.gg/${invite.code} (SINGLE USE, EXPIRES in one WEEK)`, ephemeral: true});
 
       }
 
