@@ -413,7 +413,7 @@ async function shiftStock (client) {
 
     
 
-    stock.nextUpdateTime = now + (60 * 1000 * stock.totalShares * Math.random()) ;
+    stock.nextUpdateTime = now + (20 * 1000 * stock.totalShares * Math.random()) ;
     await stock.save();
 
     setTimeout(() => {
