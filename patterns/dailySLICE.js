@@ -11,6 +11,7 @@ const marketFairCreate = require('./marketFairCreate');
 const adminWage = require('./adminWage');
 const getAllMessagesInChannelLastTwoDays = require('./getAllMessagesInChannelLastTwoDays');
 const taxes = require('./taxes');
+const kimoScore = require('./kimoScore');
 module.exports = async (client) => {
 
     console.log ('not yet time');
@@ -52,6 +53,7 @@ module.exports = async (client) => {
         alarmChannel.send(`3 HOURS LEFT <@&${dangerRole.id}>`);
         console.log ('recheck auto requested');
         forceRecheck(client);
+        kimoScore(client);
         // taxes(client);
     }
 
