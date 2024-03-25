@@ -16,11 +16,13 @@ module.exports = async (client) => {
         const userData = await UserData.findOne({userID: member.id });
         const userStats = await UserStats.findOne({userID: member.id });
 
-        const money = userData.money;
+        const money = Math.floor(userData.money/100);
         const vcTime = Math.floor(userStats.vcTime/1000/60);
         const messagesSent = userStats.totalMessages;
+        const refsShared = userStats.refsShared;
+        const bottles = userStats.messagesBottled;
         
-        const totalKimoScore = money + vcTime + messagesSent;
+        const totalKimoScore = money + (vcTime * 10) + (messagesSent * 5) + (refsShared * 10) + (bottles * 20);
 
         userData.kimoScore = totalKimoScore;
         await userData.save();
