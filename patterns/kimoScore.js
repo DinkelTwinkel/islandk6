@@ -22,7 +22,7 @@ module.exports = async (client) => {
         const refsShared = userStats.refsShared;
         const bottles = userStats.messagesBottled;
         
-        const totalKimoScore = money + (vcTime * 10) + (messagesSent * 5) + (refsShared * 10) + (bottles * 20);
+        const totalKimoScore = money + (vcTime * 2) + (messagesSent) + (refsShared * 5) + (bottles * 5);
 
         userData.kimoScore = totalKimoScore;
         await userData.save();
