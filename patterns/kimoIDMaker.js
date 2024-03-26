@@ -32,13 +32,13 @@ module.exports = async (userid, member, client) => {
     let kimoGrade = 'FFF';
 
     if (findPouch.kimoScore < 0) {
-      kimoGrade = 'GG GO NEXT'
+      kimoGrade = 'SMALL FART'
     }
     if (findPouch.kimoScore < -1000) {
-      kimoGrade = 'ITCHY BUM'
+      kimoGrade = 'MEDIUM FART'
     }
     if (findPouch.kimoScore < -10000) {
-      kimoGrade = '💩💩💩'
+      kimoGrade = 'ATOMIC FART'
     }
     if (findPouch.kimoScore > 1000) {
       kimoGrade = 'EEE'
