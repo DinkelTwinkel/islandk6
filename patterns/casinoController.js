@@ -81,16 +81,16 @@ module.exports = async (client) => {
 
             const playMessage = await thread.send (`${interaction.member} played **rock**!`);
 
-            const dice = Math.random() * 3;
+            const dice = Math.floor(Math.random() * 3);
     
-            if (2 > dice >= 1) {
+            if (dice === 0) {
                 playMessage.reply (`Goblin played paper! You lose ${cost} shells!`);
                 userWallet.money -= cost;
                 jianDaoWallet.money += cost;
                 await jianDaoWallet.save();
                 await userWallet.save();
             }
-            else if (dice >= 2) {
+            else if (dice === 1) {
                 playMessage.reply (`Goblin played rock! It's a draw!`);
             }
             else {
@@ -115,16 +115,16 @@ module.exports = async (client) => {
 
             const playMessage = await thread.send (`${interaction.member} played **paper**!`);
 
-            const dice = Math.random() * 3;
+            const dice = Math.floor(Math.random() * 3);
     
-            if (2 > dice >= 1) {
+            if (dice === 0) {
                 playMessage.reply (`Goblin played scissors! You lose ${cost} shells!`);
                 userWallet.money -= cost;
                 jianDaoWallet.money += cost;
                 await jianDaoWallet.save();
                 await userWallet.save();
             }
-            else if (dice >= 2) {
+            else if (dice === 1) {
                 playMessage.reply (`Goblin played paper! It's a draw!`);
             }
             else {
@@ -149,16 +149,16 @@ module.exports = async (client) => {
 
             const playMessage = await thread.send (`${interaction.member} played **scissors**!`);
 
-            const dice = Math.random() * 3;
+            const dice = Math.floor(Math.random() * 3);
     
-            if (2 > dice >= 1) {
+            if (dice === 0) {
                 playMessage.reply (`Goblin played rock! You lose ${cost} shells!`);
                 userWallet.money -= cost;
                 jianDaoWallet.money += cost;
                 await jianDaoWallet.save();
                 await userWallet.save();
             }
-            else if (dice >= 2) {
+            else if (dice === 1) {
                 playMessage.reply (`Goblin played scissors! It's a draw!`);
             }
             else {
