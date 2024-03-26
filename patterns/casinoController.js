@@ -90,7 +90,7 @@ module.exports = async (client) => {
                 await jianDaoWallet.save();
                 await userWallet.save();
             }
-            else if (dice > 2) {
+            else if (dice >= 2) {
                 playMessage.reply (`Goblin played rock! It's a draw!`);
             }
             else {
@@ -124,7 +124,7 @@ module.exports = async (client) => {
                 await jianDaoWallet.save();
                 await userWallet.save();
             }
-            else if (dice > 2) {
+            else if (dice >= 2) {
                 playMessage.reply (`Goblin played paper! It's a draw!`);
             }
             else {
@@ -158,7 +158,7 @@ module.exports = async (client) => {
                 await jianDaoWallet.save();
                 await userWallet.save();
             }
-            else if (dice > 2) {
+            else if (dice >= 2) {
                 playMessage.reply (`Goblin played scissors! It's a draw!`);
             }
             else {
