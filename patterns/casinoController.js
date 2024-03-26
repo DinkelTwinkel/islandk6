@@ -44,6 +44,11 @@ module.exports = async (client) => {
                 const winnerWallet = await UserData.findOne({userID: winners[index].userID});
                 winnerWallet.money += winners[index].betAmount * 4;
                 await winnerWallet.save();
+
+                const jianDaoWallet = await UserData.findOne({ userID: '865147754358767627' });
+                jianDaoWallet.money -= winners[index].betAmount * 4;
+                await jianDaoWallet.save();
+
                 thread.send ({content: `AWARDING <@${winnerWallet.userID}> ${winners[index].betAmount * 4} SHELLS!`});
             }
         }
