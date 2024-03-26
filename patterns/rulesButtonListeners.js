@@ -82,6 +82,8 @@ module.exports = async (client) => {
         userWallet.money -= cost;
         await userWallet.save();
 
+        interaction.channel.send ({ content: `${interaction.member} paid 100 shells.`});
+
         // add tip to jian dao.
 
         const jianDaoWallet = await UserData.findOne({ userID: '865147754358767627' });
