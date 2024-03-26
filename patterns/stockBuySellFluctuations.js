@@ -82,6 +82,8 @@ module.exports = async (client) => {
 
       if (interaction.customId === 'buy' + stock.stockName) {
 
+        await interaction.deferUpdate();
+
         let checkExistingInventory = await Inventory.findOne({
           ownerId: interaction.member.user.id,
           itemName: stock.stockName,
@@ -131,7 +133,7 @@ module.exports = async (client) => {
 
         const cost = stock.currentValue;
         const checkPouch = await UserData.findOne ({userID: interaction.member.user.id});
-        if (checkPouch.money < cost) return interaction.reply ({content: `You do not have enough shells! You need ${cost} shells to perform this action!`, ephemeral: true });
+        if (checkPouch.money < cost) return interaction.followUp ({content: `You do not have enough shells! You need ${cost} shells to perform this action!`, ephemeral: true });
         checkPouch.money -= cost;
         await checkPouch.save();
 
@@ -158,11 +160,11 @@ module.exports = async (client) => {
         checkExistingInventory.totalSpent += cost;
 
         if (interaction.channel.id === '1206930735315943444') {
-          interaction.reply({content: `You bought ${stock.stockName} stock for ${stock.currentValue}, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
+          interaction.followUp({content: `You bought ${stock.stockName} stock for ${stock.currentValue}, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
           // interaction.deferUpdate();
         }
         else {
-          interaction.reply({content: `You bought ${stock.stockName} stock for ${stock.currentValue}, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
+          interaction.followUp({content: `You bought ${stock.stockName} stock for ${stock.currentValue}, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
         }
 
         //refChannel1.send (`${interaction.member.displayName} bought ${stock.stockName} stock for ${stock.currentValue} sea shells, they currently have ${checkExistingInventory.quantity} shares.`);
@@ -192,6 +194,7 @@ module.exports = async (client) => {
 
       }
       else if (interaction.customId === 'sell' + stock.stockName) {
+        await interaction.deferUpdate();
 
                 // check quantity owned and if negative, use short buying logic. 
                 
@@ -242,7 +245,7 @@ module.exports = async (client) => {
         // }
 
 
-        if (!checkExistingInventory || checkExistingInventory.quantity === 0) return interaction.reply({content: 'You must buy the stock first!', ephemeral: true });
+        if (!checkExistingInventory || checkExistingInventory.quantity === 0) return interaction.followUp({content: 'You must buy the stock first!', ephemeral: true });
         
         // user posesses stock
 
@@ -265,11 +268,11 @@ module.exports = async (client) => {
         await userStat.save();
 
         if (interaction.channel.id === '1206930735315943444') {
-          interaction.reply({content: `You sold ${stock.stockName} Stock for ${stock.currentValue} shells and paid ${tax} shell in transaction fee, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
+          interaction.followUp({content: `You sold ${stock.stockName} Stock for ${stock.currentValue} shells and paid ${tax} shell in transaction fee, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
           //interaction.deferUpdate();
         }
         else {
-          interaction.reply({content: `You sold ${stock.stockName} Stock for ${stock.currentValue} shells and paid ${tax} shell in transaction fee, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
+          interaction.followUp({content: `You sold ${stock.stockName} Stock for ${stock.currentValue} shells and paid ${tax} shell in transaction fee, you currently have ${checkExistingInventory.quantity} shares.`, ephemeral: true});
         }
 
         // const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });

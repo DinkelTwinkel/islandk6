@@ -15,12 +15,14 @@ module.exports = {
 
     async execute(interaction, client) {
 
+        await interaction.deferReply({ephemeral: true});
+
         // money check.
 
         const cost = 5;
 
         const userWallet = await UserData.findOne({ userID: interaction.member.id });
-        if (userWallet.money < cost) return interaction.reply({ content: `Insufficient shells, you need ${cost} shells to use this.`, ephemeral: true });
+        if (userWallet.money < cost) return interaction.editReply({ content: `Insufficient shells, you need ${cost} shells to use this.`, ephemeral: true });
 
         userWallet.money -= cost;
         await userWallet.save();
@@ -36,7 +38,7 @@ module.exports = {
     
         cookieChannel.send({content: interaction.options.getString('message'), embeds: [embed]});
 
-        interaction.reply({ content: `Message bottled! bad or abusive messages are removed!`, ephemeral: true });
+        interaction.editReply({ content: `Message bottled! bad or abusive messages are removed!`, ephemeral: true });
 
         // user statistics total kimo posting tracking
 

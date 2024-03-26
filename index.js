@@ -65,6 +65,7 @@ const Inventory = require('./models/inventory');
 const gravetalking = require('./patterns/gravetalking');
 const kimoScore = require('./patterns/kimoScore');
 const lifeRaftController = require('./patterns/lifeRaftController');
+const casinoController = require('./patterns/casinoController');
 registerCommands;
 
 client.once(Events.ClientReady, async c => {
@@ -100,6 +101,7 @@ client.once(Events.ClientReady, async c => {
   gravetalking(client);
   //kimoScore(client);
   lifeRaftController(client);
+  casinoController(client);
 
   setInterval(() => {
     dailySLICE(client);
