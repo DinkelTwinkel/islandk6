@@ -83,7 +83,7 @@ module.exports = async (client) => {
 
             const dice = Math.random() * 3;
     
-            if (2 > dice > 1) {
+            if (2 > dice >= 1) {
                 playMessage.reply (`Goblin played paper! You lose ${cost} shells!`);
                 userWallet.money -= cost;
                 jianDaoWallet.money += cost;
@@ -117,7 +117,7 @@ module.exports = async (client) => {
 
             const dice = Math.random() * 3;
     
-            if (2 > dice > 1) {
+            if (2 > dice >= 1) {
                 playMessage.reply (`Goblin played scissors! You lose ${cost} shells!`);
                 userWallet.money -= cost;
                 jianDaoWallet.money += cost;
@@ -151,7 +151,7 @@ module.exports = async (client) => {
 
             const dice = Math.random() * 3;
     
-            if (2 > dice > 1) {
+            if (2 > dice >= 1) {
                 playMessage.reply (`Goblin played rock! You lose ${cost} shells!`);
                 userWallet.money -= cost;
                 jianDaoWallet.money += cost;
