@@ -17,6 +17,7 @@ module.exports = async (client) => {
             checkVCEmpty(voiceChannel)
             }
             catch(err) {
+                await Fire.deleteMany({channelId: fire.channelId});
                 console.log (err);
             }
         });
@@ -31,6 +32,7 @@ module.exports = async (client) => {
                     checkVCEmpty(voiceChannel);
                 }
                 catch(err) {
+                    await Fire.deleteMany({channelId: fire.channelId});
                     console.log (err);
                 }
             });
@@ -135,7 +137,10 @@ async function checkVCEmpty(channel) {
     const KimoServer = await channel.guild;
     const checkChannel = KimoServer.channels.cache.get(channel.id);
 
-    if (!checkChannel) return;
+    if (!checkChannel) {
+        //await Fire.deleteMany({channelId: channel.id});
+        return;
+    } 
 
     if (channel.members?.size === 0) {
         try {

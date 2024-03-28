@@ -18,8 +18,10 @@ module.exports = {
 
     async execute(interaction, client) {
 
+        await interaction.deferReply();
+
         // QUEST NPC ROLE CHECK
-        if (!interaction.member.roles.cache.get('1222356077316673677')) return interaction.reply({ content: 'You need a gun to use this.', ephemeral: true });
+        if (!interaction.member.roles.cache.get('1222356077316673677')) return interaction.editReply({ content: 'You need a gun to use this.', ephemeral: true });
 
         const now = Date.now();
         if (cooldowns.has(interaction.member.user.id)) {
@@ -27,12 +29,12 @@ module.exports = {
 
             if (now < expirationTime) {
               const timeLeft = (expirationTime - now) / 1000 / 60;
-              return interaction.reply({ content: `Please wait ${timeLeft.toFixed(1)} more minutes before giving cuts again`, ephemeral: true});
+              return interaction.editReply({ content: `Please wait ${timeLeft.toFixed(1)} more minutes before firing again`, ephemeral: true});
             }
         }
 
         const userWallet = await UserData.findOne({ userID: interaction.member.id });
-        if (userWallet.money < cost) return interaction.reply({ content: `Insufficient shells, you need ${cost} shells to use this.`, ephemeral: true });
+        if (userWallet.money < cost) return interaction.editReply({ content: `Insufficient shells, you need ${cost} shells to use this.`, ephemeral: true });
         userWallet.money -= cost;
         await userWallet.save();
 
@@ -50,7 +52,7 @@ module.exports = {
           target.roles.remove ('1222961371348734043');
         }, 60 * 1000);
 
-        interaction.reply({ content: `Shots Fired`, ephemeral: true});
+        interaction.editReply({ content: `Shots Fired`, ephemeral: true});
 
 
     },
