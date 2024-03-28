@@ -18,7 +18,7 @@ module.exports = {
 
     async execute(interaction, client) {
 
-        await interaction.deferReply();
+        await interaction.deferReply({ephemeral: true});
 
         // QUEST NPC ROLE CHECK
         if (!interaction.member.roles.cache.get('1222356077316673677')) return interaction.editReply({ content: 'You need a gun to use this.', ephemeral: true });
@@ -52,7 +52,7 @@ module.exports = {
           target.roles.remove ('1222961371348734043');
         }, 60 * 1000);
 
-        interaction.editReply({ content: `Shots Fired`, ephemeral: true});
+        interaction.editReply({ content: `BANG BANG, Shots Fired`, ephemeral: true});
 
 
     },
