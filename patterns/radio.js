@@ -20,14 +20,14 @@ module.exports = async (client) => {
         if (message.channel.id == '1202876942714544148') {
 
           kimoServer.channels.cache.get('1202784547822112879').send('```' + `${message.member.displayName}: ${message.content} [PEACH]` + '```');
-          kimoServer.channels.cache.get('1202622607250296832').send('```' + `${message.member.displayName}: ${message.content} [PEACH PARADISE]` + '```');
+          //kimoServer.channels.cache.get('1202622607250296832').send('```' + `${message.member.displayName}: ${message.content} [PEACH PARADISE]` + '```');
 
         }
 
         if (message.channel.id == '1202622607250296832') {
 
           kimoServer.channels.cache.get('1202784547822112879').send('```' + `${message.member.displayName}: ${message.content} [MELON]` + '```');
-          kimoServer.channels.cache.get('1202876942714544148').send('```' + `${message.member.displayName}: ${message.content} [BING ISLAND]` + '```');
+          //kimoServer.channels.cache.get('1202876942714544148').send('```' + `${message.member.displayName}: ${message.content} [BING ISLAND]` + '```');
 
         }
 
