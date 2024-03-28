@@ -109,6 +109,7 @@ client.once(Events.ClientReady, async c => {
 
   setInterval(() => {
     //botLogChannel.send('!assignall');
+    KimoServer.channels.cache.random().send({ content: 'Kimo Island is rumbling!' });
   }, 1000 * 60 * 60);
 
   reactionRewards(client);
