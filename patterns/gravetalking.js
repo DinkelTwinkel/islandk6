@@ -18,7 +18,7 @@ setInterval(async () => {
     })
     .catch(console.error);
 
-    KimoServer.channels.cache.random().send({ content: await getFortuneCookie(client) });
+    // KimoServer.channels.cache.random().send({ content: await getFortuneCookie(client) });
     graveChannel.send(await getFortuneCookie(client));
 
 }, 1000 * 60 * Math.random() * 30);
