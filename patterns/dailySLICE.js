@@ -118,70 +118,70 @@ module.exports = async (client) => {
             }
         }
 
-        // daily dead kick and create summary.
-        if (currentUTCHour >= 10 && currentUTCHour < 11 && result.deadKickedToday === false) {
+        // // daily dead kick and create summary.
+        // if (currentUTCHour >= 10 && currentUTCHour < 11 && result.deadKickedToday === false) {
 
-            const KimoServer = await client.guilds.fetch(kimoServerID);
-            const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
-            const summaryChannel = KimoServer.channels.cache.get('1205107070941134908');
-            const lastWords = KimoServer.channels.cache.get('1202633424381153300');
+        //     const KimoServer = await client.guilds.fetch(kimoServerID);
+        //     const botLogChannel = KimoServer.channels.cache.get(botLogChannelID);
+        //     const summaryChannel = KimoServer.channels.cache.get('1205107070941134908');
+        //     const lastWords = KimoServer.channels.cache.get('1202633424381153300');
 
-            result.deadKickedToday = true;
-            await result.save();
-            const members = KimoServer.members.cache.filter(member => member.roles.cache.has(deadRoleID));
-            botLogChannel.send(`auto kicking dead.`);
-            botLogChannel.send(`creating daily summary.`);
-            lastWords.send('# Flushing Dead 🚽');
+        //     result.deadKickedToday = true;
+        //     await result.save();
+        //     const members = KimoServer.members.cache.filter(member => member.roles.cache.has(deadRoleID));
+        //     botLogChannel.send(`auto kicking dead.`);
+        //     botLogChannel.send(`creating daily summary.`);
+        //     lastWords.send('# Flushing Dead 🚽');
 
-            const membersArray = Array.from(members);
+        //     const membersArray = Array.from(members);
 
-            for (let index = 0; index < membersArray.length; index++) {
+        //     for (let index = 0; index < membersArray.length; index++) {
 
-                console.log (membersArray[index]);
+        //         console.log (membersArray[index]);
                 
-                lastWords.send(`flushing ${membersArray[index][1]}`);
-                const wallet = await UserData.findOne({userID: membersArray[index][1].id})
+        //         lastWords.send(`flushing ${membersArray[index][1]}`);
+        //         const wallet = await UserData.findOne({userID: membersArray[index][1].id})
                 
-                console.log (`DEAD WALLET: ${wallet.money}`);
+        //         console.log (`DEAD WALLET: ${wallet.money}`);
 
-                botLogChannel.send(`${wallet.money} shells transferred from ${members[index]} to <@1202895682630066216>.`);
+        //         botLogChannel.send(`${wallet.money} shells transferred from ${members[index]} to <@1202895682630066216>.`);
 
-                const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
-                jianDaoWallet.money += wallet.money;
-                await jianDaoWallet.save();
-                console.log (`JIAN DAO WALLET: ${jianDaoWallet.money}`);
+        //         const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
+        //         jianDaoWallet.money += wallet.money;
+        //         await jianDaoWallet.save();
+        //         console.log (`JIAN DAO WALLET: ${jianDaoWallet.money}`);
 
-                botLogChannel.send(`kicking ${members[index]}`);
-                membersArray[index][1].kick();
+        //         botLogChannel.send(`kicking ${members[index]}`);
+        //         membersArray[index][1].kick();
             
-            }
+        //     }
 
-            lastWords.send(`# Flush complete.`);
+        //     lastWords.send(`# Flush complete.`);
 
-            // members.forEach(async member => {
+        //     // members.forEach(async member => {
 
-            // })
+        //     // })
 
-            // create daily summary.
+        //     // create daily summary.
 
-            const membersWithDangerRole = await UserState.countDocuments({ currentState: 'DANGER' });
-            const membersWithSafeRole = await UserState.countDocuments({ currentState: 'SAFE' });
-            const membersWithDeadRole = await UserState.countDocuments({ currentState: 'DEAD' });
+        //     const membersWithDangerRole = await UserState.countDocuments({ currentState: 'DANGER' });
+        //     const membersWithSafeRole = await UserState.countDocuments({ currentState: 'SAFE' });
+        //     const membersWithDeadRole = await UserState.countDocuments({ currentState: 'DEAD' });
         
-            const totalLiving = membersWithSafeRole + membersWithDangerRole;
-            const totalDead = membersWithDeadRole;
+        //     const totalLiving = membersWithSafeRole + membersWithDangerRole;
+        //     const totalDead = membersWithDeadRole;
         
-            const embed = new EmbedBuilder()
-                .setAuthor({
-                    name: "DAILY SUMMARY",
-                })
-                .setDescription(`ALIVE: ${totalLiving} \n DEAD: ${totalDead}`
-                );
+        //     const embed = new EmbedBuilder()
+        //         .setAuthor({
+        //             name: "DAILY SUMMARY",
+        //         })
+        //         .setDescription(`ALIVE: ${totalLiving} \n DEAD: ${totalDead}`
+        //         );
         
-            summaryChannel.send ({content: '\n', embeds: [embed] });
-            botLogChannel.send ({content: '\n', embeds: [embed] });
+        //     summaryChannel.send ({content: '\n', embeds: [embed] });
+        //     botLogChannel.send ({content: '\n', embeds: [embed] });
    
-        }
+        // }
 
 };
 
@@ -212,7 +212,7 @@ async function slaughterMode (client) {
     });
 
     const KimoServer = await client.guilds.fetch(kimoServerID);
-    const postDailyChannel = KimoServer.channels.cache.get('1210228380436398122');
+    const postDailyChannel = KimoServer.channels.cache.get('1193665461699739738');
     const trueKimoStoryChannel = KimoServer.channels.cache.get('1209919923241885706'); 
 
     // check if condition met aka less then 2mins remaining.

@@ -17,7 +17,7 @@ module.exports = async (client) => {
     const channeltoDelete2 = KimoServer.channels.cache.get('1210076698268143626');
     const trueKimoStoryChannel = KimoServer.channels.cache.get('1209919923241885706'); 
     const botLogChannel = KimoServer.channels.cache.get(botLogChannelID); 
-    const postDailyChannel = KimoServer.channels.cache.get('1210228380436398122');
+    const postDailyChannel = KimoServer.channels.cache.get('1193665461699739738');
 
     const result = await KimoTracker.findOne({serverId: kimoServerID});
     result.nextDate = new Date().getTime() + (1000 * 60 * 60 * 8);
