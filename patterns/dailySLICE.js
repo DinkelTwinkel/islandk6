@@ -247,7 +247,7 @@ async function slaughterMode (client) {
         return;
     }
 
-    else if (tracker.currentPeriodLength < 1000 * 60 * 30 && totalLiving >= 50) {
+    else if (tracker.currentPeriodLength < 1000 * 60 * 30 && totalLiving >= 300) {
         // clear condition met.
         tracker.nextDate = new Date().getTime() + (60 * 60 * 1000 * 5000);
         await tracker.save();
