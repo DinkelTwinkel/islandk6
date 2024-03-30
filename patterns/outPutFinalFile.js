@@ -13,7 +13,7 @@ module.exports = async (client, channel) => {
     const allDANGER = await UserState.find({currentState: 'DANGER'});
     const totalFinalSurivorCount = Array.from(allSAFE).length + Array.from(allDANGER).length;
 
-    let finalString = 'KIMO CLOSED BETA FINAL SURVIVOR LIST\n' + `TOTAL SURVIVORS: ${totalFinalSurivorCount}\n`;
+    let finalString = 'KIMO 6 FINAL SURVIVOR LIST\n' + `TOTAL SURVIVORS: ${totalFinalSurivorCount}\n`;
 
     let count = 0;
     const statesArray = Array.from(allStates);
