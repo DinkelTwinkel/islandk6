@@ -203,7 +203,7 @@ async function slaughterMode (client) {
         .setDescription(`ALIVE: ${totalLiving} \n DEAD: ${totalDead}\n NEXT CUTOFF <t:${Math.floor(tracker.nextDate/1000)}:R>`
         );
 
-    const embed = new EmbedBuilder()
+    const embedEdit = new EmbedBuilder()
         .setTitle("Blood on the Ocean, Blood on the Deck 🩸")
         .setDescription("```Welcome to the secret final level of Kimodameshi 6. Good work surviving so far. Let's end this. [CUT OFF REACTIVATED]```\nSCENARIO CONDITION:\n**After every cutoff, the next cutoff is HALVED**\nDie or survive and die later. Good luck." + `\n\n CUT OFF: <t:${Math.floor(tracker.nextDate/1000)}:R>`)
         //.setColor("#520000")
@@ -265,7 +265,7 @@ async function slaughterMode (client) {
     const messages = await trueKimoStoryChannel.messages.fetch();
     messages.forEach(message => {
       if (message.content === 'KIMODAMESHI HIDDEN SCENARIO') {
-        message.edit({ content: 'KIMODAMESHI HIDDEN SCENARIO', embeds: [embed] });
+        message.edit({ content: 'KIMODAMESHI HIDDEN SCENARIO', embeds: [embedEdit] });
       }
     });
 
