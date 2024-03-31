@@ -17,24 +17,24 @@ botLogChannel.send(`Kick all activated. Kicking everyone except those out of the
 const now = new Date().getTime() + 60000;
 
 
-flushAnnouncementChannel.send(`FLUSHING @everyone <t:${Math.floor(now/1000)}:R>`);
+// flushAnnouncementChannel.send(`FLUSHING @everyone <t:${Math.floor(now/1000)}:R>`);
 
-sendPuppetCommand(0, flushAnnouncementChannel, `This was a triumph`, 0);
-sendPuppetCommand(1, flushAnnouncementChannel, `I'm making a note here`, 0.5);
-sendPuppetCommand(0, flushAnnouncementChannel, `Huge success`, 1);
-sendPuppetCommand(1, flushAnnouncementChannel, `It's hard to overstate my satisfaction`, 1.5);
+// sendPuppetCommand(0, flushAnnouncementChannel, `This was a triumph`, 0);
+// sendPuppetCommand(1, flushAnnouncementChannel, `I'm making a note here`, 0.5);
+// sendPuppetCommand(0, flushAnnouncementChannel, `Huge success`, 1);
+// sendPuppetCommand(1, flushAnnouncementChannel, `It's hard to overstate my satisfaction`, 1.5);
 
-sendPuppetCommand(1, flushAnnouncementChannel, `Thank you for playing.`, 4);
-sendPuppetCommand(0, flushAnnouncementChannel, `Thank you for joining us.`, 5);
+// sendPuppetCommand(1, flushAnnouncementChannel, `Thank you for playing.`, 4);
+// sendPuppetCommand(0, flushAnnouncementChannel, `Thank you for joining us.`, 5);
 
-sendPuppetCommand(1, flushAnnouncementChannel, `good luck! have a good year! remember to drink water! stop shrimping! stretch your hands!`, 6);
-sendPuppetCommand(0, flushAnnouncementChannel, `farewell you fools`, 7);
+// sendPuppetCommand(1, flushAnnouncementChannel, `good luck! have a good year! remember to drink water! stop shrimping! stretch your hands!`, 6);
+// sendPuppetCommand(0, flushAnnouncementChannel, `farewell you fools`, 7);
 
-sendPuppetCommand(1, flushAnnouncementChannel, `https://tenor.com/view/anime-girl-smile-happy-tears-gif-23603422`, 9);
-sendPuppetCommand(0, flushAnnouncementChannel, `...`, 12);
+// sendPuppetCommand(1, flushAnnouncementChannel, `https://tenor.com/view/anime-girl-smile-happy-tears-gif-23603422`, 9);
+// sendPuppetCommand(0, flushAnnouncementChannel, `...`, 12);
 
-sendPuppetCommand(0, flushAnnouncementChannel, `# Kimo Activated`, 29);
-sendPuppetCommand(0, flushAnnouncementChannel, `Just kidding :]`, 30);
+// sendPuppetCommand(0, flushAnnouncementChannel, `# Kimo Activated`, 29);
+// sendPuppetCommand(0, flushAnnouncementChannel, `Just kidding :]`, 30);
 
 setTimeout(() => {
 
@@ -45,12 +45,17 @@ setTimeout(() => {
         if (member.roles.cache.get('1209326206151819336')) return;
     
         flushAnnouncementChannel.send({ content: `${member} FLUSHED`});
-        member.kick();
+        try {
+            member.kick();
+        }
+        catch(err) {
+            return
+        }
         botLogChannel.send(`kicking ${member}`);
     
     });
     
-}, 61000);
+}, 0);
 
 setInterval(async () => {
 
