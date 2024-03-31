@@ -48,9 +48,9 @@ module.exports = {
 
         target.roles.add ('1222961371348734043');
 
-        setTimeout(() => {
-          target.roles.remove ('1222961371348734043');
-        }, 60 * 3000);
+        // setTimeout(() => {
+        //   target.roles.remove ('1222961371348734043');
+        // }, 60 * 3000);
 
         interaction.editReply({ content: `BANG BANG, Shots Fired. ${target.displayName} has been shot!`, ephemeral: true});
 
