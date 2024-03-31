@@ -50,7 +50,7 @@ module.exports = {
 
         setTimeout(() => {
           target.roles.remove ('1222961371348734043');
-        }, 60 * 1000);
+        }, 60 * 3000);
 
         interaction.editReply({ content: `BANG BANG, Shots Fired. ${target.displayName} has been shot!`, ephemeral: true});
 
