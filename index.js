@@ -88,7 +88,7 @@ client.once(Events.ClientReady, async c => {
   rulesButtonListeners(client);
   jailAuto(client);
   postDailyTasker(client);
-  DangerRoleColourShifting(client);
+  //DangerRoleColourShifting(client);
   journalFinding(client);
   postScissorChan(client);
   stockBuySellFluctuations(client);
@@ -496,7 +496,7 @@ client.on(Events.MessageCreate, async (message) => {
 
       } 
 
-      if (command === 'kickall') {
+      if (command === 'goodbye') {
 
         kickall(client);
 
