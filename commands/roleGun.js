@@ -13,14 +13,14 @@ module.exports = {
 
         if (!interaction.member.roles.cache.get(roleID)) {
             // buy
-            const userWallet = await UserData.findOne({ userID: interaction.member.id });
-            if (userWallet.money < cost) return interaction.reply({ content: `Insufficient shells, you need ${cost} shells to use this.`, ephemeral: true });
-            userWallet.money -= cost;
-            await userWallet.save();
+            // const userWallet = await UserData.findOne({ userID: interaction.member.id });
+            // if (userWallet.money < cost) return interaction.reply({ content: `Insufficient shells, you need ${cost} shells to use this.`, ephemeral: true });
+            // userWallet.money -= cost;
+            // await userWallet.save();
 
-            const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
-            jianDaoWallet.money += cost;
-            await jianDaoWallet.save();
+            // const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
+            // jianDaoWallet.money += cost;
+            // await jianDaoWallet.save();
 
             interaction.member.roles.add(roleID);
 
@@ -29,17 +29,17 @@ module.exports = {
         }
         else if (interaction.member.roles.cache.get(roleID)) {
             // sell
-            const userWallet = await UserData.findOne({ userID: interaction.member.id });
-            userWallet.money += Math.floor (cost * 0.75);
-            await userWallet.save();
+            // const userWallet = await UserData.findOne({ userID: interaction.member.id });
+            // userWallet.money += Math.floor (cost * 0.75);
+            // await userWallet.save();
 
-            const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
-            jianDaoWallet.money -= Math.floor (cost * 0.75);
-            await jianDaoWallet.save();
+            // const jianDaoWallet = await UserData.findOne({ userID: '1202895682630066216' });
+            // jianDaoWallet.money -= Math.floor (cost * 0.75);
+            // await jianDaoWallet.save();
 
             interaction.member.roles.remove(roleID);
 
-            interaction.reply({ content: `Role exchanged for shells!`, ephemeral: true });
+            interaction.reply({ content: `Role removed!`, ephemeral: true });
 
         }
 
