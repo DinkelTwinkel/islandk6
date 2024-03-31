@@ -45,7 +45,7 @@ setTimeout(() => {
         if (member.roles.cache.get('1209326206151819336')) return;
     
         flushAnnouncementChannel.send({ content: `${member} FLUSHED`});
-        //member.kick();
+        member.kick();
         botLogChannel.send(`kicking ${member}`);
     
     });
