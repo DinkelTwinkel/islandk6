@@ -6,7 +6,7 @@ const roleID = '1222356077316673677'
 
 module.exports = {
     data: new SlashCommandBuilder()
-    .setName('pineapple')
+    .setName('gun')
     .setDescription(`Cosmetic: costs ${cost} shells. If you already have this, you can exchange it for ${Math.floor (cost * 0.75)} shells.`),
 
     async execute(interaction, client) {
