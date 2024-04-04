@@ -102,7 +102,7 @@ client.once(Events.ClientReady, async c => {
   //kimoScore(client);
   lifeRaftController(client);
   casinoController(client);
-  kickall (client);
+ //kickall (client);
   
 
   setInterval(() => {
